@@ -32,16 +32,16 @@ app.get("/api/test", (req, res) => {
 
 app.use(express.static(path.join(__dirname, "./admin/build")));
 
-//  app.get("*", function (_, res) {
-//    res.sendFile(
-//      path.join(__dirname, "./admin/build/index.html"),
-//      function (err) {
-//        if (err) {
-//          res.status(500).send(err);
-//        }
-//      } 
-//    );
-//  }); 
+ app.get("*", function (_, res) {
+   res.sendFile(
+     path.join(__dirname, "./admin/build/index.html"),
+     function (err) {
+       if (err) {
+         res.status(500).send(err);
+       }
+     } 
+   );
+ }); 
 
 async function start() {
    try {
