@@ -47,7 +47,7 @@ async function login(email, password) {
 
    const token = jwt.sign(
       { userId: user.id },
-      config.get('jwtSecret'),
+      process.env.SECRET_KEY,
       { expiresIn: '1h' }
    )
 
