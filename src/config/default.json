@@ -1,0 +1,5 @@
+{
+   "port" : 4000,
+   "mongoUrl": "mongodb+srv://academyteam:Academy144@academy.ip7bp.mongodb.net/?retryWrites=true&w=majority",
+   "jwtSecret": "ac738my084"
+}

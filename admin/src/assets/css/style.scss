@@ -1,0 +1,134 @@
+@import "./variables.scss";
+
+//header
+
+header {
+   .inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 0 30px;
+   }
+}
+
+//sifebar 
+
+.sidebar {
+   width: 260px;
+   display: flex;
+   flex-direction: column;
+   padding: 30px;
+   border: 1px solid $c-lighter;
+
+   .link {
+      margin-bottom: 20px;
+
+      &:last-child {
+         margin-bottom: 0;
+      }
+   }
+}
+
+// autorization page
+.auth-page {
+   display: flex;
+   align-items: center;
+   min-height: 100vh;
+
+   .inner {
+      max-width: 665px;
+      margin: auto;
+   }
+
+   .title {
+      text-align: center;
+   }
+
+   .form {
+      margin-top: 30px;
+   }
+}
+
+//content page
+
+.content-page {
+   .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border: 1px solid $c-lighter;
+      border-radius: 4px;
+
+      .title {
+         font-size: 20px;
+         line-height: 28px;
+         color: $c-dark;
+      }
+
+      button {
+         text-align: center;
+         background: $c-orange;
+         padding: 10px 22px;
+         max-width: 100%;
+         line-height: 22px;
+         color: $c-white;
+         cursor: pointer;
+         border-radius: 4px;
+         transition: 0.4s;
+
+         display: -webkit-box;
+         -webkit-line-clamp: 1;
+         -webkit-box-orient: vertical;
+         overflow: hidden;
+         text-overflow: ellipsis;
+      }
+   }
+
+   .list {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+   }
+
+   .list-item{
+      display: flex;
+      justify-content: space-between;
+      padding: 16px;
+      border: 1px solid $c-lighter;
+      border-radius: 4px;
+      margin-bottom: 16px;
+
+      &:last-child{
+         margin-bottom: 0;
+      }
+
+      .title{
+         padding-right: 30px;
+         display: -webkit-box;
+         -webkit-line-clamp: 1;
+         -webkit-box-orient: vertical;
+         overflow: hidden;
+         text-overflow: ellipsis;
+      }
+
+      .btns{
+         flex: none;
+         width: auto;
+      }
+
+      button{
+         color: $c-dark;
+         transition: .4s;
+         margin-right: 16px;
+
+         &:last-child{
+            margin-right: 0;
+         }
+
+         &:hover{
+            color: $c-orange;
+         }
+      }
+   }
+}
