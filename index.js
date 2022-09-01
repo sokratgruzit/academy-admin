@@ -23,6 +23,22 @@ app.use('/api/auth', auth);
 // app.use('/', (req, res) =>{
 //    res.status(200).json('academy server application')
 // })
+app.get("/api/test", (req, res) => {
+   res.send("test");
+ });
+ 
+ app.use(express.static(path.join(__dirname, "./admin/build")));
+ 
+ app.get("*", function (_, res) {
+   res.sendFile(
+     path.join(__dirname, "./admin/build/index.html"),
+     function (err) {
+       if (err) {
+         res.status(500).send(err);
+       }
+     }
+   );
+ });
 
 async function start (){
    try{
