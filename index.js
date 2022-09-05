@@ -22,10 +22,8 @@ app.use('/api/content', content);
 app.use('/api/upload', upload);
 app.use('/api/auth', auth);
 
-console.log(process.env.SECRET_KEY)
-// app.use('/', (req, res) =>{
-//    res.status(200).json('academy server application')
-// })
+
+
 app.get("/api/test", (req, res) => {
    res.send("test");
 });

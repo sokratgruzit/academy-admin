@@ -3,7 +3,7 @@ const Article = require('../models/Article');
 
 
 async function index(){
-   const result = await Article.find().populate(['category', 'level', 'tag']);
+   const result = await Article.find().populate(['category', 'level', 'tag', 'language']);
    return {result};
 }
 

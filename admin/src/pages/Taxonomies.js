@@ -63,6 +63,9 @@ function Taxonomies() {
             <button className={`tab ${tab === 'level' ? 'active' : ''}`} onClick={() => tabClickHanlder('level')}>
                levels
             </button>
+            <button className={`tab ${tab === 'level' ? 'active' : ''}`} onClick={() => tabClickHanlder('language')}>
+               language
+            </button>
          </div>
          <br/>
          <br/>

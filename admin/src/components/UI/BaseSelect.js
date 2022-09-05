@@ -1,6 +1,6 @@
 import Select from 'react-select'
 
-function BaseSelect({ name, options, getOptionLabel, getOptionValue, defaultValue = '', placeholder = 'select' }) {
+function BaseSelect({ name, options, getOptionLabel, getOptionValue, defaultValue = '', placeholder = 'select' , isMulti = false }) {
    return (
       <Select
          className='base-select-container'
@@ -11,6 +11,7 @@ function BaseSelect({ name, options, getOptionLabel, getOptionValue, defaultValu
          getOptionLabel={getOptionLabel}
          getOptionValue={getOptionValue}
          defaultValue={defaultValue}
+         isMulti={isMulti}
       />
    )
 }

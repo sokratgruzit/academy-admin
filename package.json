@@ -4,7 +4,12 @@
   "description": "core academy",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "admin": "npm run start --prefix admin",
+    "admin:install": "npm install --prefix admin",
+    "admin:build": "npm run build --prefix admin",
+    "dev": "concurrently \"npm run server\" \"npm run admin\" --ignore client"
   },
   "keywords": [
     "core",

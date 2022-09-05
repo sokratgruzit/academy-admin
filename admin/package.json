@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^35.0.1",
+    "@ckeditor/ckeditor5-html-embed": "^35.1.0",
     "@ckeditor/ckeditor5-react": "^5.0.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",

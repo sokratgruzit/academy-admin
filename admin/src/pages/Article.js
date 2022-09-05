@@ -8,7 +8,8 @@ function Article() {
    const [taxonomies, settaxonomies] = useState({
       category: null,
       tag: null,
-      level: null
+      level: null,
+      language: null
    })
    const [articles, setArticles] = useState(null);
    const [article, setArticle] = useState({}); 
@@ -16,7 +17,7 @@ function Article() {
    const { token } = useContext(AuthContext);
    const { request } = useHttp();
 
-
+ 
 
    const getTaxomonies = async () => {
       const category = await request('/api/content/category', 'GET', null, {
@@ -28,7 +29,10 @@ function Article() {
       const level = await request('/api/content/level', 'GET', null, {
          Authorization: `Bearer ${token}`
       });
-      settaxonomies({ category, tag, level });
+      const language = await request('/api/content/language', 'GET', null, {
+         Authorization: `Bearer ${token}`
+      });
+      settaxonomies({ category, tag, level, language });
    }
 
    const getArticles = async () => {

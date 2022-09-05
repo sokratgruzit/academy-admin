@@ -18,8 +18,12 @@ const schema = new Schema({
    editor: {
       type: String
    },
+	duration: {
+      type: String
+   },
 	image: Object,
 	category: { type: Schema.Types.ObjectId, ref: 'Category' },
+	language: { type: Schema.Types.ObjectId, ref: 'Language' },
 	level: { type: Schema.Types.ObjectId, ref: 'Level' },
 	tag: [{ type: Schema.Types.ObjectId, ref: 'Tag' }]
 },{

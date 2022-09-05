@@ -11,6 +11,7 @@ const TaxonomiesController = require('../controllers/taxonomies.controller');
 const CategoryController = new TaxonomiesController('Category');
 const LevelController = new TaxonomiesController('Level');
 const TagController = new TaxonomiesController('Tag');
+const LanguageController = new TaxonomiesController('Language');
 
 
 //articles
@@ -46,22 +47,29 @@ router.delete('/footer/:slug', AuthMiddleware , FooterController.destroy);
 router.get('/category' , AuthMiddleware  , CategoryController.index);
 router.get('/tag' , AuthMiddleware  , TagController.index);
 router.get('/level' , AuthMiddleware  , LevelController.index);
+router.get('/language' , AuthMiddleware  , LanguageController.index);
 
 router.post('/category' , AuthMiddleware  , CategoryController.create);
 router.post('/tag' , AuthMiddleware  , TagController.create);
 router.post('/level' , AuthMiddleware  , LevelController.create);
+router.post('/language' , AuthMiddleware  , LanguageController.create);
 
 router.get('/category/:id' , AuthMiddleware  , CategoryController.findOne);
 router.get('/tag/:id' , AuthMiddleware  , TagController.findOne);
 router.get('/level/:id' , AuthMiddleware  , LevelController.findOne);
+router.get('/language/:id' , AuthMiddleware  , LanguageController.findOne);
 
 router.put('/category/:id' , AuthMiddleware  , CategoryController.update);
 router.put('/tag/:id' , AuthMiddleware  , TagController.update);
 router.put('/level/:id' , AuthMiddleware  , LevelController.update);
+router.put('/language/:id' , AuthMiddleware  , LanguageController.update);
 
 router.delete('/category/:id' , AuthMiddleware  , CategoryController.destroy);
 router.delete('/tag/:id' , AuthMiddleware  , TagController.destroy);
 router.delete('/level/:id' , AuthMiddleware  , LevelController.destroy);
+router.delete('/language/:id' , AuthMiddleware  , LanguageController.destroy);
+
+
 
  
 module.exports = router; 

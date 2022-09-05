@@ -9,7 +9,7 @@ function BaseEditor({ data = '', id = 'editor1', setMyEditor }) {
       <CKEditor
          editor={ClassicEditor}
          config={{
-            toolbar: ["undo", "redo", "bold", "italic", "blockQuote", "ckfinder", "imageTextAlternative", "imageUpload", "heading",  "imageStyle:side", "link", "numberedList", "bulletedList", "mediaEmbed", "insertTable", "tableColumn", "tableRow", "mergeTableCells"],
+            toolbar: [ "undo", "redo", "bold", "italic", "blockQuote", "ckfinder", "imageTextAlternative", "imageUpload", "heading",  "imageStyle:side", "link", "numberedList", "bulletedList", "mediaEmbed", "insertTable", "tableColumn", "tableRow", "mergeTableCells"],
             heading: {
                options: [
                   { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
