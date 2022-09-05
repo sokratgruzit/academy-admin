@@ -20,7 +20,7 @@
 # Private Node Modules
 node_modules/
 creds.js
-# uploads
+uploads
  
 # Private Files
 
