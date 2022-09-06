@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const router = Router();
- 
+
 const UploadController = require('../middlewares/upload.middleware');
 const AuthMiddleware = require('../middlewares/auth.middleware');
 
@@ -13,4 +13,4 @@ router.post('/image',AuthMiddleware,  UploadController.single('image') , (req, r
 
  
 module.exports = router;
-    
+   

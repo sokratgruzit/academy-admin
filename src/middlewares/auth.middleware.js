@@ -15,8 +15,15 @@ module.exports = (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, config.get('jwtSecret'))
+
+    if (decoded.roles != 'ADMIN') {
+      return res.status(401).json({ message: 'You have not permission' })
+
+    }
+
     req.user = decoded
     next()
+
 
   } catch (e) {
     res.status(401).json({ message: 'You are not autorized' })

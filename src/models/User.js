@@ -10,7 +10,11 @@ const schema = new Schema({
    password: {
       type: String,
       requires: true
-   }
+   },
+   roles:{
+		type: String,
+		ref: 'Role'
+	}
 },{
 	timestamps: true
 })

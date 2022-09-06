@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 const storageName = 'userData';
@@ -6,14 +7,15 @@ const storageName = 'userData';
 export const useAuth = () => {
    const [token, setToken] = useState('not detected');
    const [userId, setUserId] = useState(null);
+   const location = useLocation();
 
    const login = useCallback((jwtToken, id) => {
       setToken(jwtToken);
       setUserId(id);
-
+      const expiresTime = new Date(new Date().getTime() + 58 * 60 * 1000);
       Cookies.set(storageName, JSON.stringify({
          userId: id, token: jwtToken
-      }) , { expires: (1 / 1440) * 50})
+      }) , { expires: expiresTime})
    }, []);
 
    const logout = useCallback(() => { 
@@ -31,7 +33,7 @@ export const useAuth = () => {
       }else{
          setToken(null);
       }
-   }, [login])
+   }, [login, location])
 
    return { login, logout, token, userId }
 }

@@ -31,8 +31,7 @@ function ImageUpload({ upload, data = {}, label = 'upload image' }) {
       const res = await fetch('api/upload/image', {
          method: 'POST',
          headers: {
-            Authorization: `Bearer ${token}`,
-            'Accept': 'application/json'
+            Authorization: `Bearer ${token}`
          },
          body: data
       })
