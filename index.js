@@ -10,6 +10,7 @@ require('dotenv').config();
 const auth = require('./src/routes/auth.routes')
 const content = require('./src/routes/content.routes')
 const upload = require('./src/routes/upload.routes')
+const data = require('./src/routes/data.routes')
 
 const app = express();
 app.use(express.json({ extended: true }))
@@ -21,6 +22,7 @@ const PORT = process.env.PORT || 5000;
 app.use('/api/content', content);
 app.use('/api/upload', upload);
 app.use('/api/auth', auth);
+app.use('/api/data', data);
 
 
 
