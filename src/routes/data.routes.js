@@ -18,15 +18,15 @@ router.get('/articles' ,   ArticleController.index);
 router.get('/articles/:id' ,   ArticleController.findOne);
 
 //pages
-router.get('/pages' , AuthMiddleware,  PageController.index);
+router.get('/pages' ,  PageController.index);
 router.get('/pages/:slug' ,   PageController.findOne);
 
 //glossaries
-router.get('/glossaries' , AuthMiddleware,  GlossaryController.index);
+router.get('/glossaries' ,  GlossaryController.index);
 router.get('/glossaries/:slug' ,   GlossaryController.findOne);
 
 //footer
-router.get('/footer' , AuthMiddleware,  FooterController.index);
+router.get('/footer' ,  FooterController.index);
 router.get('/footer/:slug' ,   FooterController.findOne);
 
 //taxonomies
