@@ -15,7 +15,7 @@ const LanguageController = new TaxonomiesController('Language');
 
 //articles
 router.get('/articles' ,   ArticleController.index);
-router.get('/articles/:id' ,   ArticleController.findOne);
+router.get('/articles/:slug' ,   ArticleController.findOne);
 
 //pages
 router.get('/pages' ,  PageController.index);

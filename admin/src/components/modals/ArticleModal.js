@@ -29,7 +29,7 @@ function ArticleModal({ open = false, onClose, taxonomies, article, isCreate }) 
       formData.title = e.target.title.value;
       formData.category = e.target.category.value || null;
       formData.language = e.target.language.value || null;
-      formData.tag = e.target.tag.length ? Array.from(e.target.tag).map(item => item.value) : null;
+      formData.tag = e.target.tag.length ? Array.from(e.target.tag).map(item => item.value) : e.target.tag.value ? e.target.tag.value : null ;
       formData.level = e.target.level.value || null;
       formData.duration = e.target.duration.value;
       // formData.editor = myEditor.getData();
@@ -39,7 +39,7 @@ function ArticleModal({ open = false, onClose, taxonomies, article, isCreate }) 
       formData.image = image;
 
       const method = isCreate ? 'POST' : 'PUT';
-      const path = isCreate ? '/api/content/articles' : '/api/content/articles/' + article._id;
+      const path = isCreate ? '/api/content/articles' : '/api/content/articles/' + article.slug;
 
       const result = await request(path, method, formData, {
          Authorization: `Bearer ${token}`

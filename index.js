@@ -25,7 +25,6 @@ app.use('/api/auth', auth);
 app.use('/api/data', data);
 
 
-
 app.get("/api/test", (req, res) => {
    res.send("test");
 });

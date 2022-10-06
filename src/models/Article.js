@@ -1,7 +1,9 @@
 const {Schema, model, mongoose} = require('mongoose');
 const slug = require('mongoose-slug-updater');
+const mongoosePaginate = require('mongoose-paginate');
 
 mongoose.plugin(slug); 
+mongoose.plugin(mongoosePaginate);
 
 const schema = new Schema({
    title: {

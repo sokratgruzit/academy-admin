@@ -6,6 +6,7 @@ const ArticleController = require('../controllers/article.controller');
 const PageController = require('../controllers/page.controller');
 const GlossaryController = require('../controllers/glossary.controller');
 const FooterController = require('../controllers/footer.controller');
+const HeaderController = require('../controllers/header.controller');
 const TaxonomiesController = require('../controllers/taxonomies.controller');
 
 const CategoryController = new TaxonomiesController('Category');
@@ -16,10 +17,10 @@ const LanguageController = new TaxonomiesController('Language');
 
 //articles
 router.get('/articles' , AuthMiddleware,  ArticleController.index);
-router.get('/articles/:id' , AuthMiddleware ,  ArticleController.findOne);
+router.get('/articles/:slug' , AuthMiddleware ,  ArticleController.findOne);
 router.post('/articles' , AuthMiddleware  , ArticleController.create);
-router.put('/articles/:id', AuthMiddleware , ArticleController.update);
-router.delete('/articles/:id', AuthMiddleware , ArticleController.destroy);
+router.put('/articles/:slug', AuthMiddleware , ArticleController.update);
+router.delete('/articles/:slug', AuthMiddleware , ArticleController.destroy);
 
 //pages
 router.get('/pages' , AuthMiddleware,  PageController.index);
@@ -41,6 +42,13 @@ router.get('/footer/:slug' , AuthMiddleware ,  FooterController.findOne);
 router.post('/footer' , AuthMiddleware  , FooterController.create);
 router.put('/footer/:slug', AuthMiddleware , FooterController.update);
 router.delete('/footer/:slug', AuthMiddleware , FooterController.destroy);
+
+//header
+router.get('/header' , AuthMiddleware,  HeaderController.index);
+router.get('/header/:slug' , AuthMiddleware ,  HeaderController.findOne);
+router.post('/header' , AuthMiddleware  , HeaderController.create);
+router.put('/header/:slug', AuthMiddleware , HeaderController.update);
+router.delete('/header/:slug', AuthMiddleware , HeaderController.destroy);
 
 //taxonomies
 
