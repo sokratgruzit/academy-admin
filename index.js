@@ -28,17 +28,12 @@ app.use('/api/data', data);
 app.get("/api/test", (req, res) => {
    res.send("test");
 });
-
-app.use(express.static(path.join(__dirname, "./admin/build")));
+const root = require('path').join(__dirname, 'admin', 'build')
+app.use(express.static(root));
 
  app.get("*", function (_, res) {
    res.sendFile(
-     path.join(__dirname, "./admin/build/index.html"),
-     function (err) {
-       if (err) {
-         res.status(500).send(err);
-       }
-     } 
+      'index.html', { root }
    );
  }); 
 
