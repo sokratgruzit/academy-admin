@@ -32,8 +32,7 @@ function ArticleModal({ open = false, onClose, taxonomies, article, isCreate }) 
       formData.tag = e.target.tag.length ? Array.from(e.target.tag).map(item => item.value) : e.target.tag.value ? e.target.tag.value : null ;
       formData.level = e.target.level.value || null;
       formData.duration = e.target.duration.value;
-      // formData.editor = myEditor.getData();
-      formData.editor = e.target.editor.value;
+      formData.editor = myEditor.getData();
 
       const image = await upload.current();
       formData.image = image;
@@ -95,13 +94,8 @@ function ArticleModal({ open = false, onClose, taxonomies, article, isCreate }) 
                name="duration" defaultValue={article.duration || ''}
                label="duration"
                placeholder="enter duration" />
-            {/* <BaseEditor data={article.editor} setMyEditor={setMyEditor} id="articleEditor"/> */}
-            <BaseInput
-               type="text"
-               id="editor"
-               name="editor" defaultValue={article.editor || ''}
-               label="temporary editor"
-               placeholder="enter article html" />
+            <BaseEditor data={article.editor} setMyEditor={setMyEditor} id="articleEditor"/>
+
             <ImageUpload upload={upload} data={article.image} label="article image" />
             <button className='btn' type="submit"> submit</button>
          </form>

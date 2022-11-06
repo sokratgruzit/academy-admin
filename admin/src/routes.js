@@ -6,6 +6,7 @@ import Footer from './pages/Footer';
 import Glossary from './pages/Glossary';
 import Pages from './pages/Pages';
 import Taxonomies from './pages/Taxonomies';
+import BecomeInstructor from './pages/BecomeInstructor';
 
 export const useRoutes = (isAuthenticated) => {
    if (isAuthenticated) {
@@ -17,6 +18,7 @@ export const useRoutes = (isAuthenticated) => {
                <Route path='pages' element={< Pages />}></Route>
                <Route path='glossaries' element={< Glossary />}></Route>
                <Route path='footer' element={< Footer />}></Route>
+               <Route path='become-instructor' element={< BecomeInstructor />}></Route>
                <Route
                   path="*"
                   element={<Navigate to="/" replace />}

@@ -11,7 +11,7 @@ function PagesModal({ open = false, onClose, page, isCreate }) {
    const { request } = useHttp();
    const [myEditor, setMyEditor] = useState(null);
 
-
+ 
    const submitHandler = async (e) => {
       e.preventDefault();
 

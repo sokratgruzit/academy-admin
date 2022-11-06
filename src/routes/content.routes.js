@@ -4,6 +4,7 @@ const router = Router();
 const AuthMiddleware = require('../middlewares/auth.middleware');
 const ArticleController = require('../controllers/article.controller');
 const PageController = require('../controllers/page.controller');
+const BecomeInstructorController = require('../controllers/become-instructor.controller');
 const GlossaryController = require('../controllers/glossary.controller');
 const FooterController = require('../controllers/footer.controller');
 const HeaderController = require('../controllers/header.controller');
@@ -28,6 +29,11 @@ router.get('/pages/:slug' , AuthMiddleware ,  PageController.findOne);
 router.post('/pages' , AuthMiddleware  , PageController.create);
 router.put('/pages/:slug', AuthMiddleware , PageController.update);
 router.delete('/pages/:slug', AuthMiddleware , PageController.destroy);
+
+//become an instructor
+router.get('/become-instructor' , AuthMiddleware,  BecomeInstructorController.index);
+router.put('/become-instructor/', AuthMiddleware , BecomeInstructorController.update);
+
 
 //glossaries
 router.get('/glossaries' , AuthMiddleware,  GlossaryController.index);
