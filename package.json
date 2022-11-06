@@ -21,7 +21,6 @@
   "bugs": {
     "url": "https://github.com/sokratgruzit/react-academy/issues"
   },
-  "homepage": "https://github.com/sokratgruzit/react-academy#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
