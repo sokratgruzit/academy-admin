@@ -1,7 +1,7 @@
 {
   "name": "admin",
   "version": "0.1.0",
-  "homepage": "https://academy-admin.vercel.app/",
+  "homepage": "https://academy-admin.vercel.app",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^35.0.1",

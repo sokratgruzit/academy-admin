@@ -31,7 +31,7 @@ app.get("/api/test", (req, res) => {
 const root = require('path').join(__dirname, 'admin', 'build')
 app.use(express.static(root));
 
- app.get("*", function (_, res) {
+ app.get("*", function (req, res) {
    res.sendFile(
       'index.html', { root }
    );
