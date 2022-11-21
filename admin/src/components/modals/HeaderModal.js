@@ -7,7 +7,7 @@ import BaseSelect from '../UI/BaseSelect';
 import Modal from './Modal';
 
 
-function FooterModal({ open = false, onClose, link, isCreate }) {
+function HeaderModal({ open = false, onClose, link, isCreate }) {
    const { token } = useContext(AuthContext);
    const { request } = useHttp();
    const [row] = useState([
@@ -39,7 +39,7 @@ function FooterModal({ open = false, onClose, link, isCreate }) {
 
       let formData = {};
       formData.title = e.target.title.value;
-      formData.row = e.target.row.value || 1;
+      // formData.row = e.target.row.value || 1;
       formData.target = e.target.target.checked;
       formData.external = e.target.external.checked;
       formData.url = e.target.url.value;
@@ -48,7 +48,7 @@ function FooterModal({ open = false, onClose, link, isCreate }) {
 
 
       const method = isCreate ? 'POST' : 'PUT';
-      const path = isCreate ? '/api/content/footer' : '/api/content/footer/' + link.slug;
+      const path = isCreate ? '/api/content/header' : '/api/content/header/' + link.slug;
 
       const result = await request(path, method, formData, {
          Authorization: `Bearer ${token}`
@@ -61,16 +61,16 @@ function FooterModal({ open = false, onClose, link, isCreate }) {
    }, [])
 
    return (
-      <Modal title='Footer' onClose={onClose} open={open}>
+      <Modal title='Header' onClose={onClose} open={open}>
          <form onSubmit={submitHandler} className="form-list">
             <BaseInput id='title' label="title" defaultValue={link.title} name="title" placeholder="enter title" />
-            <BaseSelect name="row"
+            {/* <BaseSelect name="row"
                options={row}
                placeholder='select row'
                defaultValue={link.row ? {
                   value: link.row,
                   label: link.row
-               } : ''} />
+               } : ''} /> */}
             <BaseCheckox name="target" id="target" label="target value" defaultChecked={link.target}/>
             <BaseCheckox id="external" name="external" defaultChecked={link.external} label="external value"/>
             <BaseInput name="url" id="url" label="url" placeholder="enter url" defaultValue={link.url} />
@@ -94,4 +94,4 @@ function FooterModal({ open = false, onClose, link, isCreate }) {
 
 }
 
-export default FooterModal;
+export default HeaderModal;

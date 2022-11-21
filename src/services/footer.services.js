@@ -15,13 +15,13 @@ async function findOne(slug){
 async function create(body) {
    let result = new Footer(body);
    result = await result.save();
-   return {result};
+   return {result}; 
 }
 
 
 async function update(slug, body){
    const result = await Footer.findOne({slug});
-   await result.updateOne(body);
+   await result.updateOne(body); 
 
    return {
       message: 'Footer successuly updated'

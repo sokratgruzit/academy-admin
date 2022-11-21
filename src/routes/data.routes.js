@@ -5,6 +5,7 @@ const ArticleController = require('../controllers/article.controller');
 const PageController = require('../controllers/page.controller');
 const GlossaryController = require('../controllers/glossary.controller');
 const FooterController = require('../controllers/footer.controller');
+const HeaderController = require('../controllers/header.controller');
 const BecomeInstructorController = require('../controllers/become-instructor.controller'); 
 const TaxonomiesController = require('../controllers/taxonomies.controller');
 
@@ -29,6 +30,10 @@ router.get('/glossaries/:slug' ,   GlossaryController.findOne);
 //footer
 router.get('/footer' ,  FooterController.index);
 router.get('/footer/:slug' ,   FooterController.findOne);
+
+//header
+router.get('/header' ,  HeaderController.index);
+router.get('/header/:slug' ,   HeaderController.findOne);
 
 //become instructor
 router.get('/become-instructor' ,  BecomeInstructorController.index);
