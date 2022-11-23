@@ -21,7 +21,6 @@ async function index(category, level, tag, limit, page, id_not, language){
 }
 
 async function findOne(slug){
-   console.log(slug)
    const result = await Article.findOne({slug}); 
    return {result};
 }   
