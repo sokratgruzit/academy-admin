@@ -13,7 +13,7 @@ async function index(req, res) {
 
 async function findOne(req, res){ 
    try{ 
-      let result = await article.findOne(req.params.slug);
+      let result = await article.findOne(req.params.slug); 
       res.status(200).json(result);
    }catch(e){ 
       console.log(e.message);
