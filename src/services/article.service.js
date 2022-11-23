@@ -16,12 +16,12 @@ async function index(category, level, tag, limit, page, id_not, language){
    tag ? query.tag = { $in : tag} : '';
    id_not ? query._id = {$ne: id_not} : '';
       
-   const result = await Article.paginate(query, options);   
+   const result = await Article.paginate(query, options);    
    return result;
 }
 
 async function findOne(slug){
-   const result = await Article.findOne({slug}); 
+   const result = await Article.findOne({slug}).populate(['category', 'level', 'tag', 'language']); 
    return {result};
 }   
 
