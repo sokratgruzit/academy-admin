@@ -2,6 +2,7 @@
   "name": "academy",
   "version": "1.0.0",
   "description": "core academy",
+  "homepage": "https://academy-admin.vercel.app/",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
