@@ -7,7 +7,7 @@ function BaseSelect({ name, options, getOptionLabel, getOptionValue, defaultValu
          classNamePrefix="base-select"
          name={name}
          options={options}
-         placeholder={placeholder}
+         placeholder={placeholder} 
          getOptionLabel={getOptionLabel}
          getOptionValue={getOptionValue}
          defaultValue={defaultValue}

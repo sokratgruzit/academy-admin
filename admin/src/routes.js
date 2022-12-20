@@ -8,6 +8,7 @@ import Glossary from './pages/Glossary';
 import Pages from './pages/Pages';
 import Taxonomies from './pages/Taxonomies';
 import BecomeInstructor from './pages/BecomeInstructor';
+import QuestionBank from './pages/QuestionBank';
 
 export const useRoutes = (isAuthenticated) => {
    if (isAuthenticated) {
@@ -21,6 +22,7 @@ export const useRoutes = (isAuthenticated) => {
                <Route path='footer' element={< Footer />}></Route>
                <Route path='header' element={< Header />}></Route>
                <Route path='become-instructor' element={< BecomeInstructor />}></Route>
+               <Route path='question-bank' element={< QuestionBank />}></Route>
                <Route
                   path="*"
                   element={<Navigate to="/" replace />}

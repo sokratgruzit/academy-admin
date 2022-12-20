@@ -11,6 +11,7 @@ function Sidebar() {
          <NavLink className='link' to="become-instructor">Become instructor</NavLink>
          <NavLink className='link' to="footer">Footer</NavLink>
          <NavLink className='link' to="header">Header</NavLink>
+         <NavLink className='link' to="question-bank">Question Bank</NavLink>
       </div>
    )
 }

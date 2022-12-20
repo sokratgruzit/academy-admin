@@ -9,6 +9,8 @@ const GlossaryController = require('../controllers/glossary.controller');
 const FooterController = require('../controllers/footer.controller');
 const HeaderController = require('../controllers/header.controller');
 const TaxonomiesController = require('../controllers/taxonomies.controller');
+const QuestionBankController = require('../controllers/question-bank.controller');
+const QuizController = require('../controllers/quiz.controller');
 
 const CategoryController = new TaxonomiesController('Category');
 const LevelController = new TaxonomiesController('Level');
@@ -83,7 +85,19 @@ router.delete('/tag/:id' , AuthMiddleware  , TagController.destroy);
 router.delete('/level/:id' , AuthMiddleware  , LevelController.destroy);
 router.delete('/language/:id' , AuthMiddleware  , LanguageController.destroy);
 
+//question bank
+router.get('/question-bank' , AuthMiddleware,  QuestionBankController.index);
+router.get('/question-bank/:slug' , AuthMiddleware ,  QuestionBankController.findOne);
+router.post('/question-bank' , AuthMiddleware  , QuestionBankController.create);
+router.put('/question-bank/:slug', AuthMiddleware , QuestionBankController.update);
+router.delete('/question-bank/:slug', AuthMiddleware , QuestionBankController.destroy);
 
+//question bank
+router.get('/question-bank' , AuthMiddleware,  QuizController.index);
+router.get('/question-bank/:slug' , AuthMiddleware ,  QuizController.findOne);
+router.post('/question-bank' , AuthMiddleware  , QuizController.create);
+router.put('/question-bank/:slug', AuthMiddleware , QuizController.update);
+router.delete('/question-bank/:slug', AuthMiddleware , QuizController.destroy);
 
  
 module.exports = router; 
