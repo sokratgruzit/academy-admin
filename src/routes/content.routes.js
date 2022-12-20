@@ -98,7 +98,7 @@ router.get('/question-bank/:slug' , AuthMiddleware ,  QuizController.findOne);
 router.post('/question-bank' , AuthMiddleware  , QuizController.create);
 router.put('/question-bank/:slug', AuthMiddleware , QuizController.update);
 router.delete('/question-bank/:slug', AuthMiddleware , QuizController.destroy);
-
+ 
  
 module.exports = router; 
   

@@ -24,7 +24,7 @@ const schema = new Schema({
 	},
 	answers: {
 		type: Array,
-		default: [{
+		default: [{ 
 			title: String,
 			value: Boolean
 		}]

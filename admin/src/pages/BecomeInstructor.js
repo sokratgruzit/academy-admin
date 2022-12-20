@@ -151,7 +151,7 @@ function BecomeInstructor() {
                      ) : ''}
                   </div>
 
-                  <br />
+                  <br /> 
                   <br />
                   <div className="add_info">
                      <BaseInput
