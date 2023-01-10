@@ -12,6 +12,7 @@ function Sidebar() {
          <NavLink className='link' to="footer">Footer</NavLink>
          <NavLink className='link' to="header">Header</NavLink>
          <NavLink className='link' to="question-bank">Question Bank</NavLink>
+         <NavLink className='link' to="quiz">Quiz</NavLink>
       </div>
    )
 }

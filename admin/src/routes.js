@@ -9,6 +9,7 @@ import Pages from './pages/Pages';
 import Taxonomies from './pages/Taxonomies';
 import BecomeInstructor from './pages/BecomeInstructor';
 import QuestionBank from './pages/QuestionBank';
+import Quiz from './pages/Quiz';
 
 export const useRoutes = (isAuthenticated) => {
    if (isAuthenticated) {
@@ -23,6 +24,7 @@ export const useRoutes = (isAuthenticated) => {
                <Route path='header' element={< Header />}></Route>
                <Route path='become-instructor' element={< BecomeInstructor />}></Route>
                <Route path='question-bank' element={< QuestionBank />}></Route>
+               <Route path='quiz' element={< Quiz />}></Route>
                <Route
                   path="*"
                   element={<Navigate to="/" replace />}

@@ -91,13 +91,13 @@ router.get('/question-bank/:slug' , AuthMiddleware ,  QuestionBankController.fin
 router.post('/question-bank' , AuthMiddleware  , QuestionBankController.create);
 router.put('/question-bank/:slug', AuthMiddleware , QuestionBankController.update);
 router.delete('/question-bank/:slug', AuthMiddleware , QuestionBankController.destroy);
-
+ 
 //question bank
-router.get('/question-bank' , AuthMiddleware,  QuizController.index);
-router.get('/question-bank/:slug' , AuthMiddleware ,  QuizController.findOne);
-router.post('/question-bank' , AuthMiddleware  , QuizController.create);
-router.put('/question-bank/:slug', AuthMiddleware , QuizController.update);
-router.delete('/question-bank/:slug', AuthMiddleware , QuizController.destroy);
+router.get('/quiz' , AuthMiddleware,  QuizController.index);
+router.get('/quiz/:slug' , AuthMiddleware ,  QuizController.findOne);
+router.post('/quiz' , AuthMiddleware  , QuizController.create);
+router.put('/quiz/:slug', AuthMiddleware , QuizController.update);
+router.delete('/quiz/:slug', AuthMiddleware , QuizController.destroy);
  
  
 module.exports = router; 

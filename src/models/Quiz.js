@@ -23,16 +23,13 @@ const schema = new Schema({
 	},
    category: { type: Schema.Types.ObjectId, ref: 'Category' },
    level: { type: Schema.Types.ObjectId, ref: 'Level' },
-	question: {
-		type: String
-	},
-	structure: {
+	structure: { 
 		type: Array,
 		default: [{
 			title: String,
 			question: { type: Schema.Types.ObjectId, ref: 'QuestionBank' },
 		}]
-	},
+	}, 
    editor: {
       type: String
    }

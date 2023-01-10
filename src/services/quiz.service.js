@@ -1,7 +1,7 @@
 const Quiz = require('../models/Quiz');
 
 async function index(){
-   const result = await Quiz.find();
+   const result = await Quiz.find().populate(['category', 'level']).populate({path:'structure.question', model:'QuestionBank'});
    return {result};
 }
 
@@ -10,7 +10,7 @@ async function findOne(slug){
    return {result};
 }    
 
-async function create(body) {
+async function create(body) { 
    let result = new Quiz(body);
    result = await result.save();
    return {result};
