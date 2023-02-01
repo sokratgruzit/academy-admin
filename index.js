@@ -12,6 +12,7 @@ const content = require('./src/routes/content.routes')
 const upload = require('./src/routes/upload.routes')
 const data = require('./src/routes/data.routes')
 
+//Academy server
 const app = express();
 app.use(express.json({ extended: true }))
 app.use(cors())
