@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
-import PagesModal from "../components/modals/PagesModal";
-import { AuthContext } from "../context/AuthContext";
-import { useHttp } from "../hooks/http.hook";
+import PagesModal from "../modals/PagesModal";
+import { AuthContext } from "../../context/AuthContext";
+import { useHttp } from "../../hooks/http.hook";
 
 function Pages() {
    const [isOpen, setIsOpen] = useState(false);

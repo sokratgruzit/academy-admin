@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
-import TaxonomiesModal from "../components/modals/TaxonomiesModal";
-import { AuthContext } from "../context/AuthContext";
-import { useHttp } from "../hooks/http.hook";
+import TaxonomiesModal from "../modals/TaxonomiesModal";
+import { AuthContext } from "../../context/AuthContext";
+import { useHttp } from "../../hooks/http.hook";
 
 
 function Taxonomies() {

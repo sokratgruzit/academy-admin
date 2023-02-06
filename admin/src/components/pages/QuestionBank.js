@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect } from "react";
-import QuestionModal from "../components/modals/QuestionModal";
-import Pagination from "../components/UI/Pagination";
-import { AuthContext } from "../context/AuthContext";
-import { useHttp } from "../hooks/http.hook";
+import QuestionModal from "../modals/QuestionModal";
+import Pagination from "../UI/Pagination";
+import { AuthContext } from "../../context/AuthContext";
+import { useHttp } from "../../hooks/http.hook";
 
 function QuestionBank() {
    const [isOpen, setIsOpen] = useState(false);

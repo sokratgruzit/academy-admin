@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { useHttp } from "../hooks/http.hook";
-import BaseInput from '../components/UI/BaseInput'
+import { AuthContext } from "../../context/AuthContext";
+import { useHttp } from "../../hooks/http.hook";
+import BaseInput from '../UI/BaseInput'
 
 function BecomeInstructor() {
    const { token } = useContext(AuthContext);

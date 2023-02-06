@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect } from "react";
-import ArticleModal from "../components/modals/ArticleModal";
-import Pagination from "../components/UI/Pagination";
-import { AuthContext } from "../context/AuthContext";
-import { useHttp } from "../hooks/http.hook";
+import ArticleModal from "../modals/ArticleModal";
+import Pagination from "../UI/Pagination";
+import { AuthContext } from "../../context/AuthContext";
+import { useHttp } from "../../hooks/http.hook";
 
 function Article() {
    const [isOpen, setIsOpen] = useState(false);

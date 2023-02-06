@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
-import FooterModal from "../components/modals/FooterModal";
-import { AuthContext } from "../context/AuthContext";
-import { useHttp } from "../hooks/http.hook";
+import FooterModal from "../modals/FooterModal";
+import { AuthContext } from "../../context/AuthContext";
+import { useHttp } from "../../hooks/http.hook";
 
 function Footer() {
    const [isOpen, setIsOpen] = useState(false);

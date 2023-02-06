@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect } from "react";
-import QuizModal from "../components/modals/QuizModal";
-import Pagination from "../components/UI/Pagination";
-import { AuthContext } from "../context/AuthContext";
-import { useHttp } from "../hooks/http.hook";
+import QuizModal from "../modals/QuizModal";
+import Pagination from "../UI/Pagination";
+import { AuthContext } from "../../context/AuthContext";
+import { useHttp } from "../../hooks/http.hook";
 
 function Quiz() {
    const [isOpen, setIsOpen] = useState(false);

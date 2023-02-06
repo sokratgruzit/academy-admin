@@ -1,5 +1,8 @@
 import { NavLink } from "react-router-dom";
 
+import Courses from "../pages/Courses";
+import Expand from "../UI/Expand";
+
 function Sidebar() {
    return (
       <div className="border sidebar">
@@ -13,6 +16,9 @@ function Sidebar() {
          <NavLink className='link' to="header">Header</NavLink>
          <NavLink className='link' to="question-bank">Question Bank</NavLink>
          <NavLink className='link' to="quiz">Quiz</NavLink>
+         <Expand>
+            <Courses />
+         </Expand>
       </div>
    )
 }
