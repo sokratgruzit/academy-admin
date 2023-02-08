@@ -3,7 +3,6 @@ import TaxonomiesModal from "../modals/TaxonomiesModal";
 import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/http.hook";
 
-
 function Taxonomies() {
    const { token } = useContext(AuthContext);
    const { request } = useHttp();
@@ -14,10 +13,10 @@ function Taxonomies() {
    const [isCreate, setIsCreate] = useState(true)
 
    const getTaxonomies = async (id) => {
-      const res = await request('/api/content/' + id, 'GET', null, {
-         Authorization: `Bearer ${token}`
-      });
-      settaxonomies(res);
+         const res = await request('/api/content/' + id, 'GET', null, {
+            Authorization: `Bearer ${token}`
+         });
+         settaxonomies(res);
    }
 
    const tabClickHanlder = (id) => {

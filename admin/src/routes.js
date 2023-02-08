@@ -10,8 +10,8 @@ import Taxonomies from './components/pages/Taxonomies';
 import BecomeInstructor from './components/pages/BecomeInstructor';
 import QuestionBank from './components/pages/QuestionBank';
 import Quiz from './components/pages/Quiz';
-import Tags from './components/pages/Courses/Tags';
-import Categories from './components/pages/Courses/Categories';
+import Tags from './components/pages/Courses/tags/Tags';
+import Categories from './components/pages/Courses/categories/Categories';
 
 export const useRoutes = (isAuthenticated) => {
    if (isAuthenticated) {
@@ -27,8 +27,10 @@ export const useRoutes = (isAuthenticated) => {
                <Route path='become-instructor' element={<BecomeInstructor />}></Route>
                <Route path='question-bank' element={<QuestionBank />}></Route>
                <Route path='quiz' element={<Quiz />}></Route>
-               <Route path='course/tags' element={<Tags />}></Route>
-               <Route path='course/categories' element={<Categories />}></Route>
+               <Route path='course'>
+                  <Route path='tags' element={<Tags />}></Route>
+                  <Route path='categories' element={<Categories />}></Route>
+               </Route>
                <Route
                   path="*"
                   element={<Navigate to="/" replace />}
