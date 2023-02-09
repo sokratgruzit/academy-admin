@@ -1,16 +1,22 @@
 import { useState, useContext, useEffect } from "react";
-import CategoriesModal from "../../../modals/CategoriesModal";
-import { AuthContext } from "../../../../context/AuthContext";
 import { useHttp } from "../../../../hooks/http.hook";
+import { AuthContext } from "../../../../context/AuthContext";
+
+import CategoriesModal from "../../../modals/CategoriesModal";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 // styles
 import styles from './Categories.module.css';
 
-function Categories() {
+const defaultFormData = {
+    title: '',
+    id: ''
+};
+
+const Categories = () => {
     const [data, setData] = useState([]);
-    const [formData, setFormData] = useState({
-        title: '',
-    });
+    const [itemList, setItemList] = useState([]);
+    const [formData, setFormData] = useState(defaultFormData);
     const [edit, setEdit] = useState(false);
     const [modalActive, setModalActive] = useState(false);
     const { token } = useContext(AuthContext);
@@ -19,30 +25,52 @@ function Categories() {
     useEffect(() => {
         request('/api/content/' + 'category', 'GET', null, {
             Authorization: `Bearer ${token}`
-        }).then((res) => setData(res))
-    }, []);
+        }).then((res) => {
+            setData(res);
+            setItemList(res);
+        });
+    }, [data]);
 
-    console.log(formData);
+    useEffect(() => {
+        // console.log('list changed')
+    }, [itemList]);
 
-    const handleChange = (e, name) => {
+    const handleClose = () => {
+        setModalActive(false);
+        setFormData(defaultFormData);
+    };
+
+    const handleModalInputChange = (e, name) => {
         setFormData(prev => ({ ...prev, [name]: e.target.value }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleModalSubmit = async (e) => {
         e.preventDefault();
-        await request('/api/content/category', edit ? 'PUT' : 'POST', formData, {
+        await request(`/api/content/category${edit ? '/' + formData.id : ''}`, edit ? 'PUT' : 'POST', { title: formData.title }, {
             Authorization: `Bearer ${token}`
         });
+        handleClose();
+    };
+ 
+    const handleRemove = async (id) => {
+       await request(`/api/content/category/${id}`, 'delete', null, {
+          Authorization: `Bearer ${token}`
+       });
     };
 
- 
-    // const removeHandler = async () => {
-    //    const result = await request('/api/content/' + 'category' + '/' + 'category', 'delete', null, {
-    //       Authorization: `Bearer ${token}`
-    //    });
- 
-    //    getTaxonomies('category');
-    // }
+    const handleEdit = (item) => {
+        setFormData({ id: item._id, title: item.slug });
+        setEdit(true);
+        setModalActive(true);
+    };
+
+    const handleDrop = (droppedItem) => {
+        if (!droppedItem.destination) return;
+        var updatedList = [...itemList];
+        const [reorderedItem] = updatedList.splice(droppedItem.source.index, 1);
+        updatedList.splice(droppedItem.destination.index, 0, reorderedItem);
+        setItemList(updatedList);
+    };
  
     return (
         <>
@@ -55,34 +83,52 @@ function Categories() {
                     }}>Add Category</button>
                 </div>
 
-                <div className={styles.categoriesList}>
-                    {data?.map((item) => {
-                        return (
-                            <div className={styles.categoriesListItem} key={item._id}>
-                                <span>{item.slug}</span>
-                                <div className={styles.categoriesButtons}>
-                                    <button onClick={() => {
-                                        console.log(item);
-                                        setEdit(true);
-                                        setModalActive(true);
-                                    }}>Edit</button>
-                                    <button onClick={() => console.log(item._id)}>Remove</button>
-                                </div>
+                <DragDropContext onDragEnd={handleDrop}>
+                    <Droppable droppableId="draggable-list">
+                        {(provided) => ( 
+                            <div 
+                                className={styles.categoriesList}
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
+                            >
+                                {itemList?.map((item, index) => (
+                                    <Draggable 
+                                        key={item.slug} 
+                                          draggableId={item.slug} 
+                                        index={index}
+                                    >
+                                        {(provided, snapshot) => (
+                                            <div 
+                                                className={styles.categoriesListItem} 
+                                                ref={provided.innerRef}
+                                                {...provided.dragHandleProps}
+                                                {...provided.draggableProps}
+                                            >
+                                                <span>{item.slug}</span>
+                                                <div className={styles.categoriesButtons}>
+                                                    <button onClick={() => handleEdit(item)}>Edit</button>
+                                                    <button onClick={() => handleRemove(item._id)}>Remove</button>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                ))}
+                                {provided.placeholder}
                             </div>
-                        )
-                    })}
-                </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
             </div>
             <CategoriesModal
                 open={modalActive}
-                onClose={() => setModalActive(false)}
+                onClose={handleClose}
                 title={edit ? 'Edit Category' : 'Add New Category'}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-                // edit={edit}
+                handleChange={handleModalInputChange}
+                handleSubmit={handleModalSubmit}
+                formData={formData}
             />
      </>
     );
-}
+};
 
 export default Categories;

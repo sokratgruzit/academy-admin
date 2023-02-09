@@ -7,7 +7,8 @@ const CategoriesModal = ({
     onClose, 
     title,
     handleChange,
-    handleSubmit
+    handleSubmit,
+    formData
 }) => {
     return (
         <Modal open={open} onClose={onClose} title={title}>
@@ -16,7 +17,7 @@ const CategoriesModal = ({
                     type="text"
                     id="title"
                     name="title" 
-                    defaultValue={''}
+                    defaultValue={formData.title}
                     label="title"
                     placeholder="enter title" 
                     onChange={(e) => handleChange(e, 'title')}
