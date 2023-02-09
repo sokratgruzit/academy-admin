@@ -14,7 +14,6 @@ const defaultFormData = {
 };
 
 const Tags = () => {
-    const [data, setData] = useState([]);
     const [itemList, setItemList] = useState([]);
     const [formData, setFormData] = useState(defaultFormData);
     const [edit, setEdit] = useState(false);
@@ -27,13 +26,12 @@ const Tags = () => {
             Authorization: `Bearer ${token}`
         }).then((res) => {
             setItemList(res);
-            setData(res);
         })
-    }, [data]);
+    }, []);
 
     useEffect(() => {
-        // console.log('list changed')
-    }, [itemList]);
+        console.log('list changed')
+    }, [itemList])
 
     const handleClose = () => {
         setModalActive(false);

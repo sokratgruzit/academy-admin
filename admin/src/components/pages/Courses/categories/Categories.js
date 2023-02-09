@@ -14,7 +14,6 @@ const defaultFormData = {
 };
 
 const Categories = () => {
-    const [data, setData] = useState([]);
     const [itemList, setItemList] = useState([]);
     const [formData, setFormData] = useState(defaultFormData);
     const [edit, setEdit] = useState(false);
@@ -26,14 +25,13 @@ const Categories = () => {
         request('/api/content/' + 'category', 'GET', null, {
             Authorization: `Bearer ${token}`
         }).then((res) => {
-            setData(res);
             setItemList(res);
         });
-    }, [data]);
+    }, []);
 
     useEffect(() => {
-        // console.log('list changed')
-    }, [itemList]);
+        console.log('list changed')
+    }, [itemList])
 
     const handleClose = () => {
         setModalActive(false);
