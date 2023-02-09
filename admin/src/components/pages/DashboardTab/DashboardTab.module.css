@@ -1,0 +1,22 @@
+.info {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.charts {
+  display: flex;
+  width: 100%;
+}
+
+.overviewSection {
+  display: flex;
+}
+.donutsWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 34%;
+}
+
+.chart50w {
+  width: 50%;
+}

@@ -1,0 +1,24 @@
+.box {
+  display: flex;
+  padding: 21px 30px;
+  justify-content: space-between;
+  border: 1px solid #cccdcf;
+  border-radius: 4px;
+}
+
+.wrap {
+  flex: 0 0 25%;
+  max-width: 25%;
+  padding: 15px;
+}
+
+.title {
+  font-size: 16px;
+  line-height: 140%;
+  color: #00050f;
+}
+
+.subTitle {
+  font-size: 14px;
+  line-height: 140%;
+}
