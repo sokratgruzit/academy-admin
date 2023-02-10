@@ -1,3 +1,4 @@
+import BarChart from "./components/BarChart/BarChart";
 import DonutChart from "./components/DonutChart/DonutChart";
 import InfoItem from "./components/InfoItem/InfoItem";
 import LineChart from "./components/LineChart/LineChart";
@@ -31,8 +32,7 @@ function Courses() {
         />
       </div>
       <div className={styles.charts}>
-        <LineChart
-          opposite={true}
+        <BarChart
           className={styles.chart50w}
           title="Monthly Income Stats for 2023"
           categories={[
@@ -55,7 +55,6 @@ function Courses() {
           }}
         />
         <LineChart
-          opposite={true}
           className={styles.chart50w}
           title="Payment Statistics for February"
           categories={getDaysInMonth(new Date())}
@@ -89,13 +88,23 @@ function Courses() {
           ]}
         />
         <div className={styles.donutsWrapper}>
-          <DonutChart data={[44, 55]} labels={["Active", "Pending"]} />
-          <DonutChart data={[34, 59, 48]} labels={["Courses", "Quizzes", "Classes"]} />
+          <DonutChart
+            data={[44, 55]}
+            labels={["Active", "Pending"]}
+            title={"Status Overview of Topics"}
+          />
+          <DonutChart
+            data={[34, 59, 48]}
+            labels={["Courses", "Quizzes", "Classes"]}
+            title={"Overview of Topics"}
+          />
         </div>
       </div>
       <div>
-        <LineChart
-          title="Monthly Income Stats for 2023"
+        <BarChart
+          className={styles.chart100w}
+          type="bar"
+          title="Daily Wise Enroll Status for February"
           categories={[
             "Jan",
             "Feb",

@@ -64,3 +64,9 @@
 .trow span {
   word-break: break-all;
 }
+
+@media (max-width: 1400px) {
+  .mainBox {
+    width: 100%;
+  }
+}

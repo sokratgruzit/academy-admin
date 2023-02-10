@@ -6,10 +6,13 @@
 .charts {
   display: flex;
   width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .overviewSection {
   display: flex;
+  padding-left: 15px;
 }
 .donutsWrapper {
   display: flex;
@@ -19,4 +22,21 @@
 
 .chart50w {
   width: 50%;
+}
+
+@media (max-width: 1400px) {
+  .charts {
+    flex-direction: column;
+  }
+  .chart50w {
+    width: 100%;
+  }
+  .donutsWrapper {
+    flex-direction: row;
+    width: 100%;
+  }
+  .overviewSection {
+    flex-direction: column;
+    gap: 30px;
+  }
 }

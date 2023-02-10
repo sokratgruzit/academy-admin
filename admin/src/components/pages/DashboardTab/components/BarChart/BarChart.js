@@ -1,9 +1,9 @@
 import React from "react";
 // import ApexCharts from "apexcharts";
 import Chart from "react-apexcharts";
-import styles from "./LineChart.module.css";
+import styles from "./BarChart.module.css";
 
-const LineChart = ({ title, categories, data, className, opposite }) => {
+const BarChart = ({ title, categories, data, className, opposite }) => {
   const options = {
     title: {
       text: title,
@@ -21,7 +21,6 @@ const LineChart = ({ title, categories, data, className, opposite }) => {
         show: false,
       },
     },
-
     xaxis: {
       categories: categories,
       tooltip: {
@@ -42,20 +41,11 @@ const LineChart = ({ title, categories, data, className, opposite }) => {
       colors: ["#FF7152"],
       width: 2,
     },
-    markers: {
-      size: 0,
-      colors: "#FF7152",
-      strokeColors: "#FF7152",
-      strokeWidth: 15,
-      strokeOpacity: 0.6,
-      strokeDashArray: 0,
-      fillOpacity: 1,
-      hover: {
-        size: 5,
-      },
-    },
     dataLabels: {
       enabled: false,
+    },
+    fill: {
+      colors: ["#FF7152"],
     },
     noData: {
       text: "Loading...",
@@ -88,11 +78,11 @@ const LineChart = ({ title, categories, data, className, opposite }) => {
 
   return (
     <div className={`${styles.chartWrap} ${className}`}>
-      <div id="chart" className={`${styles.chart} dashboard-chart`}>
-        <Chart options={options} series={series} type={"line"} />
+      <div id="chart" className={`${styles.chart} dashboard-chart-bar`}>
+        <Chart options={options} series={series} type={"bar"} />
       </div>
     </div>
   );
 };
 
-export default LineChart;
+export default BarChart;
