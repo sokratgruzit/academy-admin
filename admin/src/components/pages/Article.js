@@ -97,7 +97,7 @@ function Article() {
                      console.log(article)
                      return (
                         <div className="list-item" key={article._id}>
-                           <img className="thumbnail" src={article.image.path} alt={article.image.alt} />
+                           <img className="thumbnail private" src={article.image.path} alt={article.image.alt} />
                            <span className="title">{article.slug}</span>
                            <div className="btns">
                               <button onClick={() => editHandler(article)}>Edit</button>
