@@ -6,35 +6,38 @@ import { useHttp } from "../../hooks/http.hook";
 
 function Article() {
    const [isOpen, setIsOpen] = useState(false);
-   const [taxonomies, settaxonomies] = useState({
+   const [taxonomies, setTaxonomies] = useState({
       category: null,
       tag: null,
       level: null,
       language: null
-   })
+   });
+
    const [articles, setArticles] = useState(null);
    const [article, setArticle] = useState({});
-   const [isCreate, setIsCreate] = useState(true)
+   const [isCreate, setIsCreate] = useState(true);
    const { token } = useContext(AuthContext);
    const { request } = useHttp();
-
-
 
    const getTaxomonies = async () => {
       const category = await request('/api/content/category', 'GET', null, {
          Authorization: `Bearer ${token}`
       });
+
       const tag = await request('/api/content/tag', 'GET', null, {
          Authorization: `Bearer ${token}`
       });
+
       const level = await request('/api/content/level', 'GET', null, {
          Authorization: `Bearer ${token}`
       });
+
       const language = await request('/api/content/language', 'GET', null, {
          Authorization: `Bearer ${token}`
       });
-      settaxonomies({ category, tag, level, language });
-   }
+
+      setTaxonomies({ category, tag, level, language });
+   };
 
    const getArticles = async (page) => {
       console.log(page)
@@ -43,42 +46,43 @@ function Article() {
       const articles = await request('/api/content/articles' + query , 'GET', null, {
          Authorization: `Bearer ${token}`
       });
+
       setArticles(articles);
-   }
+   };
 
    const removeHandler = async (slug) => {
       const result = await request('/api/content/articles/' + slug, 'delete', null, {
          Authorization: `Bearer ${token}`
       });
+
       getArticles();
-   }
+   };
 
    const editHandler = async (article) => {
       setIsCreate(false);
       setArticle(article);
       setIsOpen(true);
-   }
+   };
 
    const createHandler = () => {
       setIsCreate(true);
       setIsOpen(true);
-   }
+   };
 
    const closeHandler = () => {
       setIsOpen(false);
       getArticles();
       setArticle({});
-   }
+   };
 
    const pageHandler = (page) => {
       getArticles(page);
-   }
+   };
 
    useEffect(() => {
       getTaxomonies();
       getArticles();
-   }, [])
-
+   }, []);
 
    return (
       <div className="content-page article">
@@ -90,8 +94,10 @@ function Article() {
             <>
                <div className="list">
                   {articles.docs.map((article) => {
+                     console.log(article)
                      return (
                         <div className="list-item" key={article._id}>
+                           <img className="thumbnail" src={article.image.path} alt={article.image.alt} />
                            <span className="title">{article.slug}</span>
                            <div className="btns">
                               <button onClick={() => editHandler(article)}>Edit</button>

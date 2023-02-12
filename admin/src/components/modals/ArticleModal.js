@@ -26,6 +26,7 @@ function ArticleModal({ open = false, onClose, taxonomies, article, isCreate }) 
          duration: '',
          editor: ''
       };
+
       formData.title = e.target.title.value;
       formData.category = e.target.category.value || null;
       formData.language = e.target.language.value || null;
@@ -43,8 +44,9 @@ function ArticleModal({ open = false, onClose, taxonomies, article, isCreate }) 
       const result = await request(path, method, formData, {
          Authorization: `Bearer ${token}`
       });
+
       onClose();
-   }
+   };
 
    return (
       <Modal open={open} onClose={onClose} title="Article">
