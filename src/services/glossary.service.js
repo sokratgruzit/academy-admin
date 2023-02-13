@@ -1,7 +1,5 @@
 const Glossary = require('../models/Glossary');
 
-
-
 async function index(){
    const result = await Glossary.find();
    return {result};
