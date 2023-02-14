@@ -1,29 +1,30 @@
-
-@import './main.scss';
-@import './variables.scss';
-@import './style.scss';
+@import "./main.scss";
+@import "./variables.scss";
+@import "./style.scss";
 
 @font-face {
-   font-family: "Lack-Regular";
-   src: url("../fonts/Lack-Regular.eot");
-   src: url("../fonts/Lack-Regular.eot?#iefix") format("embedded-opentype"),
-      url("../fonts/Lack-Regular.svg#Lack-Regular") format("svg"), url("../fonts/Lack-Regular.ttf") format("truetype"),
-      url("../fonts/Lack-Regular.woff") format("woff"), url("../fonts/Lack-Regular.woff2") format("woff2");
-   font-weight: normal;
-   font-style: normal;
+  font-family: "Lack-Regular";
+  src: url("../fonts/Lack-Regular.eot");
+  src: url("../fonts/Lack-Regular.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/Lack-Regular.svg#Lack-Regular") format("svg"),
+    url("../fonts/Lack-Regular.ttf") format("truetype"),
+    url("../fonts/Lack-Regular.woff") format("woff"),
+    url("../fonts/Lack-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {
-   font-family: "Lack-Regular";
-   font-size: 16px;
-   color: $c-main;
-   box-sizing: border-box;
-   text-decoration: none;
+  font-family: "Lack-Regular";
+  font-size: 16px;
+  color: $c-main;
+  box-sizing: border-box;
+  text-decoration: none;
 }
 body {
-   margin: 0;
-   padding: 0;
-   background: linear-gradient(91.73deg, rgba(235, 237, 240, 0) 1.03%, #EBEDF0 100%);
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(91.73deg, rgba(235, 237, 240, 0) 1.03%, #ebedf0 100%);
 }
 ul,
 li,
@@ -38,22 +39,42 @@ h6,
 input,
 button,
 nav {
-   padding: 0;
-   margin: 0;
-   list-style: none;
-   font-weight: normal;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-weight: normal;
 }
 input,
 textarea {
-   outline: none;
-   box-shadow: none;
-   // -webkit-appearance: none;
-   // -moz-appearance: none;
-   // appearance: none;
+  outline: none;
+  box-shadow: none;
+  // -webkit-appearance: none;
+  // -moz-appearance: none;
+  // appearance: none;
 }
 button {
-   border: none;
-   background: none;
-   cursor: pointer;
-   outline: none;
-} 
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.dashboard-chart .apexcharts-tooltip-marker {
+  background: #ff7152 !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ff7152;
+}
