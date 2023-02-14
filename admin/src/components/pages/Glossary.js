@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
-import GlossaryModal from "../components/modals/GlossaryModal";
-import { AuthContext } from "../context/AuthContext";
-import { useHttp } from "../hooks/http.hook";
+import GlossaryModal from "../modals/GlossaryModal";
+import { AuthContext } from "../../context/AuthContext";
+import { useHttp } from "../../hooks/http.hook";
 
 function Glossary() {
    const [isOpen, setIsOpen] = useState(false);
@@ -11,43 +11,40 @@ function Glossary() {
    const { token } = useContext(AuthContext);
    const { request } = useHttp();
 
-
-
-
    const getGlossaries = async () => {
       const result = await request('/api/content/glossaries', 'GET', null, {
          Authorization: `Bearer ${token}`
       });
       setGlossaries(result);
-   }
+   };
 
    const removeHandler = async (slug) => {
       const result = await request('/api/content/glossaries/' + slug, 'delete', null, {
          Authorization: `Bearer ${token}`
       });
       getGlossaries();
-   }
+   };
 
    const editHandler = async (glossary) => {
       setIsCreate(false);
       setGlossary(glossary);
       setIsOpen(true);
-   }
+   };
 
    const createHandler = () => {
       setIsCreate(true);
       setIsOpen(true);
-   }
+   };
 
    const closeHandler = () => {
       setIsOpen(false); 
       getGlossaries();
       setGlossary({});
-   }
+   };
 
    useEffect(() => {
       getGlossaries();
-   }, [])
+   }, []);
 
 
    return (
@@ -79,7 +76,7 @@ function Glossary() {
             isCreate={isCreate}>
          </GlossaryModal>
       </div>
-   )
-}
+   );
+};
 
 export default Glossary; 

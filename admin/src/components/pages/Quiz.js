@@ -1,10 +1,10 @@
 import { useState, useContext, useEffect } from "react";
-import ArticleModal from "../components/modals/ArticleModal";
-import Pagination from "../components/UI/Pagination";
-import { AuthContext } from "../context/AuthContext";
-import { useHttp } from "../hooks/http.hook";
+import QuizModal from "../modals/QuizModal";
+import Pagination from "../UI/Pagination";
+import { AuthContext } from "../../context/AuthContext";
+import { useHttp } from "../../hooks/http.hook";
 
-function Article() {
+function Quiz() {
    const [isOpen, setIsOpen] = useState(false);
    const [taxonomies, settaxonomies] = useState({
       category: null,
@@ -12,8 +12,9 @@ function Article() {
       level: null,
       language: null
    })
-   const [articles, setArticles] = useState(null);
-   const [article, setArticle] = useState({});
+   const [questions, setQuestions] = useState(null);
+   const [quizzes, setQuizzes] = useState(null);
+   const [quiz, setQuiz] = useState({});
    const [isCreate, setIsCreate] = useState(true)
    const { token } = useContext(AuthContext);
    const { request } = useHttp();
@@ -36,26 +37,32 @@ function Article() {
       settaxonomies({ category, tag, level, language });
    }
 
-   const getArticles = async (page) => {
-      console.log(page)
+   const getQuestions = async () => {
+      const questions = await request('/api/content/question-bank', 'GET', null, {
+         Authorization: `Bearer ${token}`
+      }); 
+      if(questions.result?.length) setQuestions(questions.result);
+   }
+
+   const getQuiz = async (page) => {
       let query;
       page ? query = '?page=' + page : query  = '';
-      const articles = await request('/api/content/articles' + query , 'GET', null, {
+      const quizzes = await request('/api/content/quiz' + query , 'GET', null, {
          Authorization: `Bearer ${token}`
       });
-      setArticles(articles);
+      setQuizzes(quizzes);
    }
 
    const removeHandler = async (slug) => {
-      const result = await request('/api/content/articles/' + slug, 'delete', null, {
+      await request('/api/content/quiz/' + slug, 'delete', null, {
          Authorization: `Bearer ${token}`
       });
-      getArticles();
+      getQuiz();
    }
 
-   const editHandler = async (article) => {
+   const editHandler = async (quiz) => {
       setIsCreate(false);
-      setArticle(article);
+      setQuiz(quiz);
       setIsOpen(true);
    }
 
@@ -66,54 +73,57 @@ function Article() {
 
    const closeHandler = () => {
       setIsOpen(false);
-      getArticles();
-      setArticle({});
+      getQuiz();
+      setQuiz({});
    }
 
    const pageHandler = (page) => {
-      getArticles(page);
+      getQuiz(page);
    }
 
    useEffect(() => {
       getTaxomonies();
-      getArticles();
+      getQuestions();
+      getQuiz();
    }, [])
 
 
    return (
-      <div className="content-page article">
+      <div className="content-page quiz" >
          <div className="top">
-            <h1 className="title">Article</h1>
+            <h1 className="title">Quizzes</h1>
             <button onClick={createHandler}>create</button>
          </div>
-         {articles && articles.total ? (
+         {quizzes && quizzes.result ? (
             <>
                <div className="list">
-                  {articles.docs.map((article) => {
+                  {quizzes.result.map((quiz) => {
                      return (
-                        <div className="list-item" key={article._id}>
-                           <span className="title">{article.slug}</span>
+                        <div className="list-item" key={quiz._id}>
+                           <span className="title">{quiz.slug}</span>
                            <div className="btns">
-                              <button onClick={() => editHandler(article)}>Edit</button>
-                              <button onClick={() => removeHandler(article.slug)}>Remove</button>
+                              <button onClick={() => editHandler(quiz)}>Edit</button>
+                              <button onClick={() => removeHandler(quiz.slug)}>Remove</button>
                            </div>
                         </div>
                      )
                   })}
-               </div>
-               <Pagination pages={articles.pages} page={articles.page} pageHandler={pageHandler} />
+               </div> 
+               <Pagination pages={quizzes.pages} page={quizzes.page} pageHandler={pageHandler} />
             </>
          ) : null}
 
-         <ArticleModal
+         <QuizModal
             open={isOpen}
             onClose={closeHandler}
             taxonomies={taxonomies}
-            article={article}
+            questions={questions}
+            quiz={quiz} 
             isCreate={isCreate}>
-         </ArticleModal>
+         </QuizModal>
       </div>
+
    )
 }
 
-export default Article; 
+export default Quiz; 

@@ -16,7 +16,7 @@ function App() {
       token, userId, login, logout, isAuthenticated
     }}>
       <div className="App">
-        {token != 'not detected' && routes}
+        {token !== 'not detected' && routes}
       </div>
     </AuthContext.Provider>
   );

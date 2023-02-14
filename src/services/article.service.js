@@ -1,7 +1,5 @@
 const Article = require('../models/Article');
 
-
-
 async function index(category, level, tag, limit, page, id_not, language){
    let query = {};
    let options = {
@@ -31,7 +29,6 @@ async function create(body) {
    return {result};
 }
 
-
 async function update(slug, body){
    const result = await Article.findOne({slug});
    await result.updateOne(body);
@@ -49,11 +46,10 @@ async function destroy(slug){
    }
 }
 
-
 module.exports = {
    create,
    index,
    findOne,
    update,
    destroy
-}
+};
