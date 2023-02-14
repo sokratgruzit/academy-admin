@@ -1,5 +1,6 @@
 const Article = require('../models/Article');
 
+//Articles routes
 async function index(category, level, tag, limit, page, id_not, language){
    let query = {};
    let options = {

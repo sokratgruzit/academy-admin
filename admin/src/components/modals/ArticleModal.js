@@ -7,7 +7,6 @@ import BaseSelect from '../UI/BaseSelect';
 import Modal from './Modal';
 import BaseEditor from '../UI/BaseEditor';
 
-
 function ArticleModal({ open = false, onClose, taxonomies, article, isCreate }) {
    const { token } = useContext(AuthContext);
    const { request } = useHttp();

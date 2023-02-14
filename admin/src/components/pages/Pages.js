@@ -1,54 +1,53 @@
 import { useState, useContext, useEffect } from "react";
-import PagesModal from "../modals/PagesModal";
 import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/http.hook";
 
+import PagesModal from "../modals/PagesModal";
+
 function Pages() {
-   const [isOpen, setIsOpen] = useState(false);
-   const [pages, setPages] = useState(null);
-   const [page, setPage] = useState({}); 
-   const [isCreate, setIsCreate] = useState(true)
+   const [ isOpen, setIsOpen ] = useState(false);
+   const [ pages, setPages ] = useState(null);
+   const [ page, setPage ] = useState({}); 
+   const [ isCreate, setIsCreate ] = useState(true)
    const { token } = useContext(AuthContext);
    const { request } = useHttp();
-
-
-
 
    const getPages = async () => {
       const result = await request('/api/content/pages', 'GET', null, {
          Authorization: `Bearer ${token}`
       });
+
       setPages(result);
-   }
+   };
 
    const removeHandler = async (slug) => {
       const result = await request('/api/content/pages/' + slug, 'delete', null, {
          Authorization: `Bearer ${token}`
       });
+
       getPages();
-   }
+   };
 
    const editHandler = async (page) => {
       setIsCreate(false);
       setPage(page);
       setIsOpen(true);
-   }
+   };
 
    const createHandler = () => {
       setIsCreate(true);
       setIsOpen(true);
-   }
+   };
 
    const closeHandler = () => {
       setIsOpen(false); 
       getPages();
       setPage({});
-   }
+   };
 
    useEffect(() => {
       getPages();
-   }, [])
-
+   }, []);
 
    return (
       <div className="content-page article">
@@ -61,7 +60,7 @@ function Pages() {
                {pages.result.map((page) => {
                   return (
                      <div className="list-item" key={page._id}>
-                        <span>{page.slug}</span>
+                        <span>{page.title}</span>
                         <div className="btns">
                            <button onClick={() => editHandler(page)}>Edit</button>
                            <button onClick={() => removeHandler(page.slug)}>Remove</button>
