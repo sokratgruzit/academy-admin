@@ -22,7 +22,6 @@
   "bugs": {
     "url": "https://github.com/sokratgruzit/react-academy/issues"
   },
-  "proxy": "http://localhost:3000/",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",

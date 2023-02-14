@@ -1,5 +1,7 @@
 const Page = require('../models/Page');
 
+
+
 async function index(){
    const result = await Page.find();
    return {result};

@@ -3,9 +3,7 @@
 # dependencies
 /node_modules
 /.pnp
-.pnp.jstustu
-
-/build
+.pnp.js
 
 # testing
 /coverage

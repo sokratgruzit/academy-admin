@@ -1,8 +1,10 @@
-import { Outlet } from "react-router-dom";
-import Header from "../modules/Header";
-import Sidebar from "../modules/Sidebar";
+import { Outlet } from 'react-router-dom';
+import Header from "../components/modules/Header";
+import Sidebar from "../components/modules/Sidebar";
+
 
 function Dashboard() {
+
   return (
     <div className="dashboard">
       <Header />
@@ -18,4 +20,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Dashboard;   

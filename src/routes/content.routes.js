@@ -2,7 +2,6 @@ const {Router} = require('express');
 const router = Router();
 
 const AuthMiddleware = require('../middlewares/auth.middleware');
-const { articleValidator } = require('../middlewares/validators/auth.validator');
 const ArticleController = require('../controllers/article.controller');
 const PageController = require('../controllers/page.controller');
 const BecomeInstructorController = require('../controllers/become-instructor.controller');
@@ -20,11 +19,11 @@ const LanguageController = new TaxonomiesController('Language');
 
 
 //articles
-router.get('/articles', AuthMiddleware, ArticleController.index);
-router.get('/articles/:slug', AuthMiddleware, ArticleController.findOne);
-router.post('/articles', AuthMiddleware, ArticleController.create);
-router.put('/articles/:slug', AuthMiddleware, ArticleController.update);
-router.delete('/articles/:slug', AuthMiddleware, ArticleController.destroy);
+router.get('/articles' , AuthMiddleware,  ArticleController.index);
+router.get('/articles/:slug' , AuthMiddleware ,  ArticleController.findOne);
+router.post('/articles' , AuthMiddleware  , ArticleController.create);
+router.put('/articles/:slug', AuthMiddleware , ArticleController.update);
+router.delete('/articles/:slug', AuthMiddleware , ArticleController.destroy);
 
 //pages
 router.get('/pages' , AuthMiddleware,  PageController.index);

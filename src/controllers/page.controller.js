@@ -10,8 +10,7 @@ async function index(req, res) {
    }
 } 
 
-async function findOne(req, res) { 
-   console.log(req)
+async function findOne(req, res){ 
    try{ 
       let result = await page.findOne(req.params.slug);
       res.status(200).json(result);

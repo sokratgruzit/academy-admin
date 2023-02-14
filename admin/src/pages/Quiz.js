@@ -1,10 +1,10 @@
 import { useState, useContext, useEffect } from "react";
-import QuestionModal from "../modals/QuestionModal";
-import Pagination from "../UI/Pagination";
-import { AuthContext } from "../../context/AuthContext";
-import { useHttp } from "../../hooks/http.hook";
+import QuizModal from "../components/modals/QuizModal";
+import Pagination from "../components/UI/Pagination";
+import { AuthContext } from "../context/AuthContext";
+import { useHttp } from "../hooks/http.hook";
 
-function QuestionBank() {
+function Quiz() {
    const [isOpen, setIsOpen] = useState(false);
    const [taxonomies, settaxonomies] = useState({
       category: null,
@@ -13,7 +13,8 @@ function QuestionBank() {
       language: null
    })
    const [questions, setQuestions] = useState(null);
-   const [question, setQuestion] = useState({});
+   const [quizzes, setQuizzes] = useState(null);
+   const [quiz, setQuiz] = useState({});
    const [isCreate, setIsCreate] = useState(true)
    const { token } = useContext(AuthContext);
    const { request } = useHttp();
@@ -36,25 +37,32 @@ function QuestionBank() {
       settaxonomies({ category, tag, level, language });
    }
 
-   const getQuestions = async (page) => {
+   const getQuestions = async () => {
+      const questions = await request('/api/content/question-bank', 'GET', null, {
+         Authorization: `Bearer ${token}`
+      }); 
+      if(questions.result?.length) setQuestions(questions.result);
+   }
+
+   const getQuiz = async (page) => {
       let query;
       page ? query = '?page=' + page : query  = '';
-      const questions = await request('/api/content/question-bank' + query , 'GET', null, {
+      const quizzes = await request('/api/content/quiz' + query , 'GET', null, {
          Authorization: `Bearer ${token}`
       });
-      setQuestions(questions);
+      setQuizzes(quizzes);
    }
 
    const removeHandler = async (slug) => {
-      await request('/api/content/question-bank/' + slug, 'delete', null, {
+      await request('/api/content/quiz/' + slug, 'delete', null, {
          Authorization: `Bearer ${token}`
       });
-      getQuestions();
+      getQuiz();
    }
 
-   const editHandler = async (question) => {
+   const editHandler = async (quiz) => {
       setIsCreate(false);
-      setQuestion(question);
+      setQuiz(quiz);
       setIsOpen(true);
    }
 
@@ -65,54 +73,57 @@ function QuestionBank() {
 
    const closeHandler = () => {
       setIsOpen(false);
-      getQuestions();
-      setQuestion({});
+      getQuiz();
+      setQuiz({});
    }
 
    const pageHandler = (page) => {
-      getQuestions(page);
+      getQuiz(page);
    }
 
    useEffect(() => {
       getTaxomonies();
       getQuestions();
+      getQuiz();
    }, [])
 
 
    return (
-      <div className="content-page question" >
+      <div className="content-page quiz" >
          <div className="top">
-            <h1 className="title">Question</h1>
+            <h1 className="title">Quizzes</h1>
             <button onClick={createHandler}>create</button>
          </div>
-         {questions && questions.result ? (
+         {quizzes && quizzes.result ? (
             <>
                <div className="list">
-                  {questions.result.map((question) => {
+                  {quizzes.result.map((quiz) => {
                      return (
-                        <div className="list-item" key={question._id}>
-                           <span className="title">{question.slug}</span>
+                        <div className="list-item" key={quiz._id}>
+                           <span className="title">{quiz.slug}</span>
                            <div className="btns">
-                              <button onClick={() => editHandler(question)}>Edit</button>
-                              <button onClick={() => removeHandler(question.slug)}>Remove</button>
+                              <button onClick={() => editHandler(quiz)}>Edit</button>
+                              <button onClick={() => removeHandler(quiz.slug)}>Remove</button>
                            </div>
                         </div>
                      )
                   })}
                </div> 
-               <Pagination pages={questions.pages} page={questions.page} pageHandler={pageHandler} />
+               <Pagination pages={quizzes.pages} page={quizzes.page} pageHandler={pageHandler} />
             </>
          ) : null}
 
-         <QuestionModal
+         <QuizModal
             open={isOpen}
             onClose={closeHandler}
             taxonomies={taxonomies}
-            question={question} 
+            questions={questions}
+            quiz={quiz} 
             isCreate={isCreate}>
-         </QuestionModal>
+         </QuizModal>
       </div>
+
    )
 }
 
-export default QuestionBank; 
+export default Quiz; 

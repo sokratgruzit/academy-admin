@@ -17,19 +17,19 @@ const schema = new Schema({
 		slugPaddingSize: 2,  
 		unique: true 
 	},
-	editor: {
-		type: String
-	},
+   editor: {
+      type: String
+   },
 	duration: {
-		type: String
-	},
+      type: String
+   },
 	image: Object,
 	category: { type: Schema.Types.ObjectId, ref: 'Category' },
 	language: { type: Schema.Types.ObjectId, ref: 'Language' },
 	level: { type: Schema.Types.ObjectId, ref: 'Level' },
 	tag: [{ type: Schema.Types.ObjectId, ref: 'Tag' }]
-}, {
+},{
 	timestamps: true
-});
+})
 
 module.exports = model('Article', schema);

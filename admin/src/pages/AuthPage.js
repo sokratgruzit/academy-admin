@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import Dialog from "../dialog/Dialog";
-import BaseInput from "../UI/BaseInput";
-import { AuthContext } from "../../context/AuthContext";
-import { useHttp } from "../../hooks/http.hook";
+import Dialog from "../components/dialog/Dialog";
+import BaseInput from "../components/UI/BaseInput";
+import { AuthContext } from "../context/AuthContext";
+import { useHttp } from "../hooks/http.hook";
 
 function AuthPage() {
    const auth = useContext(AuthContext);
