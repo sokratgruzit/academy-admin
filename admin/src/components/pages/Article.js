@@ -13,9 +13,9 @@ function Article() {
       language: null
    });
 
-   const [articles, setArticles] = useState(null);
-   const [article, setArticle] = useState({});
-   const [isCreate, setIsCreate] = useState(true);
+   const [ articles, setArticles ] = useState(null);
+   const [ article, setArticle ] = useState({});
+   const [ isCreate, setIsCreate ] = useState(true);
    const { token } = useContext(AuthContext);
    const { request } = useHttp();
 
@@ -40,9 +40,9 @@ function Article() {
    };
 
    const getArticles = async (page) => {
-      console.log(page)
       let query;
       page ? query = '?page=' + page : query  = '';
+
       const articles = await request('/api/content/articles' + query , 'GET', null, {
          Authorization: `Bearer ${token}`
       });
@@ -51,7 +51,7 @@ function Article() {
    };
 
    const removeHandler = async (slug) => {
-      const result = await request('/api/content/articles/' + slug, 'delete', null, {
+      await request('/api/content/articles/' + slug, 'delete', null, {
          Authorization: `Bearer ${token}`
       });
 
@@ -94,7 +94,6 @@ function Article() {
             <>
                <div className="list">
                   {articles.docs.map((article) => {
-                     console.log(article)
                      return (
                         <div className="list-item" key={article._id}>
                            <img className="thumbnail private" src={article.image.path} alt={article.image.alt} />

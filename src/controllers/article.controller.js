@@ -39,7 +39,7 @@ async function create(req, res) {
   try {
     const { title, category, tag, level, language, duration, editor, image } = req.body;
 
-    console.log(image);
+    console.log('lala', image);
     const result = await article.create(req.body);
     res.status(200).json(result);
   } catch (e) {
