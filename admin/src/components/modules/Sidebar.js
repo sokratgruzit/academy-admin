@@ -37,7 +37,7 @@ function Sidebar() {
       <NavLink className="link" to="quiz">
         Quiz
       </NavLink>
-      <Expand>
+      <Expand title={"Courses"}>
         <Courses />
       </Expand>
     </div>

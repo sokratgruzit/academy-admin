@@ -15,15 +15,26 @@ header {
    width: 260px;
    display: flex;
    flex-direction: column;
-   padding: 30px;
    border: 1px solid $c-lighter;
 
    .link {
-      margin-bottom: 20px;
+      padding: 10px 20px;
+   }
 
-      &:last-child {
-         margin-bottom: 0;
-      }
+   .activLink {
+      border-left: 6px solid #7c32ff;
+      border-image-source: linear-gradient(#c738d8,#7c32ff);
+      border-image-slice: 1;
+      background-color: #415094;
+   }
+   .link:focus {
+      border-left: 6px solid #7c32ff;
+      border-image-source: linear-gradient(#c738d8,#7c32ff);
+      border-image-slice: 1;
+   }
+
+   .link:hover {
+      background-color: #24326d;
    }
 }
 
