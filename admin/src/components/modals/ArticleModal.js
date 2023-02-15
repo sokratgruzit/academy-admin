@@ -1,4 +1,4 @@
-import { useContext, useState, useRef } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/http.hook";
 import ImageUpload from '../UI/ImageUpload';
@@ -10,8 +10,9 @@ import BaseEditor from '../UI/BaseEditor';
 function ArticleModal({ open = false, onClose, taxonomies, article, isCreate }) {
    const { token } = useContext(AuthContext);
    const { request } = useHttp();
-   const [myEditor, setMyEditor] = useState(null);
-   const upload = useRef(null);
+   const [ myEditor, setMyEditor ] = useState(null);
+   const [ imgPath, setImgPath ] = useState("");
+   const [ imgAlt, setImgAlt ] = useState("");
 
    const submitHandler = async (e) => {
       e.preventDefault();
@@ -23,7 +24,11 @@ function ArticleModal({ open = false, onClose, taxonomies, article, isCreate }) 
          level: null,
          language: null,
          duration: '',
-         editor: ''
+         editor: '',
+         image: {
+            path: '',
+            alt: ''
+         }
       };
 
       formData.title = e.target.title.value;
@@ -33,18 +38,25 @@ function ArticleModal({ open = false, onClose, taxonomies, article, isCreate }) 
       formData.level = e.target.level.value || null;
       formData.duration = e.target.duration.value;
       formData.editor = myEditor.getData();
-
-      const image = await upload.current();
-      formData.image = image;
+      formData.image.path = imgPath;
+      formData.image.alt = imgAlt;
 
       const method = isCreate ? 'POST' : 'PUT';
       const path = isCreate ? '/api/content/articles' : '/api/content/articles/' + article.slug;
 
-      const result = await request(path, method, formData, {
+      await request(path, method, formData, {
          Authorization: `Bearer ${token}`
       });
 
       onClose();
+   };
+
+   const getImagePath = path => {
+      setImgPath(path);
+   };
+
+   const getImageAlt = alt => {
+      setImgAlt(alt);
    };
 
    return (
@@ -97,8 +109,13 @@ function ArticleModal({ open = false, onClose, taxonomies, article, isCreate }) 
                placeholder="enter duration" />
             <BaseEditor data={article.editor} setMyEditor={setMyEditor} id="articleEditor"/>
 
-            <ImageUpload upload={upload} data={article.image} label="article image" />
-            <button className='btn' type="submit"> submit</button>
+            <ImageUpload 
+               getImagePath={getImagePath} 
+               getImageAlt={getImageAlt} 
+               data={article.image} 
+               label="article image" 
+            />
+            <button className='btn' type="submit">Submit</button>
          </form>
       </Modal>
    )
