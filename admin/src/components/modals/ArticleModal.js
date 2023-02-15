@@ -40,6 +40,7 @@ function ArticleModal({ open = false, onClose, taxonomies, article, isCreate }) 
       formData.editor = myEditor.getData();
       formData.image.path = imgPath;
       formData.image.alt = imgAlt;
+      console.log(imgPath);
 
       const method = isCreate ? 'POST' : 'PUT';
       const path = isCreate ? '/api/content/articles' : '/api/content/articles/' + article.slug;

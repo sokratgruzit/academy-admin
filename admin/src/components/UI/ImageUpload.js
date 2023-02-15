@@ -20,7 +20,7 @@ function ImageUpload({ getImagePath, getImageAlt, data = {}, label = "upload ima
       return res.json();
     }).then(data => {
       getImagePath(data.path);
-    })
+    });
   }
 
   return (
