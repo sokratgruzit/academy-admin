@@ -2,13 +2,16 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import FormData from "form-data";
 
-function ImageUpload({ getImagePath, getImageAlt, data = {}, label = "upload image" }) {
+function ImageUpload({ getImagePath, getImageAlt, article, label = "upload image" }) {
   const [altValue, setAltValue] = useState("Image");
   const { token } = useContext(AuthContext);
 
   async function saveImage(file) {
     let data = new FormData();
     data.append("image", file);
+    data.append("id", article._id);
+
+    console.log();
 
     await fetch("api/upload/image", {
       method: "POST",
@@ -46,7 +49,7 @@ function ImageUpload({ getImagePath, getImageAlt, data = {}, label = "upload ima
         <input
           type="text"
           name="alt"
-          defaultValue={data.alt || altValue}
+          defaultValue={article?.image?.alt || altValue}
           placeholder="alt text"
           onChange={(e) => {
             setAltValue(e.target.value);

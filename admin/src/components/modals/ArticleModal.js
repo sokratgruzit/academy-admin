@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/http.hook";
+
+import { AuthContext } from "../../context/AuthContext";
 import ImageUpload from "../UI/ImageUpload";
 import BaseInput from "../UI/BaseInput";
 import BaseSelect from "../UI/BaseSelect";
@@ -51,7 +52,6 @@ function ArticleModal({
     formData.editor = myEditor.getData();
     formData.image.path = imgPath;
     formData.image.alt = imgAlt;
-    console.log(imgPath);
 
     const method = isCreate ? "POST" : "PUT";
     const path = isCreate
@@ -69,11 +69,13 @@ function ArticleModal({
       }));
     }
 
-    if (message === "New Article Created")
+    if (message === "New Article Created") {
       setArticles((prev) => ({ ...prev, docs: [...prev.docs, result] }));
+    }
 
     onClose();
   };
+
   const getImagePath = (path) => {
     setImgPath(path);
   };
@@ -135,11 +137,10 @@ function ArticleModal({
           placeholder="enter duration"
         />
         <BaseEditor data={article.editor} setMyEditor={setMyEditor} id="articleEditor" />
-
         <ImageUpload
           getImagePath={getImagePath}
           getImageAlt={getImageAlt}
-          data={article.image}
+          article={article}
           label="article image"
         />
         <button className="btn" type="submit">

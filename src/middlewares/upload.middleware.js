@@ -1,5 +1,6 @@
 const { Storage } = require("@google-cloud/storage");
 const path = require("path");
+const Article = require("../models/Article");
 
 const gc = new Storage({
   keyFilename: path.join(__dirname, "../../optimum-habitat-377819-2e92f3dfa8d6.json"),
@@ -41,9 +42,10 @@ const upload = (req, res, next) => {
   });
 
   blobStream.on("finish", async () => {
-    //  console.log("aghaha");
     // The public URL can be used to directly access the file via HTTP. const publicUrl = format(https://storage.googleapis.com/${bucket.name}/${blob.name});
-    await generateV4ReadSignedUrl(fileName).then((path) => {
+    await generateV4ReadSignedUrl(fileName).then(async (path) => {
+      await Article.findOneAndUpdate({ _id: req.body.id }, { image: { path } });
+
       res.status(200).json({ path: path });
     });
 

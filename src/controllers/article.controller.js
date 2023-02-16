@@ -53,6 +53,7 @@ async function create(req, res) {
       editor,
       image,
     });
+    
     result = await result.save();
     res.status(200).json({ message: "New Article Created", result });
   } catch (e) {
