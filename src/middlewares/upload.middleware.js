@@ -21,7 +21,7 @@ async function generateV4ReadSignedUrl(fileName) {
    const [url] = await gc.bucket("cubitrix-storage-bucket")
    .file(fileName)
    .getSignedUrl(options);
- 
+   
    return url;
 }
 
