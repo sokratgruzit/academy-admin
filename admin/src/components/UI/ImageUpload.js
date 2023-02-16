@@ -3,7 +3,7 @@ import { AuthContext } from "../../context/AuthContext";
 import FormData from "form-data";
 
 function ImageUpload({ getImagePath, getImageAlt, data = {}, label = "upload image" }) {
-  const [ altValue, setAltValue ] = useState("Image");
+  const [altValue, setAltValue] = useState("Image");
   const { token } = useContext(AuthContext);
 
   async function saveImage(file) {
@@ -16,11 +16,14 @@ function ImageUpload({ getImagePath, getImageAlt, data = {}, label = "upload ima
         Authorization: `Bearer ${token}`,
       },
       body: data,
-    }).then(res => {
-      return res.json();
-    }).then(data => {
-      getImagePath(data.path);
-    });
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        getImagePath(data.path);
+      });
   }
 
   return (
@@ -31,16 +34,13 @@ function ImageUpload({ getImagePath, getImageAlt, data = {}, label = "upload ima
           name="image"
           id="imageUploader"
           accept="image/jpeg, image/png, image/jpg"
-          onChange={e => {
+          onChange={(e) => {
             saveImage(e.target.files[0]);
           }}
         />
         <span className="label">{label}</span>
         <div className="upload-btn">Upload Image</div>
-        <img
-          className="preview"
-          src={""}
-        />
+        <img className="preview" src={""} />
       </label>
       <div className="input">
         <input
@@ -48,7 +48,7 @@ function ImageUpload({ getImagePath, getImageAlt, data = {}, label = "upload ima
           name="alt"
           defaultValue={data.alt || altValue}
           placeholder="alt text"
-          onChange={e => {
+          onChange={(e) => {
             setAltValue(e.target.value);
             getImageAlt(e.target.value);
           }}
