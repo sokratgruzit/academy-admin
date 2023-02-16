@@ -1,4 +1,4 @@
-import { useContext, useState, useRef } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/http.hook";
 import ImageUpload from "../UI/ImageUpload";
@@ -18,7 +18,8 @@ function ArticleModal({
   const { token } = useContext(AuthContext);
   const { request } = useHttp();
   const [myEditor, setMyEditor] = useState(null);
-  const upload = useRef(null);
+  const [imgPath, setImgPath] = useState("");
+  const [imgAlt, setImgAlt] = useState("");
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -31,10 +32,13 @@ function ArticleModal({
       language: null,
       duration: "",
       editor: "",
+      image: {
+        path: "",
+        alt: "",
+      },
     };
 
     formData.title = e.target.title.value;
-    // if (!e.target.title.value) return "title error";
     formData.category = e.target.category.value || null;
     formData.language = e.target.language.value || null;
     formData.tag = e.target.tag.length
@@ -45,9 +49,9 @@ function ArticleModal({
     formData.level = e.target.level.value || null;
     formData.duration = e.target.duration.value;
     formData.editor = myEditor.getData();
-
-    const image = await upload.current();
-    formData.image = image;
+    formData.image.path = imgPath;
+    formData.image.alt = imgAlt;
+    console.log(imgPath);
 
     const method = isCreate ? "POST" : "PUT";
     const path = isCreate
@@ -69,6 +73,13 @@ function ArticleModal({
       setArticles((prev) => ({ ...prev, docs: [...prev.docs, result] }));
 
     onClose();
+  };
+  const getImagePath = (path) => {
+    setImgPath(path);
+  };
+
+  const getImageAlt = (alt) => {
+    setImgAlt(alt);
   };
 
   return (
@@ -125,10 +136,14 @@ function ArticleModal({
         />
         <BaseEditor data={article.editor} setMyEditor={setMyEditor} id="articleEditor" />
 
-        <ImageUpload upload={upload} data={article.image} label="article image" />
+        <ImageUpload
+          getImagePath={getImagePath}
+          getImageAlt={getImageAlt}
+          data={article.image}
+          label="article image"
+        />
         <button className="btn" type="submit">
-          {" "}
-          submit
+          Submit
         </button>
       </form>
     </Modal>

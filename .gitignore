@@ -5,6 +5,10 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+
+# Google cloud bucket
+optimum-habitat-377819-2e92f3dfa8d6.json
+
 # Local History for Visual Studio Code
 .history/
 

@@ -5,9 +5,6 @@ process.env["NODE_CONFIG_DIR"] = __dirname + "/src/config";
 const config = require('config');
 const mongoose = require('mongoose');
 const path = require("path");
-const multer = require("multer");
-const uploads = multer({ dest: "uploads/" });
-const fs = require("fs");
 const app = express();
 
 const auth = require('./src/routes/auth.routes')
@@ -18,9 +15,8 @@ const data = require('./src/routes/data.routes')
 require('dotenv').config();
 
 //Academy server
-app.use(express.json({ extended: true }))
-app.use(cors())
-app.use('/uploads', express.static('uploads'));
+app.use(express.json({ extended: true }));
+app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 

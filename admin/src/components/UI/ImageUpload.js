@@ -1,43 +1,26 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import FormData from "form-data";
 
-function ImageUpload({ upload, data = {}, label = "upload image" }) {
-  const imgRef = useRef(null);
-  const altRef = useRef(null);
-  const [image, setImage] = useState(null);
+function ImageUpload({ getImagePath, getImageAlt, data = {}, label = "upload image" }) {
+  const [ altValue, setAltValue ] = useState("Image");
   const { token } = useContext(AuthContext);
 
-  const onChange = (e) => {
-    setImage(URL.createObjectURL(e.target.files[0]));
-  };
-
-  useEffect(() => {
-    console.log(data);
-    upload.current = () => saveImage(data);
-  }, []);
-
-  async function saveImage(defaultData) {
-    if (!imgRef.current.files.length) {
-      return {
-        path: defaultData.path || "",
-        alt: altRef.current.value,
-      };
-    }
+  async function saveImage(file) {
     let data = new FormData();
-    data.append("image", imgRef.current.files[0]);
-    const res = await fetch("api/upload/image", {
+    data.append("image", file);
+
+    await fetch("api/upload/image", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
       body: data,
+    }).then(res => {
+      return res.json();
+    }).then(data => {
+      getImagePath(data.path);
     });
-    const { path } = await res.json();
-    return {
-      path,
-      alt: altRef.current.value,
-    };
   }
 
   return (
@@ -47,24 +30,28 @@ function ImageUpload({ upload, data = {}, label = "upload image" }) {
           type="file"
           name="image"
           id="imageUploader"
-          ref={imgRef}
           accept="image/jpeg, image/png, image/jpg"
-          onChange={onChange}
+          onChange={e => {
+            saveImage(e.target.files[0]);
+          }}
         />
         <span className="label">{label}</span>
         <div className="upload-btn">Upload Image</div>
         <img
           className="preview"
-          src={image ? image : data.path ? "http://localhost:4000/" + data.path : ""}
+          src={""}
         />
       </label>
       <div className="input">
         <input
           type="text"
           name="alt"
-          ref={altRef}
-          defaultValue={data.alt || ""}
+          defaultValue={data.alt || altValue}
           placeholder="alt text"
+          onChange={e => {
+            setAltValue(e.target.value);
+            getImageAlt(e.target.value);
+          }}
         />
       </div>
     </div>

@@ -12,7 +12,7 @@ export const useAuth = () => {
    const login = useCallback((jwtToken, id) => {
       setToken(jwtToken);
       setUserId(id);
-      const expiresTime = new Date(new Date().getTime() + 58 * 60 * 1000);
+      const expiresTime = new Date(new Date().getTime() + 232 * 60 * 1000);
       Cookies.set(storageName, JSON.stringify({
          userId: id, token: jwtToken
       }) , { expires: expiresTime})
