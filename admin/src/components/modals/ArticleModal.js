@@ -19,11 +19,12 @@ function ArticleModal({
   const { token } = useContext(AuthContext);
   const { request } = useHttp();
   const [myEditor, setMyEditor] = useState(null);
-  const [imgPath, setImgPath] = useState("");
-  const [imgAlt, setImgAlt] = useState("");
+  const [imageFile, setImageFile] = useState({});
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    saveImage(imageFile);
 
     let formData = {
       title: "",
@@ -50,8 +51,6 @@ function ArticleModal({
     formData.level = e.target.level.value || null;
     formData.duration = e.target.duration.value;
     formData.editor = myEditor.getData();
-    formData.image.path = imgPath;
-    formData.image.alt = imgAlt;
 
     const method = isCreate ? "POST" : "PUT";
     const path = isCreate
@@ -76,12 +75,33 @@ function ArticleModal({
     onClose();
   };
 
-  const getImagePath = (path) => {
-    setImgPath(path);
-  };
+  async function saveImage(file) {
+    let data = new FormData();
+    data.append("image", file);
+    data.append("id", article._id);
 
-  const getImageAlt = (alt) => {
-    setImgAlt(alt);
+    await fetch("api/upload/image", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: data,
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setArticles((prev) => ({
+          ...prev,
+          docs: prev.docs.map((doc) =>
+            doc.title === article.title ? { ...doc, image: { path: data.path } } : doc,
+          ),
+        }));
+      });
+  }
+
+  const getImageFile = (file) => {
+    setImageFile(file);
   };
 
   return (
@@ -138,8 +158,7 @@ function ArticleModal({
         />
         <BaseEditor data={article.editor} setMyEditor={setMyEditor} id="articleEditor" />
         <ImageUpload
-          getImagePath={getImagePath}
-          getImageAlt={getImageAlt}
+          getImageFile={getImageFile}
           article={article}
           label="article image"
         />

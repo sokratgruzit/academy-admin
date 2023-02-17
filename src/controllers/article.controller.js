@@ -53,7 +53,7 @@ async function create(req, res) {
       editor,
       image,
     });
-    
+
     result = await result.save();
     res.status(200).json({ message: "New Article Created", result });
   } catch (e) {
@@ -66,7 +66,7 @@ async function update(req, res) {
   try {
     const result = await Article.findOneAndUpdate({ slug: req.params.slug }, req.body, {
       new: true,
-    });
+    }).populate(["category", "level", "tag", "language"]);
 
     if (result) {
       return res.status(201).json({ message: "Article successuly updated", result });
