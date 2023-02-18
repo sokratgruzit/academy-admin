@@ -11,8 +11,6 @@ function ImageUpload({ getImagePath, getImageAlt, article, label = "upload image
     data.append("image", file);
     data.append("id", article._id);
 
-    console.log();
-
     await fetch("api/upload/image", {
       method: "POST",
       headers: {
@@ -20,13 +18,16 @@ function ImageUpload({ getImagePath, getImageAlt, article, label = "upload image
       },
       body: data,
     })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        getImagePath(data.path);
-      });
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      console.log(data);
+      getImagePath(data.path);
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   return (
