@@ -1,7 +1,6 @@
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
-import FormData from "form-data";
+import { useState } from "react";
 
+<<<<<<< HEAD
 function ImageUpload({ getImagePath, getImageAlt, article, label = "upload image" }) {
   const [altValue, setAltValue] = useState("Image");
   const { token } = useContext(AuthContext);
@@ -29,34 +28,32 @@ function ImageUpload({ getImagePath, getImageAlt, article, label = "upload image
       console.log(err);
     });
   }
+=======
+function ImageUpload({ getImageFile, article, label = "upload image" }) {
+  const [fileURL, setFIleURL] = useState(article.image.path || "");
+  const [imageTitle, setImageTitle] = useState("");
+>>>>>>> 9c57dc0d3736db80d1bc6aacc68cbd99fc74b47d
 
   return (
     <div className="image-uploader">
       <label htmlFor="imageUploader" className="uploader">
+        <span className="label">{label}</span>
+        <div className="upload-btn">Upload Image</div>
         <input
           type="file"
           name="image"
           id="imageUploader"
           accept="image/jpeg, image/png, image/jpg"
           onChange={(e) => {
-            saveImage(e.target.files[0]);
+            setFIleURL(URL.createObjectURL(e.target.files[0]));
+            setImageTitle(e.target.files[0]?.name);
+            getImageFile(e.target.files[0]);
           }}
         />
-        <span className="label">{label}</span>
-        <div className="upload-btn">Upload Image</div>
-        <img className="preview" src={""} />
       </label>
-      <div className="input">
-        <input
-          type="text"
-          name="alt"
-          defaultValue={article?.image?.alt || altValue}
-          placeholder="alt text"
-          onChange={(e) => {
-            setAltValue(e.target.value);
-            getImageAlt(e.target.value);
-          }}
-        />
+      <div className="imgOverview">
+        <img className="preview" src={fileURL} alt="img" />
+        <div className="imageTitle">{imageTitle}</div>
       </div>
     </div>
   );

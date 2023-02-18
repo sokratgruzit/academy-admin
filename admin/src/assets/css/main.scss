@@ -324,12 +324,24 @@ main {
 
 .image-uploader {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
   padding: 6px;
   border: 1px solid $c-lighter;
   border-radius: 4px;
-
+  gap: 30px;
+  .imgOverview {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    padding-top: 15px;
+    .preview {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+  }
   .uploader {
     position: relative;
     padding-top: 24px;
@@ -377,14 +389,6 @@ main {
     }
     &:hover .label {
       color: $c-blue;
-    }
-
-    .preview {
-      width: 44px;
-      height: 44px;
-      object-fit: cover;
-      border-radius: 4px;
-      margin-left: 30px;
     }
   }
 
