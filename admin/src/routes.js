@@ -13,6 +13,7 @@ import QuestionBank from "./components/pages/QuestionBank";
 import Quiz from "./components/pages/Quiz";
 import Tags from "./components/pages/Courses/tags/Tags";
 import Categories from "./components/pages/Courses/categories/Categories";
+import SubCategories from "./components/pages/Courses/SubCategories/SubCategories";
 
 export const useRoutes = (isAuthenticated) => {
   if (isAuthenticated) {
@@ -32,6 +33,9 @@ export const useRoutes = (isAuthenticated) => {
           <Route path="course/tags" element={<Tags />}></Route>
           <Route path="course/categories" element={<Categories />}></Route>
           <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+        <Route path="/" element={<Categories />}>
+          <Route path="course/subCategories" element={<SubCategories />}></Route>
         </Route>
       </Routes>
     );

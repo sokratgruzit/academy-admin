@@ -48,12 +48,13 @@ main {
 //border with corner styles
 .border {
   position: relative;
-
+  
   &::before,
   .inner::before,
   &::after,
   .inner::after {
     content: "";
+    pointer-events: none;
     position: absolute;
     height: 24px;
     width: 24px;

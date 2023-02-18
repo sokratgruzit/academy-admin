@@ -19,6 +19,7 @@ header {
 
    .link {
       padding: 10px 20px;
+      border-left: 6px solid transparent;
    }
 
    .activLink {
@@ -27,13 +28,16 @@ header {
       border-image-slice: 1;
       background-color: #415094;
    }
-   .link:focus {
+
+   .activeL {
       border-left: 6px solid #7c32ff;
       border-image-source: linear-gradient(#c738d8,#7c32ff);
       border-image-slice: 1;
+      background-color: #415094;
    }
 
    .link:hover {
+      border-left: 6px solid #7c32ff;
       background-color: #24326d;
    }
 }
