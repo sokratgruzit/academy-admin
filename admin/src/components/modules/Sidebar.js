@@ -167,17 +167,15 @@ function Sidebar() {
             return value;
           } 
         });
-
-        if (subArr) {
-          //checkedArr.push(subArr);
-        }
       };
-
-      checkedArr.push(
-        <NavLink onClick={onActive} key={_uniqueId('prefix-')} id={index} className={`link ${item.active ? "activeL" : ""}`} to={item.to}>
-          {item.title}
-        </NavLink>
-      );
+      
+      if (!item.subLinks) {
+        checkedArr.push(
+          <NavLink onClick={onActive} key={_uniqueId('prefix-')} id={index} className={`link ${item.active ? "activeL" : ""}`} to={item.to}>
+            {item.title}
+          </NavLink>
+        );
+      }
 
       checker(item);
     });
