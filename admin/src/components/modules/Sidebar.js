@@ -141,26 +141,26 @@ function Sidebar() {
     setLinks(newLinks);
   };
 
-  useEffect(() => {
-    let checkedArr = [[
-      {
-        title: "sTags",
-        to: "scourse/tags",
-        active: false
-      },
-      {
-        title: "sdTags",
-        to: "sdcourse/tags",
-        active: false
-      }, 
-      
-    ]];
+  const createLinks = () => {
+    let checkedArr = [];
 
-    temproraryData.map(item => {
+    temproraryData.map((item, index) => {
       let checker = (item) => {
         let subArr = _.find(_.values(item), (value) => {
           if (_.isArray(value)) {
+            checkedArr.push(
+              <Expand title={item.title} key={_uniqueId('sub1prefix-')}>
+                {value.map((s, i) => {
+                  return (
+                    <NavLink onClick={onActive} key={_uniqueId('sub2prefix-')} id={i + 'sub'} className={`link ${s.active ? "activeL" : ""}`} to={s.to}>
+                      {s.title}
+                    </NavLink>
+                  );
+                })}
+              </Expand>
+            );
             _.find(_.values(value), (v) => {
+              console.log(item)
               checker(v);
             });
             
@@ -169,20 +169,26 @@ function Sidebar() {
         });
 
         if (subArr) {
-          checkedArr.push(subArr);
+          //checkedArr.push(subArr);
         }
       };
 
+      checkedArr.push(
+        <NavLink onClick={onActive} key={_uniqueId('prefix-')} id={index} className={`link ${item.active ? "activeL" : ""}`} to={item.to}>
+          {item.title}
+        </NavLink>
+      );
+
       checker(item);
     });
-
-    setSub(checkedArr);
-  }, []);
+    
+    return checkedArr;
+  };
 
   return (
     <div className="border sidebar">
       <div className="inner"></div>
-      {links.map((item, index) => {
+      {/* {links.map((item, index) => {
         const check = item.subLinks ? false : true;
 
         let link = null;
@@ -193,9 +199,10 @@ function Sidebar() {
           </NavLink>;
         } else {
           link = <Expand title={item.title} key={_uniqueId('sub1prefix-')}>
-            {sub?.map((sub, i) => {
+            {sub?.map((s, i) => {
+              console.log(s)
               return (
-                <NavLink onClick={onActive} key={_uniqueId('sub2prefix-')} id={i + 'sub'} className={`link ${sub.active ? "activeL" : ""}`} to={sub.to}>
+                <NavLink onClick={onActive} key={_uniqueId('sub2prefix-')} id={i + 'sub'} className={`link ${s.active ? "activeL" : ""}`} to={"/"}>
                   {sub.title}
                 </NavLink>
               );
@@ -204,7 +211,8 @@ function Sidebar() {
         }
 
         return link;
-      })}
+      })} */}
+      {createLinks()}
     </div>
   );
 }
