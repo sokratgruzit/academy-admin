@@ -1,10 +1,6 @@
-import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import _uniqueId from "lodash.uniqueid";
-import _ from "lodash";
+import { useState } from "react";
 
-import Courses from "../pages/Courses";
-import Expand from "../UI/Expand";
+import RecursiveLink from "../UI/RecursiveLink";
 
 const temproraryData = [
   {
@@ -88,7 +84,7 @@ const temproraryData = [
             active: false
           }, 
           {
-            title: "Sub Categories",
+            title: "Sub Categories2",
             to: "",
             active: false,
             subLinks: [
@@ -126,9 +122,9 @@ const temproraryData = [
 
 function Sidebar() {
   const [ links, setLinks ] = useState(temproraryData);
-  const [ sub, setSub ] = useState([]);
 
   const onActive = (e) => {
+    console.log(e)
     let newLinks = temproraryData.map((link, index) => {
       if (e.target.id == index) {
         link.active = true;
@@ -138,79 +134,14 @@ function Sidebar() {
 
       return link;
     });
+
     setLinks(newLinks);
-  };
-
-  const createLinks = () => {
-    let checkedArr = [];
-
-    temproraryData.map((item, index) => {
-      let checker = (item) => {
-        let subArr = _.find(_.values(item), (value) => {
-          if (_.isArray(value)) {
-            checkedArr.push(
-              <Expand title={item.title} key={_uniqueId('sub1prefix-')}>
-                {value.map((s, i) => {
-                  return (
-                    <NavLink onClick={onActive} key={_uniqueId('sub2prefix-')} id={i + 'sub'} className={`link ${s.active ? "activeL" : ""}`} to={s.to}>
-                      {s.title}
-                    </NavLink>
-                  );
-                })}
-              </Expand>
-            );
-            _.find(_.values(value), (v) => {
-              console.log(item)
-              checker(v);
-            });
-            
-            return value;
-          } 
-        });
-      };
-      
-      if (!item.subLinks) {
-        checkedArr.push(
-          <NavLink onClick={onActive} key={_uniqueId('prefix-')} id={index} className={`link ${item.active ? "activeL" : ""}`} to={item.to}>
-            {item.title}
-          </NavLink>
-        );
-      }
-
-      checker(item);
-    });
-    
-    return checkedArr;
   };
 
   return (
     <div className="border sidebar">
       <div className="inner"></div>
-      {/* {links.map((item, index) => {
-        const check = item.subLinks ? false : true;
-
-        let link = null;
-
-        if (check) {
-          link =  <NavLink onClick={onActive} key={_uniqueId('prefix-')} id={index} className={`link ${item.active ? "activeL" : ""}`} to={item.to}>
-            {item.title}
-          </NavLink>;
-        } else {
-          link = <Expand title={item.title} key={_uniqueId('sub1prefix-')}>
-            {sub?.map((s, i) => {
-              console.log(s)
-              return (
-                <NavLink onClick={onActive} key={_uniqueId('sub2prefix-')} id={i + 'sub'} className={`link ${s.active ? "activeL" : ""}`} to={"/"}>
-                  {sub.title}
-                </NavLink>
-              );
-            })}
-          </Expand>;
-        }
-
-        return link;
-      })} */}
-      {createLinks()}
+      <RecursiveLink activeLink={onActive} data={links} />
     </div>
   );
 }
