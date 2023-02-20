@@ -106,7 +106,20 @@ const temproraryData = [
                   {
                     title: "sdTags",
                     to: "sdcourse/tags",
-                    active: false
+                    active: false,
+                    subLinks: [
+                      {
+                        title: "sTags",
+                        to: "scourse/tags",
+                        active: false
+                      },
+                      {
+                        title: "sdTags",
+                        to: "sdcourse/tags",
+                        active: false
+                      }, 
+                      
+                    ]
                   }, 
                   
                 ]
