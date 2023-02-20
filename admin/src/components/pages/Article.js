@@ -19,6 +19,12 @@ function Article() {
   const { token } = useContext(AuthContext);
   const { request } = useHttp();
 
+  const [first, setfirst] = useState(3);
+
+  useEffect(() => {
+    setfirst(3);
+  }, [first]);
+
   const getTaxomonies = async () => {
     try {
       const [category, tag, level, language] = await Promise.all([
@@ -52,13 +58,20 @@ function Article() {
     setArticles(articles);
   };
 
-  const removeHandler = async (slug) => {
-    const result = await request("/api/content/articles/" + slug, "delete", null, {
-      Authorization: `Bearer ${token}`,
-    });
+  const removeHandler = async (chosenArticle) => {
+    const result = await request(
+      "/api/content/articles/" + chosenArticle._id,
+      "delete",
+      null,
+      {
+        Authorization: `Bearer ${token}`,
+      },
+    );
 
     if (result.message === "Article successuly deleted") {
-      const updatedItems = articles.docs.filter((item) => item.title !== slug);
+      const updatedItems = articles.docs.filter(
+        (item) => item.title !== chosenArticle.title,
+      );
       setArticles((prev) => ({ ...prev, docs: updatedItems }));
     }
   };
@@ -108,7 +121,7 @@ function Article() {
                   <span className="title">{article.slug}</span>
                   <div className="btns">
                     <button onClick={() => editHandler(article)}>Edit</button>
-                    <button onClick={() => removeHandler(article.slug)}>Remove</button>
+                    <button onClick={() => removeHandler(article)}>Remove</button>
                   </div>
                 </div>
               );

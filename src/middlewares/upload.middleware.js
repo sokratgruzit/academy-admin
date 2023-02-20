@@ -43,12 +43,19 @@ const getImage = async (req, res) => {
     res.status(404).send("Image not found");
   });
 
-  res.setHeader("Content-Type", "image/jpeg");
+  res.setHeader("Content-Type", "image/png");
 
   stream.pipe(res);
 };
 
+async function deleteImage(fileName) {
+  try {
+    await bucket.file(fileName).delete();
+  } catch (err) {}
+}
+
 module.exports = {
   upload,
   getImage,
+  deleteImage,
 };

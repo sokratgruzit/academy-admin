@@ -35,8 +35,7 @@ function ArticleModal({
       duration: "",
       editor: "",
       image: {
-        path: "",
-        alt: "",
+        path: `http://localhost:4000/api/images/${article._id}.png`,
       },
     };
 
@@ -62,6 +61,7 @@ function ArticleModal({
     });
 
     if (message === "Article successuly updated") {
+      console.log(result);
       setArticles((prev) => ({
         ...prev,
         docs: prev.docs.map((doc) => (doc.title === article.title ? result : doc)),
@@ -76,6 +76,7 @@ function ArticleModal({
   };
 
   async function saveImage(file) {
+    if (!file?.name) return;
     let blob = file.slice(0, file.size, "image/png");
     const newFile = new File([blob], `${article._id}_article.png`, { type: "image/png" });
 
