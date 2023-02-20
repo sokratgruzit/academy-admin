@@ -76,8 +76,11 @@ function ArticleModal({
   };
 
   async function saveImage(file) {
+    let blob = file.slice(0, file.size, "image/png");
+    const newFile = new File([blob], `${article._id}_article.png`, { type: "image/png" });
+
     let data = new FormData();
-    data.append("image", file);
+    data.append("image", newFile);
     data.append("id", article._id);
 
     await fetch("api/upload/image", {

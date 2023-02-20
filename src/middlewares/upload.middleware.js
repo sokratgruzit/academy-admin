@@ -2,39 +2,21 @@ const { Storage } = require("@google-cloud/storage");
 const path = require("path");
 const Article = require("../models/Article");
 
-const gc = new Storage({
-  keyFilename: path.join(__dirname, "../../optimum-habitat-377819-2e92f3dfa8d6.json"),
-  projectId: "optimum-habitat-377819",
+const storage = new Storage({
+  projectId: "buoyant-imagery-378110",
+  keyFilename: path.join(__dirname, "../../buoyant-imagery-378110-078ae3dc746a.json"),
 });
 
-const cubitrixBucket = gc.bucket("cubitrix-storage-bucket");
+const bucket = storage.bucket("academy-images");
 
-async function generateV4ReadSignedUrl(fileName) {
-  // These options will allow temporary read access to the file
-  const options = {
-    version: "v4",
-    action: "read",
-    expires: Date.now() + 15 * 60 * 1000, // 15 minutes
-  };
-
-  // Get a v4 signed URL for reading the file
-  const [url] = await gc
-    .bucket("cubitrix-storage-bucket")
-    .file(fileName)
-    .getSignedUrl(options);
-
-  return url;
-}
-
-const upload = (req, res, next) => {
+const upload = async (req, res, next) => {
   if (!req.file) {
     res.status(400).send("No file uploaded.");
     return;
   }
-
   let fileName = req.file.originalname.replace(/\s/g, "");
 
-  const blob = cubitrixBucket.file(fileName);
+  const blob = bucket.file(fileName);
   const blobStream = blob.createWriteStream();
 
   blobStream.on("error", (err) => {
@@ -42,19 +24,31 @@ const upload = (req, res, next) => {
   });
 
   blobStream.on("finish", async () => {
-    // The public URL can be used to directly access the file via HTTP. const publicUrl = format(https://storage.googleapis.com/${bucket.name}/${blob.name});
-    await generateV4ReadSignedUrl(fileName).then(async (path) => {
-      await Article.findOneAndUpdate({ _id: req.body.id }, { image: { path } });
+    await Article.findOneAndUpdate(
+      { _id: req.body.id },
+      { image: { path: `http://localhost:4000/api/images/${fileName}` } },
+    );
 
-      res.status(200).json({ path: path });
-    });
+    res.status(200).json({ path: `http://localhost:4000/api/images/${fileName}` });
+  });
+  blobStream.end(req.file.buffer);
+};
 
-    //let publicUrl = `https://storage.googleapis.com/cubitrix-storage-bucket/${blob.name}`
+const getImage = async (req, res) => {
+  const { filename } = req.params;
+  const file = bucket.file(filename);
+
+  const stream = file.createReadStream();
+  stream.on("error", (err) => {
+    res.status(404).send("Image not found");
   });
 
-  blobStream.end(req.file.buffer);
+  res.setHeader("Content-Type", "image/jpeg");
+
+  stream.pipe(res);
 };
 
 module.exports = {
   upload,
+  getImage,
 };
