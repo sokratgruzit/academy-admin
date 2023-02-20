@@ -21,6 +21,7 @@ export const useRoutes = (isAuthenticated) => {
       <Routes>
         <Route path="/" element={<Dashboard />}>
           <Route path="dashboard" element={<DashboardTab />}></Route>
+          <Route path="admin/menu" element={<Categories />}></Route>
           <Route path="articles" element={<Article />}></Route>
           <Route path="taxonomies" element={<Taxonomies />}></Route>
           <Route path="pages" element={<Pages />}></Route>
