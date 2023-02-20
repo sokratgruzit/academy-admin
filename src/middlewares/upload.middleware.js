@@ -31,7 +31,7 @@ const upload = async (req, res, next) => {
 
     res.status(200).json({ path: `http://localhost:4000/api/images/${fileName}` });
   });
-  
+
   blobStream.end(req.file.buffer);
 };
 
@@ -47,7 +47,6 @@ const getImage = async (req, res) => {
   res.setHeader("Content-Type", "image/png");
 
   stream.pipe(res);
->>>>>>> cf8beac15bbc63028b77d16c07e6f9564f9b8453
 };
 
 async function deleteImage(fileName) {
