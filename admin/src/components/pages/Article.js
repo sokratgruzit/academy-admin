@@ -58,6 +58,7 @@ function Article() {
     setArticles(articles);
   };
 
+  //Images managment
   const removeHandler = async (chosenArticle) => {
     const result = await request(
       "/api/content/articles/" + chosenArticle._id,
