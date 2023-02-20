@@ -9,6 +9,18 @@ const temproraryData = [
     active: false
   },
   {
+    title: "admin",
+    to: "admin",
+    active: false,
+    subLinks: [
+      {
+        title: "menu",
+        to: "admin/menu",
+        active: false
+      }
+    ]
+  },
+  {
     title: "Taxonomies",
     to: "taxonomies",
     active: false
@@ -31,7 +43,7 @@ const temproraryData = [
   {
     title: "Become instructor",
     to: "become-instructor",
-    active: true
+    active: false
   },
   {
     title: "Footer",
@@ -82,51 +94,7 @@ const temproraryData = [
             title: "sdTags",
             to: "sdcourse/tags",
             active: false
-          }, 
-          {
-            title: "Sub Categories2",
-            to: "",
-            active: false,
-            subLinks: [
-              {
-                title: "sTags",
-                to: "scourse/tags",
-                active: false
-              },
-              {
-                title: "sdTags",
-                to: "sdcourse/tags",
-                active: false,
-                subLinks: [
-                  {
-                    title: "sTags",
-                    to: "scourse/tags",
-                    active: false
-                  },
-                  {
-                    title: "sdTags",
-                    to: "sdcourse/tags",
-                    active: false,
-                    subLinks: [
-                      {
-                        title: "sTags",
-                        to: "scourse/tags",
-                        active: false
-                      },
-                      {
-                        title: "sdTags",
-                        to: "sdcourse/tags",
-                        active: false
-                      }, 
-                      
-                    ]
-                  }, 
-                  
-                ]
-              }, 
-              
-            ]
-          },
+          }
         ]
       },
     ]

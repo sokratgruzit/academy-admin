@@ -53,7 +53,7 @@ function Article() {
   };
 
   const removeHandler = async (slug) => {
-    const result = await request("/api/content/articles/" + slug, "delete", null, {
+    const result = await request("/api/content/articles/" + slug, "DELETE", null, {
       Authorization: `Bearer ${token}`,
     });
 
