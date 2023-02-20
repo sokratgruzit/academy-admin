@@ -1,3 +1,4 @@
+const { deleteImage } = require("../middlewares/upload.middleware");
 const Article = require("../models/Article");
 var ObjectId = require("mongoose").Types.ObjectId;
 
@@ -64,6 +65,12 @@ async function create(req, res) {
 
 async function update(req, res) {
   try {
+    // const foundArticle = await Article.findOne({ slug: req.params.slug });
+
+    // if (!foundArticle) return res.status(400).json({ message: "Article not found" });
+
+    // console.log({ ...foundArticle, _doc: {...req.body} });
+
     const result = await Article.findOneAndUpdate({ slug: req.params.slug }, req.body, {
       new: true,
     }).populate(["category", "level", "tag", "language"]);
@@ -80,9 +87,9 @@ async function update(req, res) {
 
 async function destroy(req, res) {
   try {
-    // const result = await article.destroy(req.params.slug);
+    const result = await Article.deleteOne({ _id: req.params.slug });
 
-    const result = await Article.deleteOne({ slug: req.params.slug });
+    deleteImage(`${req.params.slug}_article.png`);
 
     if (result.acknowledged === true) {
       return res.status(200).json({ message: "Article successuly deleted" });
