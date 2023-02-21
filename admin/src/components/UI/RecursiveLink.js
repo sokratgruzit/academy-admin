@@ -2,24 +2,25 @@ import { NavLink } from "react-router-dom";
 import _uniqueId from "lodash.uniqueid";
 
 import Expand from "./Expand";
+import React from "react";
 
 const RecursiveLink = ({ data, activeLink }) => {
     return (
         <>
             {data.map((s, i) => {
                 return (
-                    <>
+                    <React.Fragment key={_uniqueId('sub1prefix-')}>
                         {s.subLinks && 
-                            <Expand onClick={activeLink} title={s.title} key={_uniqueId('sub1prefix-')}>
+                            <Expand onClick={activeLink} title={s.title}>
                                 {s.subLinks && <RecursiveLink data={s.subLinks} />}
                             </Expand>
                         }
                         {!s.subLinks && 
-                            <NavLink onClick={activeLink} key={_uniqueId('sub2prefix-')} id={i + 'sub'} className={`link ${s.active ? "activeL" : ""}`} to={s.to}>
+                            <NavLink onClick={activeLink} id={i + 'sub'} className={`link ${s.active ? "activeL" : ""}`} to={s.to}>
                                 {s.title}
                             </NavLink>
                         }
-                    </>
+                    </React.Fragment>
                 );
             })}
         </>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function ImageUpload({ getImageFile, article, label = "upload image" }) {
-  const [fileURL, setFIleURL] = useState(article.image.path || "");
+  const [fileURL, setFIleURL] = useState(article?.image?.path || "");
   const [imageTitle, setImageTitle] = useState("");
 
   return (
