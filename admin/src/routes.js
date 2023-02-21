@@ -11,9 +11,10 @@ import Taxonomies from "./components/pages/Taxonomies";
 import BecomeInstructor from "./components/pages/BecomeInstructor";
 import QuestionBank from "./components/pages/QuestionBank";
 import Quiz from "./components/pages/Quiz";
-import Tags from "./components/pages/Courses/tags/Tags";
-import Categories from "./components/pages/Courses/categories/Categories";
-import SubCategories from "./components/pages/Courses/SubCategories/SubCategories";
+import Tags from "./components/pages/Tags/Tags";
+import Menu from "./components/pages/Menu/Menu";
+import Categories from "./components/pages/Categories/Categories";
+import SubCategories from "./components/pages/Categories/SubCategories/SubCategories";
 
 export const useRoutes = (isAuthenticated) => {
   if (isAuthenticated) {
@@ -21,7 +22,7 @@ export const useRoutes = (isAuthenticated) => {
       <Routes>
         <Route path="/" element={<Dashboard />}>
           <Route path="dashboard" element={<DashboardTab />}></Route>
-          <Route path="admin/menu" element={<Categories />}></Route>
+          <Route path="admin/menu" element={<Menu />}></Route>
           <Route path="articles" element={<Article />}></Route>
           <Route path="taxonomies" element={<Taxonomies />}></Route>
           <Route path="pages" element={<Pages />}></Route>

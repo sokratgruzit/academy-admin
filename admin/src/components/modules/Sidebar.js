@@ -9,26 +9,14 @@ const temproraryData = [
     active: false
   },
   {
-    title: "admin",
+    title: "Admin",
     to: "admin",
     active: false,
     subLinks: [
       {
-        title: "menu",
+        title: "Menu",
         to: "admin/menu",
-        active: false,
-        subLinks: [
-          {
-            title: "sTags",
-            to: "scourse/tags",
-            active: false
-          },
-          {
-            title: "sdTags",
-            to: "sdcourse/tags",
-            active: false
-          }
-        ]
+        active: false
       }
     ]
   },
@@ -89,7 +77,7 @@ const temproraryData = [
       }, 
       {
         title: "Categories",
-        to: "course/categories",
+        to: "categories",
         active: false
       },
       {

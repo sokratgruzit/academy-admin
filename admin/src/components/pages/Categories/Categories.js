@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect, useRef } from "react";
-import { useHttp } from "../../../../hooks/http.hook";
-import { AuthContext } from "../../../../context/AuthContext";
+import { useHttp } from "../../../hooks/http.hook";
+import { AuthContext } from "../../../context/AuthContext";
 
-import CategoriesModal from "../../../modals/CategoriesModal";
+import CategoriesModal from "../../modals/CategoriesModal";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 // styles
