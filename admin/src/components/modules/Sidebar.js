@@ -9,12 +9,12 @@ const temproraryData = [
     active: false
   },
   {
-    title: "admin",
+    title: "Admin",
     to: "admin",
     active: false,
     subLinks: [
       {
-        title: "menu",
+        title: "Menu",
         to: "admin/menu",
         active: false
       }
@@ -72,12 +72,12 @@ const temproraryData = [
     subLinks: [
       {
         title: "Tags",
-        to: "course/tags",
+        to: "tags",
         active: false
       }, 
       {
         title: "Categories",
-        to: "course/categories",
+        to: "categories",
         active: false
       },
       {

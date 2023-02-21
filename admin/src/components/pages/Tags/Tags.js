@@ -1,21 +1,19 @@
-import { useState, useContext, useEffect, useRef } from "react";
-import { useHttp } from "../../../../hooks/http.hook";
-import { AuthContext } from "../../../../context/AuthContext";
+import { useState, useContext, useEffect } from "react";
+import { useHttp } from "../../../hooks/http.hook";
+import { AuthContext } from "../../../context/AuthContext";
 
-import CategoriesModal from "../../../modals/CategoriesModal";
+import CategoriesModal from "../../modals/CategoriesModal";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 // styles
-import styles from './Categories.module.css';
+import styles from './Tags.module.css';
 
 const defaultFormData = {
     title: '',
-    active: '',
-    id: '',
-    image: ''
+    id: ''
 };
 
-const Categories = () => {
+const Tags = () => {
     const [itemList, setItemList] = useState([]);
     const [formData, setFormData] = useState(defaultFormData);
     const [edit, setEdit] = useState(false);
@@ -24,11 +22,11 @@ const Categories = () => {
     const { request } = useHttp();
 
     useEffect(() => {
-        request('/api/content/' + 'category', 'GET', null, {
+        request('/api/content/' + 'tag', 'GET', null, {
             Authorization: `Bearer ${token}`
         }).then((res) => {
             setItemList(res);
-        });
+        })
     }, []);
 
     useEffect(() => {
@@ -40,39 +38,26 @@ const Categories = () => {
         setFormData(defaultFormData);
     };
 
+    const handleModalInputChange = (e, name) => {
+        setFormData(prev => ({ ...prev, [name]: e.target.value }));
+    };
+
     const handleModalSubmit = async (e) => {
-        e.preventDefault(); 
-
-        console.log(URL.createObjectURL(e.target.files[0]));
-
-        console.log({
-            title: e.target.title.value,
-            active: e.target.active.value,
-            // image
-        })
-        
-        // await request(`/api/content/category${edit ? '/' + formData.id : ''}`, edit ? 'PUT' : 'POST', {
-        //     title: e.target.title.value,
-        //     active: e.target.active.value,
-        //     // image
-        // }, {
-        //     Authorization: `Bearer ${token}`
-        // });
-        // handleClose();
+        e.preventDefault();
+        await request(`/api/content/tag${edit ? '/' + formData.id : ''}`, edit ? 'PUT' : 'POST', { title: formData.title }, {
+            Authorization: `Bearer ${token}`
+        });
+        handleClose();
     };
  
     const handleRemove = async (id) => {
-       await request(`/api/content/category/${id}`, 'delete', null, {
+       await request(`/api/content/tag/${id}`, 'delete', null, {
           Authorization: `Bearer ${token}`
        });
     };
 
     const handleEdit = (item) => {
-        setFormData({ 
-            id: item._id, 
-            title: item.slug,
-            active: item.active
-        });
+        setFormData({ id: item._id, title: item.slug });
         setEdit(true);
         setModalActive(true);
     };
@@ -89,11 +74,11 @@ const Categories = () => {
         <>
             <div>
                 <div className={styles.categoriesHeader}>
-                    <h2>Categories</h2>
+                    <h2>Tags</h2>
                     <button onClick={() => {
                         setModalActive(!modalActive);
                         setEdit(false);
-                    }}>Add Category</button>
+                    }}>Add Tag</button>
                 </div>
 
                 <DragDropContext onDragEnd={handleDrop}>
@@ -135,7 +120,8 @@ const Categories = () => {
             <CategoriesModal
                 open={modalActive}
                 onClose={handleClose}
-                title={edit ? 'Edit Category' : 'Add New Category'}
+                title={edit ? 'Edit Tag' : 'Add New Tag'}
+                handleChange={handleModalInputChange}
                 handleSubmit={handleModalSubmit}
                 formData={formData}
             />
@@ -143,4 +129,4 @@ const Categories = () => {
     );
 };
 
-export default Categories;
+export default Tags;

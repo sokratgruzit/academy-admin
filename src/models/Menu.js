@@ -18,6 +18,7 @@ const schema = new Schema({
 		type: String
 	},
 	ord:Number,
+	active: {type: Boolean, default: false},
 	subLinks:[]
 }, {
 	timestamps: true
