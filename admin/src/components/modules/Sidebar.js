@@ -36,8 +36,8 @@ const temproraryData = [
     active: false
   },
   {
-    title: "Glossaries",
-    to: "glossaries",
+    title: "Glossary",
+    to: "glossary",
     active: false
   },
   {
@@ -82,20 +82,8 @@ const temproraryData = [
       },
       {
         title: "Sub Categories",
-        to: "",
+        to: "course/sub-categories",
         active: false,
-        subLinks: [
-          {
-            title: "sTags",
-            to: "scourse/tags",
-            active: false
-          },
-          {
-            title: "sdTags",
-            to: "sdcourse/tags",
-            active: false
-          }
-        ]
       },
     ]
   }
