@@ -1,6 +1,19 @@
 const Menu = require("../models/Menu");
 var ObjectId = require("mongoose").Types.ObjectId;
-let _uniqueId = require("lodash.uniqueid");
+const fs = require("fs-extra");
+const path = require("path");
+
+async function parseStructure(req, res) {
+  try {
+    const contentFolder = path.resolve("admin/src/components/pages");
+    const dataFolders = fs.readdirSync(contentFolder);
+
+    res.status(200).json(dataFolders);
+  } catch (e) {
+    console.log(e.message);
+    res.status(400).json({ message: e.message });
+  }
+}
 
 async function index(req, res) {
   try {
@@ -20,6 +33,7 @@ async function index(req, res) {
     res.status(400).json({ message: e.message });
   }
 }
+
 async function create(req, res) {
   try {
     const { title, to, tag, subLinks } = req.body;
@@ -76,4 +90,5 @@ module.exports = {
   index,
   update,
   destroy,
+  parseStructure
 };
