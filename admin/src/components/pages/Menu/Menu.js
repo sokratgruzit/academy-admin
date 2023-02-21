@@ -7,6 +7,7 @@ import MenuModal from "../../modals/MenuModal";
 function Menu() {
    const [ isOpen, setIsOpen ] = useState(false);
    const [ menuData, setMenuData ] = useState(null);
+   const [ menuDatatitle, setMenuDatatitle ] = useState(null);
    const [ menu, setMenu ] = useState({}); 
    const [ isCreate, setIsCreate ] = useState(true)
    const { token } = useContext(AuthContext);
@@ -16,49 +17,50 @@ function Menu() {
       const result = await request('/api/content/menu', 'GET', null, {
          Authorization: `Bearer ${token}`
       });
-        console.log(result)
-      setMenuData(result);
-   };
+        setMenuData(result);
+        setMenuDatatitle(result.docs[0].title);
+    };
+    
+    const removeHandler = async (to) => {
+        const result = await request('/api/content/menu/' + to, 'delete', null, {
+            Authorization: `Bearer ${token}`
+        });
+        
+        getMenu();
+    };
+    
+    const editHandler = async (menu) => {
+        setIsCreate(false);
+        setMenu(menu);
+        setIsOpen(true);
+    };
+    
+    const createHandler = () => {
+        setIsCreate(true);
+        setIsOpen(true);
+    };
+    
+    const closeHandler = () => {
+        setIsOpen(false); 
+        getMenu();
+        setMenu({});
+    };
+    
+    useEffect(() => {
+        getMenu();
 
-   const removeHandler = async (to) => {
-     await request('/api/content/menu/' + to, 'delete', null, {
-         Authorization: `Bearer ${token}`
-      });
-
-      getMenu();
-   };
-
-   const editHandler = async (menu) => {
-      setIsCreate(false);
-      setMenu(menu);
-      setIsOpen(true);
-   };
-
-   const createHandler = () => {
-      setIsCreate(true);
-      setIsOpen(true);
-   };
-
-   const closeHandler = () => {
-      setIsOpen(false); 
-      getMenu();
-      setMenu({});
-   };
-
-   useEffect(() => {
-    getMenu();
-   }, []);
-
+        console.log(menuData, 'menujs')
+    }, []);
+    
    return (
       <div className="content-page article">
          <div className="top">
             <h1 className="title">Menu</h1>
             <button onClick={createHandler}>create</button>
          </div>
-         {menuData && menuData.docs ? (
+         {menuData && menuData.result ? (
             <div className="list">
-               {menuData.docs.map((menuDataItem) => {
-                console.log(menuDataItem)
+               {menuData.result.map((menuDataItem) => {
                   return (
                      <div className="list-item" key={menuDataItem._id}>
                         <span>{menuDataItem.title}</span>
@@ -75,6 +77,7 @@ function Menu() {
          <MenuModal
             open={isOpen}
             onClose={closeHandler}
+            menuDataTitle={menuDatatitle}
             menu={menu}
             isCreate={isCreate}>
          </MenuModal>

@@ -48,6 +48,7 @@ async function create(req, res) {
       title,
       category,
       tag,
+      
       level,
       language,
       duration,
