@@ -1,16 +1,15 @@
-const {Router} = require('express');
+const { Router } = require("express");
 const router = Router();
+const Multer = require("multer");
 
-const UploadController = require('../middlewares/upload.middleware');
-const AuthMiddleware = require('../middlewares/auth.middleware');
-
-
-//  /api/auth
-router.post('/image',AuthMiddleware,  UploadController.single('image') , (req, res) => {
-   const path = 'uploads/images/' + req.file.filename;
-   res.status(200).json({path})
+const multer = Multer({
+  storage: Multer.memoryStorage(),
+  limits: { fileSize: 2 * 1024 * 1024 },
 });
 
- 
+const UploadController = require("../middlewares/upload.middleware");
+const AuthMiddleware = require("../middlewares/auth.middleware");
+
+router.post("/image", AuthMiddleware, multer.single("image"), UploadController.upload);
+
 module.exports = router;
-   

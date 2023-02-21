@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { useHttp } from "../../../../hooks/http.hook";
 import { AuthContext } from "../../../../context/AuthContext";
 
@@ -10,11 +10,12 @@ import styles from './Categories.module.css';
 
 const defaultFormData = {
     title: '',
-    id: ''
+    active: '',
+    id: '',
+    image: ''
 };
 
 const Categories = () => {
-    const [data, setData] = useState([]);
     const [itemList, setItemList] = useState([]);
     const [formData, setFormData] = useState(defaultFormData);
     const [edit, setEdit] = useState(false);
@@ -26,30 +27,38 @@ const Categories = () => {
         request('/api/content/' + 'category', 'GET', null, {
             Authorization: `Bearer ${token}`
         }).then((res) => {
-            setData(res);
             setItemList(res);
         });
-    }, [data]);
+    }, []);
 
     useEffect(() => {
-        // console.log('list changed')
-    }, [itemList]);
+        console.log('list changed')
+    }, [itemList])
 
     const handleClose = () => {
         setModalActive(false);
         setFormData(defaultFormData);
     };
 
-    const handleModalInputChange = (e, name) => {
-        setFormData(prev => ({ ...prev, [name]: e.target.value }));
-    };
-
     const handleModalSubmit = async (e) => {
-        e.preventDefault();
-        await request(`/api/content/category${edit ? '/' + formData.id : ''}`, edit ? 'PUT' : 'POST', { title: formData.title }, {
-            Authorization: `Bearer ${token}`
-        });
-        handleClose();
+        e.preventDefault(); 
+
+        console.log(URL.createObjectURL(e.target.files[0]));
+
+        console.log({
+            title: e.target.title.value,
+            active: e.target.active.value,
+            // image
+        })
+        
+        // await request(`/api/content/category${edit ? '/' + formData.id : ''}`, edit ? 'PUT' : 'POST', {
+        //     title: e.target.title.value,
+        //     active: e.target.active.value,
+        //     // image
+        // }, {
+        //     Authorization: `Bearer ${token}`
+        // });
+        // handleClose();
     };
  
     const handleRemove = async (id) => {
@@ -59,7 +68,11 @@ const Categories = () => {
     };
 
     const handleEdit = (item) => {
-        setFormData({ id: item._id, title: item.slug });
+        setFormData({ 
+            id: item._id, 
+            title: item.slug,
+            active: item.active
+        });
         setEdit(true);
         setModalActive(true);
     };
@@ -123,7 +136,6 @@ const Categories = () => {
                 open={modalActive}
                 onClose={handleClose}
                 title={edit ? 'Edit Category' : 'Add New Category'}
-                handleChange={handleModalInputChange}
                 handleSubmit={handleModalSubmit}
                 formData={formData}
             />

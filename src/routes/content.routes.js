@@ -1,104 +1,111 @@
-const {Router} = require('express');
+const { Router } = require("express");
 const router = Router();
 
-const AuthMiddleware = require('../middlewares/auth.middleware');
-const ArticleController = require('../controllers/article.controller');
-const PageController = require('../controllers/page.controller');
-const BecomeInstructorController = require('../controllers/become-instructor.controller');
-const GlossaryController = require('../controllers/glossary.controller');
-const FooterController = require('../controllers/footer.controller');
-const HeaderController = require('../controllers/header.controller');
-const TaxonomiesController = require('../controllers/taxonomies.controller');
-const QuestionBankController = require('../controllers/question-bank.controller');
-const QuizController = require('../controllers/quiz.controller');
+const AuthMiddleware = require("../middlewares/auth.middleware");
+const { articleValidator } = require("../middlewares/validators/auth.validator");
+const ArticleController = require("../controllers/article.controller");
+const PageController = require("../controllers/page.controller");
+const BecomeInstructorController = require("../controllers/become-instructor.controller");
+const GlossaryController = require("../controllers/glossary.controller");
+const FooterController = require("../controllers/footer.controller");
+const HeaderController = require("../controllers/header.controller");
+const TaxonomiesController = require("../controllers/taxonomies.controller");
+const QuestionBankController = require("../controllers/question-bank.controller");
+const QuizController = require("../controllers/quiz.controller");
+const MenuController = require("../controllers/menu.controller");
 
-const CategoryController = new TaxonomiesController('Category');
-const LevelController = new TaxonomiesController('Level');
-const TagController = new TaxonomiesController('Tag');
-const LanguageController = new TaxonomiesController('Language');
 
+const CategoryController = new TaxonomiesController("Category");
+const LevelController = new TaxonomiesController("Level");
+const TagController = new TaxonomiesController("Tag");
+const LanguageController = new TaxonomiesController("Language");
+
+// router.use(AuthMiddleware);
 
 //articles
-router.get('/articles' , AuthMiddleware,  ArticleController.index);
-router.get('/articles/:slug' , AuthMiddleware ,  ArticleController.findOne);
-router.post('/articles' , AuthMiddleware  , ArticleController.create);
-router.put('/articles/:slug', AuthMiddleware , ArticleController.update);
-router.delete('/articles/:slug', AuthMiddleware , ArticleController.destroy);
+router.get("/articles", ArticleController.index);
+router.get("/articles/:slug", ArticleController.findOne);
+router.post("/articles", ArticleController.create);
+router.put("/articles/:slug", ArticleController.update);
+router.delete("/articles/:slug", ArticleController.destroy);
+
+//menu
+router.get("/menu", MenuController.index);
+router.post("/menu", MenuController.create);
+router.put("/menu/:to", MenuController.update);
+router.delete("/menu/:to", MenuController.destroy);
 
 //pages
-router.get('/pages' , AuthMiddleware,  PageController.index);
-router.get('/pages/:slug' , AuthMiddleware ,  PageController.findOne);
-router.post('/pages' , AuthMiddleware  , PageController.create);
-router.put('/pages/:slug', AuthMiddleware , PageController.update);
-router.delete('/pages/:slug', AuthMiddleware , PageController.destroy);
+router.get("/pages", PageController.index);
+router.get("/pages/:slug", PageController.findOne);
+router.post("/pages", PageController.create);
+router.put("/pages/:slug", PageController.update);
+router.delete("/pages/:slug", PageController.destroy);
 
 //become an instructor
-router.get('/become-instructor' , AuthMiddleware,  BecomeInstructorController.index);
-router.put('/become-instructor/', AuthMiddleware , BecomeInstructorController.update);
-
+router.get("/become-instructor", BecomeInstructorController.index);
+router.put("/become-instructor/", BecomeInstructorController.update);
 
 //glossaries
-router.get('/glossaries' , AuthMiddleware,  GlossaryController.index);
-router.get('/glossaries/:slug' , AuthMiddleware ,  GlossaryController.findOne);
-router.post('/glossaries' , AuthMiddleware  , GlossaryController.create);
-router.put('/glossaries/:slug', AuthMiddleware , GlossaryController.update);
-router.delete('/glossaries/:slug', AuthMiddleware , GlossaryController.destroy);
+router.get("/glossaries", GlossaryController.index);
+router.get("/glossaries/:slug", GlossaryController.findOne);
+router.post("/glossaries", GlossaryController.create);
+router.put("/glossaries/:slug", GlossaryController.update);
+router.delete("/glossaries/:slug", GlossaryController.destroy);
 
 //footer
-router.get('/footer' , AuthMiddleware,  FooterController.index);
-router.get('/footer/:slug' , AuthMiddleware ,  FooterController.findOne);
-router.post('/footer' , AuthMiddleware  , FooterController.create);
-router.put('/footer/:slug', AuthMiddleware , FooterController.update);
-router.delete('/footer/:slug', AuthMiddleware , FooterController.destroy);
+router.get("/footer", FooterController.index);
+router.get("/footer/:slug", FooterController.findOne);
+router.post("/footer", FooterController.create);
+router.put("/footer/:slug", FooterController.update);
+router.delete("/footer/:slug", FooterController.destroy);
 
 //header
-router.get('/header' , AuthMiddleware,  HeaderController.index);
-router.get('/header/:slug' , AuthMiddleware ,  HeaderController.findOne);
-router.post('/header' , AuthMiddleware  , HeaderController.create);
-router.put('/header/:slug', AuthMiddleware , HeaderController.update);
-router.delete('/header/:slug', AuthMiddleware , HeaderController.destroy);
+router.get("/header", HeaderController.index);
+router.get("/header/:slug", HeaderController.findOne);
+router.post("/header", HeaderController.create);
+router.put("/header/:slug", HeaderController.update);
+router.delete("/header/:slug", HeaderController.destroy);
 
 //taxonomies
 
-router.get('/category' , AuthMiddleware  , CategoryController.index);
-router.get('/tag' , AuthMiddleware  , TagController.index);
-router.get('/level' , AuthMiddleware  , LevelController.index);
-router.get('/language' , AuthMiddleware  , LanguageController.index);
+router.get("/category", CategoryController.index);
+router.get("/tag", TagController.index);
+router.get("/level", LevelController.index);
+router.get("/language", LanguageController.index);
 
-router.post('/category' , AuthMiddleware  , CategoryController.create);
-router.post('/tag' , AuthMiddleware  , TagController.create);
-router.post('/level' , AuthMiddleware  , LevelController.create);
-router.post('/language' , AuthMiddleware  , LanguageController.create);
+router.post("/category", CategoryController.create);
+router.post("/tag", TagController.create);
+router.post("/level", LevelController.create);
+router.post("/language", LanguageController.create);
 
-router.get('/category/:id' , AuthMiddleware  , CategoryController.findOne);
-router.get('/tag/:id' , AuthMiddleware  , TagController.findOne);
-router.get('/level/:id' , AuthMiddleware  , LevelController.findOne);
-router.get('/language/:id' , AuthMiddleware  , LanguageController.findOne);
+router.get("/category/:id", CategoryController.findOne);
+router.get("/tag/:id", TagController.findOne);
+router.get("/level/:id", LevelController.findOne);
+router.get("/language/:id", LanguageController.findOne);
 
-router.put('/category/:id' , AuthMiddleware  , CategoryController.update);
-router.put('/tag/:id' , AuthMiddleware  , TagController.update);
-router.put('/level/:id' , AuthMiddleware  , LevelController.update);
-router.put('/language/:id' , AuthMiddleware  , LanguageController.update);
+router.put("/category/:id", CategoryController.update);
+router.put("/tag/:id", TagController.update);
+router.put("/level/:id", LevelController.update);
+router.put("/language/:id", LanguageController.update);
 
-router.delete('/category/:id' , AuthMiddleware  , CategoryController.destroy);
-router.delete('/tag/:id' , AuthMiddleware  , TagController.destroy);
-router.delete('/level/:id' , AuthMiddleware  , LevelController.destroy);
-router.delete('/language/:id' , AuthMiddleware  , LanguageController.destroy);
+router.delete("/category/:id", CategoryController.destroy);
+router.delete("/tag/:id", TagController.destroy);
+router.delete("/level/:id", LevelController.destroy);
+router.delete("/language/:id", LanguageController.destroy);
 
 //question bank
-router.get('/question-bank' , AuthMiddleware,  QuestionBankController.index);
-router.get('/question-bank/:slug' , AuthMiddleware ,  QuestionBankController.findOne);
-router.post('/question-bank' , AuthMiddleware  , QuestionBankController.create);
-router.put('/question-bank/:slug', AuthMiddleware , QuestionBankController.update);
-router.delete('/question-bank/:slug', AuthMiddleware , QuestionBankController.destroy);
- 
+router.get("/question-bank", QuestionBankController.index);
+router.get("/question-bank/:slug", QuestionBankController.findOne);
+router.post("/question-bank", QuestionBankController.create);
+router.put("/question-bank/:slug", QuestionBankController.update);
+router.delete("/question-bank/:slug", QuestionBankController.destroy);
+
 //question bank
-router.get('/quiz' , AuthMiddleware,  QuizController.index);
-router.get('/quiz/:slug' , AuthMiddleware ,  QuizController.findOne);
-router.post('/quiz' , AuthMiddleware  , QuizController.create);
-router.put('/quiz/:slug', AuthMiddleware , QuizController.update);
-router.delete('/quiz/:slug', AuthMiddleware , QuizController.destroy);
- 
- 
-module.exports = router; 
-  
+router.get("/quiz", QuizController.index);
+router.get("/quiz/:slug", QuizController.findOne);
+router.post("/quiz", QuizController.create);
+router.put("/quiz/:slug", QuizController.update);
+router.delete("/quiz/:slug", QuizController.destroy);
+
+module.exports = router;

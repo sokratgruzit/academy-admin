@@ -2,131 +2,157 @@
 
 //header
 header {
-   .inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 30px 0 30px;
-   }
+  .inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 0 30px;
+  }
 }
 
-//sidebar 
+.pagination {
+  display: flex;
+  div {
+    width: 40px;
+  }
+}
+//sidebar
 .sidebar {
    width: 260px;
    display: flex;
    flex-direction: column;
-   padding: 30px;
    border: 1px solid $c-lighter;
 
    .link {
-      margin-bottom: 20px;
+      padding: 10px 20px;
+      border-left: 6px solid transparent;
+   }
 
-      &:last-child {
-         margin-bottom: 0;
-      }
+   .activLink {
+      border-left: 6px solid #7c32ff;
+      border-image-source: linear-gradient(#c738d8,#7c32ff);
+      border-image-slice: 1;
+      background-color: #415094;
+   }
+
+   .activeL {
+      border-left: 6px solid #7c32ff;
+      border-image-source: linear-gradient(#c738d8,#7c32ff);
+      border-image-slice: 1;
+      background-color: #415094;
+   }
+
+   .link:hover {
+      border-left: 6px solid #7c32ff;
+      background-color: #24326d;
    }
 }
 
 // autorization page
 .auth-page {
-   display: flex;
-   align-items: center;
-   min-height: 100vh;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
 
-   .inner {
-      max-width: 665px;
-      margin: auto;
-   }
+  .inner {
+    max-width: 665px;
+    margin: auto;
+  }
 
-   .title {
-      text-align: center;
-   }
+  .title {
+    text-align: center;
+  }
 
-   .form {
-      margin-top: 30px;
-   }
+  .form {
+    margin-top: 30px;
+  }
 }
 
 //content page
 
 .content-page {
-   .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      border: 1px solid $c-lighter;
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid $c-lighter;
+    border-radius: 4px;
+
+    .title {
+      font-size: 20px;
+      line-height: 28px;
+      color: $c-dark;
+    }
+
+    button {
+      text-align: center;
+      background: $c-orange;
+      padding: 10px 22px;
+      max-width: 100%;
+      line-height: 22px;
+      color: $c-white;
+      cursor: pointer;
       border-radius: 4px;
+      transition: 0.4s;
 
-      .title {
-         font-size: 20px;
-         line-height: 28px;
-         color: $c-dark;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .list {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    border: 1px solid $c-lighter;
+    border-radius: 4px;
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .title {
+      padding-right: 30px;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btns {
+      flex: none;
+      width: auto;
+    }
+
+    button {
+      color: $c-dark;
+      transition: 0.4s;
+      margin-right: 16px;
+
+      &:last-child {
+        margin-right: 0;
       }
 
-      button {
-         text-align: center;
-         background: $c-orange;
-         padding: 10px 22px;
-         max-width: 100%;
-         line-height: 22px;
-         color: $c-white;
-         cursor: pointer;
-         border-radius: 4px;
-         transition: 0.4s;
-
-         display: -webkit-box;
-         -webkit-line-clamp: 1;
-         -webkit-box-orient: vertical;
-         overflow: hidden;
-         text-overflow: ellipsis;
+      &:hover {
+        color: $c-orange;
       }
-   }
+    }
 
-   .list {
-      margin-top: 40px;
-      display: flex;
-      flex-direction: column;
-   }
-
-   .list-item{
-      display: flex;
-      justify-content: space-between;
-      padding: 16px;
-      border: 1px solid $c-lighter;
-      border-radius: 4px;
-      margin-bottom: 16px;
-
-      &:last-child{
-         margin-bottom: 0;
-      }
-
-      .title{
-         padding-right: 30px;
-         display: -webkit-box;
-         -webkit-line-clamp: 1;
-         -webkit-box-orient: vertical;
-         overflow: hidden;
-         text-overflow: ellipsis;
-      }
-
-      .btns{
-         flex: none;
-         width: auto;
-      }
-
-      button{
-         color: $c-dark;
-         transition: .4s;
-         margin-right: 16px;
-
-         &:last-child{
-            margin-right: 0;
-         }
-
-         &:hover{
-            color: $c-orange;
-         }
-      }
-   }
+    .thumbnail {
+      width: 50px;
+      height: 50px;
+    }
+  }
 }
