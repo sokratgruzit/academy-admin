@@ -14,7 +14,6 @@ const QuestionBankController = require("../controllers/question-bank.controller"
 const QuizController = require("../controllers/quiz.controller");
 const MenuController = require("../controllers/menu.controller");
 
-
 const CategoryController = new TaxonomiesController("Category");
 const LevelController = new TaxonomiesController("Level");
 const TagController = new TaxonomiesController("Tag");

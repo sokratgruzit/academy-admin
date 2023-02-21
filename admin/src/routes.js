@@ -31,7 +31,7 @@ export const useRoutes = (isAuthenticated) => {
           <Route path="become-instructor" element={<BecomeInstructor />}></Route>
           <Route path="question-bank" element={<QuestionBank />}></Route>
           <Route path="quiz" element={<Quiz />}></Route>
-          <Route path="course/tags" element={<Tags />}></Route>
+          <Route path="tags" element={<Tags />}></Route>
           <Route path="course/categories" element={<Categories />}></Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
