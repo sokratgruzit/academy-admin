@@ -1,130 +1,178 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/http.hook";
-import BaseInput from '../UI/BaseInput'
-import BaseSelect from '../UI/BaseSelect';
-import Modal from './Modal';
-import BaseEditor from '../UI/BaseEditor';
-import BaseCheckox from '../UI/BaseCheckbox';
+import BaseInput from "../UI/BaseInput";
+import BaseSelect from "../UI/BaseSelect";
+import Modal from "./Modal";
 
+function QuestionModal({ open = false, onClose, question, isCreate, setQuestions }) {
+  const { token } = useContext(AuthContext);
+  const { request } = useHttp();
+  const [questionType, setQuestionType] = useState(question.type || "question");
 
-function QuestionModal({ open = false, onClose, taxonomies, question, isCreate }) {
-   const { token } = useContext(AuthContext);
-   const { request } = useHttp();
-   const [myEditor, setMyEditor] = useState(null);
-   const [answersLength, setAnswersLength] = useState(1);
+  const [answersValue, setAnswersValue] = useState({
+    answer1: "",
+    answer2: "",
+    answer3: "",
+    answer4: "",
+  });
 
-   const submitHandler = async (e) => {
-      e.preventDefault();
+  useEffect(() => {
+    if (question.answers) {
+      setAnswersValue(question.answers);
+    }
+  }, [question]);
 
-      let formData = {
-         title: '',
-         type: null,
-         question: '',
-         answers: [],
-         editor: ''
-      };
-      formData.title = e.target.title.value;
-      formData.type = e.target.type.value || null;
-      formData.question = e.target.question.value;
-      formData.editor = myEditor.getData();
+  const [correctAnswer, setCorrectAnswer] = useState(0);
 
-      const getDynamicValues = (prefix, length, name) => {
-         let obj = {}
-         for (let i = 0; i < length; i++) {
-            obj.title = e.target[`${prefix}_title_${i + 1}`].value
-            obj.value = e.target[`${prefix}_value_${i + 1}`].checked
-            formData[name].push(obj)
-            obj = {}
-         }
-      }
-      getDynamicValues('answ', answersLength, 'answers')
+  const submitHandler = async (e) => {
+    e.preventDefault();
 
-      const method = isCreate ? 'POST' : 'PUT';
-      const path = isCreate ? '/api/content/question-bank' : '/api/content/question-bank/' + question.slug;
+    let formData = {
+      title: "",
+      type: null,
+      question: "",
+      answers: {},
+    };
+    formData.title = e.target.title.value;
+    formData.type = e.target.type.value || null;
+    formData.question = e.target.question.value;
+    formData.answers = answersValue;
 
-      const result = await request(path, method, formData, {
-         Authorization: `Bearer ${token}`
-      });
-      onClose();
-   }
+    const method = isCreate ? "POST" : "PUT";
+    const path = isCreate
+      ? "/api/content/question-bank"
+      : "/api/content/question-bank/" + question.slug;
 
-   const answers = [];
-   for (let i = 1; i <= answersLength; i++) {
-      answers.push(
-         (
-            <div key={i}>
-               <BaseInput
-                  type="text"
-                  id={`answ_title_${i}`}
-                  name={`answ_title_${i}`}
-                  label="title"
-                  defaultValue={question?.answers && question.answers[i - 1]?.title ? question.answers[i - 1].title : ''}
-                  placeholder="title" />
-               <br />
-               <BaseCheckox name={`answ_value_${i}`} id={`answ_value_${i}`} label="is question correct or false"
-                  defaultChecked={question?.answers && question.answers[i - 1]?.value ? question.answers[i - 1].value : false} />
-               <br />
-               <br />
-               <hr/>
-            </div>
-         )
-      )
-   }
+    const result = await request(path, method, formData, {
+      Authorization: `Bearer ${token}`,
+    });
 
+    if (result?.message === "new question created") {
+      setQuestions((prev) => [...prev, result.result]);
+    }
 
-   useEffect(() => {
-      if(question.answers){
-         setAnswersLength(question.answers.length || 1)
-      }else{
-         setAnswersLength(1)
-      }
-   }, [open])
+    if (result?.message === "question updated") {
+      // setQuestions((prev) => [...prev, result.result]);
+      // setQuestions((prev) => [
+      //   ...prev.map((q) => (q._id === result.result._id ? result.result : q)),
+      // ]);
+    }
+    console.log(result);
+    onClose();
+  };
 
-   return (
-      <Modal open={open} onClose={onClose} title="Question">
-         <form onSubmit={submitHandler} className="form-list">
-            <BaseInput
-               type="text"
-               id="title"
-               name="title" defaultValue={question.title || ''}
-               label="title"
-               placeholder="enter title" />
-            <BaseSelect
-               name="type"
-               options={[
-                  { value: 'question', label: 'question' },
-                  { value: 'informational', label: 'informational' }
-               ]}
-               defaultValue={question.type}
-               placeholder='select type'
+  const chooseCorrectAnswer = (e, num) => {
+    if (e.currentTarget.checked) setCorrectAnswer(num);
+  };
+
+  return (
+    <Modal open={open} onClose={onClose} title="Question">
+      <form onSubmit={submitHandler} className="form-list">
+        <BaseInput
+          type="text"
+          id="title"
+          name="title"
+          defaultValue={question.title || ""}
+          label="title"
+          placeholder="enter title"
+        />
+        <BaseSelect
+          name="type"
+          options={[
+            { value: "question", label: "question" },
+            { value: "informational", label: "informational" },
+          ]}
+          defaultValue={{ value: questionType, label: questionType }}
+          onChange={(e) => {
+            setQuestionType(e.value);
+          }}
+          placeholder="select type"
+        />
+        <BaseInput
+          type="text"
+          id="question"
+          name="question"
+          defaultValue={question.question || ""}
+          label="question"
+          placeholder="enter question"
+        />
+        <div className="correctAnswersSection">
+          <div className="answersTitle">
+            <h1>Possible Answers</h1>
+            <h1>Choose correct answer</h1>
+          </div>
+          <div className="answersInputWrapper">
+            <input
+              className="answersInput"
+              onChange={(e) => {
+                setAnswersValue((prev) => ({ ...prev, answer1: e.target.value }));
+              }}
+              value={answersValue["answer1"]}
+              placeholder="Answer 1"
             />
-            <BaseInput
-               type="text"
-               id="question"
-               name="question" defaultValue={question.question || ''}
-               label="question"
-               placeholder="enter question" />
-
-            {answersLength && (
-               <div>
-                  <h4>answers</h4>
-                  <br />
-                  {answers}
-                  <br />
-                  <div className='btn' onClick={() => setAnswersLength(answersLength + 1)}>add answer</div>
-                  {answersLength > 1 ? (
-                     <div className='btn' onClick={() => setAnswersLength(answersLength - 1)}>remove answer</div>
-                  ) : ''}
-               </div>
-            )}
-
-            <BaseEditor data={question.editor} setMyEditor={setMyEditor} id="questionEditor" />
-
-            <button className='btn' type="submit"> submit</button>
-         </form>
-      </Modal>
-   )
+            <input
+              type={"radio"}
+              checked={correctAnswer === 0}
+              onChange={(e) => chooseCorrectAnswer(e, 0)}
+              name="correctAnswer"
+            />
+          </div>
+          <div className="answersInputWrapper">
+            <input
+              className="answersInput"
+              onChange={(e) => {
+                setAnswersValue((prev) => ({ ...prev, answer2: e.target.value }));
+              }}
+              value={answersValue["answer2"]}
+              placeholder="Answer 2"
+            />
+            <input
+              type={"radio"}
+              checked={correctAnswer === 1}
+              onChange={(e) => chooseCorrectAnswer(e, 1)}
+              name="correctAnswer"
+            />
+          </div>
+          <div className="answersInputWrapper">
+            <input
+              className="answersInput"
+              onChange={(e) => {
+                setAnswersValue((prev) => ({ ...prev, answer3: e.target.value }));
+              }}
+              value={answersValue["answer3"]}
+              placeholder="Answer 3"
+            />
+            <input
+              type={"radio"}
+              checked={correctAnswer === 2}
+              onChange={(e) => chooseCorrectAnswer(e, 2)}
+              name="correctAnswer"
+            />
+          </div>
+          <div className="answersInputWrapper">
+            <input
+              className="answersInput"
+              onChange={(e) => {
+                setAnswersValue((prev) => ({ ...prev, answer4: e.target.value }));
+              }}
+              value={answersValue["answer4"]}
+              placeholder="Answer 4"
+            />
+            <input
+              type={"radio"}
+              checked={correctAnswer === 3}
+              onChange={(e) => chooseCorrectAnswer(e, 3)}
+              name="correctAnswer"
+            />
+          </div>
+        </div>
+        <button className="btn" type="submit">
+          submit
+        </button>
+      </form>
+    </Modal>
+  );
 }
 
 export default QuestionModal;

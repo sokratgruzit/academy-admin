@@ -35,7 +35,7 @@ function ArticleModal({
       duration: "",
       editor: "",
       image: {
-        path: `http://localhost:4000/api/images/${article._id}.png`,
+        path: `http://localhost:4000/api/images/${article._id}_article.png`,
       },
     };
 
@@ -61,7 +61,6 @@ function ArticleModal({
     });
 
     if (message === "Article successuly updated") {
-      console.log(result);
       setArticles((prev) => ({
         ...prev,
         docs: prev.docs.map((doc) => (doc.title === article.title ? result : doc)),
