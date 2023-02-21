@@ -16,6 +16,7 @@ import Tags from "./components/pages/Tags/Tags";
 import Categories from "./components/pages/Categories/Categories";
 import SubCategories from "./components/pages/Categories/SubCategories/SubCategories";
 import React from "react";
+import Menu from "./components/pages/Menu/Menu";
 
 const temproraryData = [
   {
@@ -26,14 +27,14 @@ const temproraryData = [
   },
   {
     title: "Admin",
-    to: "admin",
+    to: "",
     active: false,
     subLinks: [
       {
         title: "Menu",
-        to: "admin/menu",
+        to: "menu",
         active: false,
-        component: <Categories />,
+        component: <Menu />,
       },
     ],
   },

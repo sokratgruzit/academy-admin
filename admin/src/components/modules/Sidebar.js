@@ -10,12 +10,12 @@ const temproraryData = [
   },
   {
     title: "Admin",
-    to: "admin",
+    to: "",
     active: false,
     subLinks: [
       {
         title: "Menu",
-        to: "admin/menu",
+        to: "menu",
         active: false
       }
     ]
