@@ -95,7 +95,7 @@ function Sidebar() {
   const onActive = (e) => {
     console.log(e)
     let newLinks = temproraryData.map((link, index) => {
-      if (e.target.id == index) {
+      if (e.target.id === String(index)) {
         link.active = true;
       } else {
         link.active = false;

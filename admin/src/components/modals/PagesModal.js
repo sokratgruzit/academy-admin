@@ -5,7 +5,6 @@ import Modal from './Modal';
 import BaseInput from '../UI/BaseInput'
 import BaseEditor from '../UI/BaseEditor';
 
-
 function PagesModal({ open = false, onClose, page, isCreate }) {
    const { token } = useContext(AuthContext);
    const { request } = useHttp();
@@ -30,6 +29,7 @@ function PagesModal({ open = false, onClose, page, isCreate }) {
          Authorization: `Bearer ${token}`
       });
       onClose();
+      console.log(result)
    }
 
    return (

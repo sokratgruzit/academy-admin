@@ -48,8 +48,6 @@ function Menu() {
     
     useEffect(() => {
         getMenu();
-
-        console.log(menuData, 'menujs')
     }, []);
     
    return (

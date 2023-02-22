@@ -1,8 +1,8 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
 import _uniqueId from "lodash.uniqueid";
 
 import Expand from "./Expand";
-import React from "react";
 
 const RecursiveLink = ({ data, activeLink }) => {
     return (
