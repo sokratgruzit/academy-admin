@@ -52,6 +52,13 @@ function Article() {
     setArticles(articles);
   };
 
+  const getParsedStructure = async () => {
+    const data = await request("/api/content/structure", "GET", null, {
+      Authorization: `Bearer ${token}`,
+    });
+    console.log(data);
+  };
+
   const removeHandler = async (chosenArticle) => {
     const result = await request(
       "/api/content/articles/" + chosenArticle._id,
@@ -92,6 +99,7 @@ function Article() {
   useEffect(() => {
     getTaxomonies();
     getArticles();
+    getParsedStructure();
   }, []);
 
   return (

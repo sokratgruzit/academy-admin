@@ -1,45 +1,116 @@
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
 
-import Courses from "../pages/Courses";
-import Expand from "../UI/Expand";
+import RecursiveLink from "../UI/RecursiveLink";
+
+const temproraryData = [
+  {
+    title: "Dashboard",
+    to: "dashboard",
+    active: false
+  },
+  {
+    title: "Admin",
+    to: "",
+    active: false,
+    subLinks: [
+      {
+        title: "Menu",
+        to: "menu",
+        active: false
+      }
+    ]
+  },
+  {
+    title: "Taxonomies",
+    to: "taxonomies",
+    active: false
+  },
+  {
+    title: "Articles",
+    to: "articles",
+    active: false
+  },
+  {
+    title: "Pages",
+    to: "pages",
+    active: false
+  },
+  {
+    title: "Glossary",
+    to: "glossary",
+    active: false
+  },
+  {
+    title: "Become instructor",
+    to: "become-instructor",
+    active: false
+  },
+  {
+    title: "Footer",
+    to: "footer",
+    active: false
+  },
+  {
+    title: "Header",
+    to: "header",
+    active: false
+  },
+  {
+    title: "Question Bank",
+    to: "question-bank",
+    active: false
+  },
+  {
+    title: "Quiz",
+    to: "quiz",
+    active: false
+  },
+  {
+    title: "Courses",
+    to: '',
+    active: false,
+    subLinks: [
+      {
+        title: "Tags",
+        to: "tags",
+        active: false
+      }, 
+      {
+        title: "Categories",
+        to: "categories",
+        active: false
+      },
+      {
+        title: "Sub Categories",
+        to: "course/sub-categories",
+        active: false,
+      },
+    ]
+  }
+];
 
 function Sidebar() {
+  const [ links, setLinks ] = useState(temproraryData);
+
+  const onActive = (e) => {
+    console.log(e)
+    let newLinks = temproraryData.map((link, index) => {
+      if (e.target.id == index) {
+        link.active = true;
+      } else {
+        link.active = false;
+      }
+
+      return link;
+    });
+
+    setLinks(newLinks);
+  };
+
   return (
     <div className="border sidebar">
       <div className="inner"></div>
-      <NavLink className="link" to="dashboard">
-        Dashboard
-      </NavLink>
-      <NavLink className="link" to="taxonomies">
-        Taxonomies
-      </NavLink>
-      <NavLink className="link" to="articles">
-        Articles
-      </NavLink>
-      <NavLink className="link" to="pages">
-        Pages
-      </NavLink>
-      <NavLink className="link" to="glossaries">
-        Glossaries
-      </NavLink>
-      <NavLink className="link" to="become-instructor">
-        Become instructor
-      </NavLink>
-      <NavLink className="link" to="footer">
-        Footer
-      </NavLink>
-      <NavLink className="link" to="header">
-        Header
-      </NavLink>
-      <NavLink className="link" to="question-bank">
-        Question Bank
-      </NavLink>
-      <NavLink className="link" to="quiz">
-        Quiz
-      </NavLink>
-      <Expand>
-        <Courses />
-      </Expand>
+      <RecursiveLink activeLink={onActive} data={links} />
     </div>
   );
 }
