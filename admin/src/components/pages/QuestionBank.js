@@ -43,14 +43,21 @@ function QuestionBank() {
     const questions = await request("/api/content/question-bank" + query, "GET", null, {
       Authorization: `Bearer ${token}`,
     });
+
     setQuestions(questions);
   };
 
-  const removeHandler = async (slug) => {
-    await request("/api/content/question-bank/" + slug, "delete", null, {
+  const removeHandler = async (id) => {
+    const result = await request("/api/content/question-bank/" + id, "delete", null, {
       Authorization: `Bearer ${token}`,
     });
-    //  getQuestions();
+
+    if (result.message === "question deleted") {
+      setQuestions((prev) => ({
+        ...prev,
+        docs: [...prev.docs.filter((q) => q._id !== result.id)],
+      }));
+    }
   };
 
   const editHandler = async (question) => {
@@ -66,7 +73,6 @@ function QuestionBank() {
 
   const closeHandler = () => {
     setIsOpen(false);
-    //   getQuestions();
     setQuestion({});
   };
 
@@ -87,7 +93,7 @@ function QuestionBank() {
       </div>
       <>
         <div className="list">
-          {questions?.map((question) => {
+          {questions?.docs?.map((question) => {
             return (
               <div className="list-item" key={question._id}>
                 <span className="title">{question.title}</span>

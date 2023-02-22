@@ -1,5 +1,12 @@
 const { Schema, model, mongoose } = require("mongoose");
 
+const slug = require("mongoose-slug-updater");
+
+// Exclude the QuestionBank model
+const pluginOptions = { excludedModels: ["QuestionBank"] };
+
+mongoose.plugin(slug, pluginOptions);
+
 const schema = new Schema({
   title: {
     type: String,
@@ -13,15 +20,6 @@ const schema = new Schema({
   question: {
     type: String,
   },
-  // answers: {
-  //   type: Array,
-  //   default: [
-  //     {
-  //       title: String,
-  //       value: Boolean,
-  //     },
-  //   ],
-  // },
   answers: Object,
   editor: {
     type: String,

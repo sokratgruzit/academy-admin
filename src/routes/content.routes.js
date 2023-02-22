@@ -96,10 +96,9 @@ router.delete("/language/:id", LanguageController.destroy);
 
 //question bank
 router.get("/question-bank", QuestionBankController.index);
-router.get("/question-bank/:slug", QuestionBankController.findOne);
 router.post("/question-bank", QuestionBankController.create);
-router.put("/question-bank/:slug", QuestionBankController.update);
-router.delete("/question-bank/:slug", QuestionBankController.destroy);
+router.put("/question-bank/:id", QuestionBankController.update);
+router.delete("/question-bank/:id", QuestionBankController.destroy);
 
 //question bank
 router.get("/quiz", QuizController.index);
