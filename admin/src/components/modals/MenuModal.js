@@ -24,6 +24,8 @@ import BaseSelect from '../UI/BaseSelect';
      subLinks: [
        {
          title: "Menu",
+         value: 'menu',
+         label: 'menu',
          to: "menu",
          active: false
        }
@@ -127,7 +129,7 @@ import BaseSelect from '../UI/BaseSelect';
  function MenuModal({ open = false, onClose, menu, isCreate }) {
    const { token } = useContext(AuthContext);
    const [ selectData, setSelectData] = useState(temproraryData);
-   const [ selectOptionData, setSelectOptionData] = useState([temproraryData]);
+   const [ selectOptionData, setSelectOptionData] = useState([[temproraryData]]);
    const { request } = useHttp();
 
    
@@ -153,13 +155,13 @@ import BaseSelect from '../UI/BaseSelect';
    };
 
    const handleChange = (e) => {
+      console.log(e, 'e')
       if (e.subLinks) {
-         // console.log(e, 'hi');
          setSelectData(e.subLinks);
-         let optionData = [temproraryData];
-         optionData.push(e.subLinks)
+         let optionData = [[temproraryData]];
+         optionData.push([e.subLinks])
          setSelectOptionData(optionData)
-         // console.log(selectOptionData);
+
       } else {
          console.log('this component has not children')
       }
@@ -167,7 +169,7 @@ import BaseSelect from '../UI/BaseSelect';
    
    useEffect(() => {
       setSelectData(temproraryData);
-      setSelectOptionData([temproraryData]);
+      setSelectOptionData([[temproraryData]]);
       console.log(selectOptionData, 'useffect')
    }, []);
 
@@ -197,39 +199,28 @@ import BaseSelect from '../UI/BaseSelect';
                placeholder="to" 
             />
 
-            {console.log(selectOptionData, 'dsef')}
-            
-            <BaseSelect
-                  name="perent"
-                  options={selectOptionData[0]}
-                  placeholder={"select component"} 
-                  getOptionLabel={selectOptionData?.title}
-                  getOptionValue={selectOptionData?.to}
-                  defaultValue={'selectlals'}
-                  onChange={handleChange}
-            />
-            {selectOptionData.length < 1 ?
-               (
-                  console.log('hs')
-               ) 
-                :
-               (
+            {               
                selectOptionData.map((q, i )=> {
                   console.log(q, 'q')
                   return(
-                     <BaseSelect
-                        key={i}
-                        name="perent"
-                        options={q}
-                        placeholder={"select component"} 
-                        // getOptionLabel={q[1].title}
-                        // getOptionValue={q?.to}
-                        defaultValue={'selectlals'}
-                        onChange={handleChange}
-                     />
-                  )
+                     q.map((item, index) => {
+                        console.log(item, 'item')
+                        return(
+                           <BaseSelect
+                              key={index}
+                              name="perent"
+                              options={item}
+                              placeholder={"select component"} 
+                              // getOptionLabel={q[1].title}
+                              // getOptionValue={q?.to}
+                              defaultValue={'selectlals'}
+                              onChange={handleChange}
+                           />
+                        )
+                     })
+                  ) 
                })
-            )}
+            }
 
             <button className='btn' type="submit"> submit</button>
          </form>
