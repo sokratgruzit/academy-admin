@@ -51,9 +51,14 @@ function Article() {
   const getArticles = async (page) => {
     let query;
     page ? (query = "?page=" + page) : (query = "");
-    const articles = await request("/api/content/articles" + query, "GET", null, {
-      Authorization: `Bearer ${token}`,
-    });
+    const articles = await request(
+      "/api/content/articles" + query,
+      "GET",
+      null,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
 
     setArticles(articles);
   };
@@ -66,12 +71,12 @@ function Article() {
       null,
       {
         Authorization: `Bearer ${token}`,
-      },
+      }
     );
 
     if (result.message === "Article successuly deleted") {
       const updatedItems = articles.docs.filter(
-        (item) => item.title !== chosenArticle.title,
+        (item) => item.title !== chosenArticle.title
       );
       setArticles((prev) => ({ ...prev, docs: updatedItems }));
     }
@@ -99,6 +104,7 @@ function Article() {
   useEffect(() => {
     getTaxomonies();
     getArticles();
+    getParsedStructure();
   }, []);
 
   return (
@@ -122,7 +128,9 @@ function Article() {
                   <span className="title">{article.slug}</span>
                   <div className="btns">
                     <button onClick={() => editHandler(article)}>Edit</button>
-                    <button onClick={() => removeHandler(article)}>Remove</button>
+                    <button onClick={() => removeHandler(article)}>
+                      Remove
+                    </button>
                   </div>
                 </div>
               );
