@@ -12,13 +12,14 @@ const HeaderController = require("../controllers/header.controller");
 const TaxonomiesController = require("../controllers/taxonomies.controller");
 const QuestionBankController = require("../controllers/question-bank.controller");
 const QuizController = require("../controllers/quiz.controller");
+const MenuController = require("../controllers/menu.controller");
 
 const CategoryController = new TaxonomiesController("Category");
 const LevelController = new TaxonomiesController("Level");
 const TagController = new TaxonomiesController("Tag");
 const LanguageController = new TaxonomiesController("Language");
 
-router.use(AuthMiddleware);
+// router.use(AuthMiddleware);
 
 //articles
 router.get("/articles", ArticleController.index);
@@ -26,6 +27,13 @@ router.get("/articles/:slug", ArticleController.findOne);
 router.post("/articles", ArticleController.create);
 router.put("/articles/:slug", ArticleController.update);
 router.delete("/articles/:slug", ArticleController.destroy);
+
+//menu
+router.get("/menu", MenuController.index);
+router.post("/menu", MenuController.create);
+router.put("/menu/:to", MenuController.update);
+router.delete("/menu/:to", MenuController.destroy);
+router.get("/structure", MenuController.parseStructure);
 
 //pages
 router.get("/pages", PageController.index);
@@ -88,10 +96,9 @@ router.delete("/language/:id", LanguageController.destroy);
 
 //question bank
 router.get("/question-bank", QuestionBankController.index);
-router.get("/question-bank/:slug", QuestionBankController.findOne);
 router.post("/question-bank", QuestionBankController.create);
-router.put("/question-bank/:slug", QuestionBankController.update);
-router.delete("/question-bank/:slug", QuestionBankController.destroy);
+router.put("/question-bank/:id", QuestionBankController.update);
+router.delete("/question-bank/:id", QuestionBankController.destroy);
 
 //question bank
 router.get("/quiz", QuizController.index);

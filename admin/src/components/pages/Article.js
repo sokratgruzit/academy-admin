@@ -19,12 +19,6 @@ function Article() {
   const { token } = useContext(AuthContext);
   const { request } = useHttp();
 
-  const [first, setfirst] = useState(3);
-
-  useEffect(() => {
-    setfirst(3);
-  }, [first]);
-
   const getTaxomonies = async () => {
     try {
       const [category, tag, level, language] = await Promise.all([
@@ -58,7 +52,13 @@ function Article() {
     setArticles(articles);
   };
 
-  //Images managment
+  const getParsedStructure = async () => {
+    const data = await request("/api/content/structure", "GET", null, {
+      Authorization: `Bearer ${token}`,
+    });
+    console.log(data);
+  };
+
   const removeHandler = async (chosenArticle) => {
     const result = await request(
       "/api/content/articles/" + chosenArticle._id,
@@ -99,6 +99,7 @@ function Article() {
   useEffect(() => {
     getTaxomonies();
     getArticles();
+    getParsedStructure();
   }, []);
 
   return (

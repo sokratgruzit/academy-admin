@@ -1,60 +1,59 @@
-const question = require('../services/question-bank.service');
+const QuestionBank = require("../models/QuestionBank");
 
 async function index(req, res) {
-   try {
-      const result = await question.index();
-      res.status(200).json(result);
-   } catch (e) {
-      console.log(e.message);
-      res.status(400).json({ message: e.message });
-   }
-} 
+  const { limit, page } = req.query;
+  ``;
+  try {
+    let options = {
+      limit: limit || 10,
+      page: page || 1,
+    };
 
-async function findOne(req, res){ 
-   try{ 
-      let result = await question.findOne(req.params.slug);
-      res.status(200).json(result);
-   }catch(e){ 
-      console.log(e.message);
-      res.status(400).json({ message: e.message }); 
-   }
+    const result = await QuestionBank.paginate({}, options);
+
+    res.status(200).json(result);
+  } catch (e) {
+    console.log(e.message);
+    res.status(400).json({ message: e.message });
+  }
 }
 
 async function create(req, res) {
-   try {
-      const result = await question.create(req.body);
-      res.status(200).json(result);
-   } catch (e) {
-      console.log(e.message);
-      res.status(400).json({ message: e.message })
-   }
+  try {
+    const inst = new QuestionBank(req.body);
+    const result = await inst.save();
+    res.status(200).json({ message: "new question created", result });
+  } catch (e) {
+    console.log(e.message);
+    res.status(400).json({ message: e.message });
+  }
 }
 
 async function update(req, res) {
-   try {
-      const result = await question.update(req.params.slug, req.body);
-      res.status(201).json(result);
-   } catch (e) {
-      console.log(e.message);
-      res.status(400).json({ message: e.message })
-   }
+  try {
+    const result = await QuestionBank.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      new: true,
+    });
+    res.status(201).json({ message: "question updated", result });
+  } catch (e) {
+    console.log(e.message);
+    res.status(400).json({ message: e.message });
+  }
+}
 
-} 
- 
-async function destroy(req, res){
-   try{
-      const result = await question.destroy(req.params.slug);
-      res.status(200).json(result)
-   }catch(e){
-      console.log(e.message);
-      res.status(400).json({ message: e.message })
-   }
+async function destroy(req, res) {
+  try {
+    await QuestionBank.deleteOne({ _id: req.params.id });
+    res.status(200).json({ message: "question deleted", id: req.params.id });
+  } catch (e) {
+    console.log(e.message);
+    res.status(400).json({ message: e.message });
+  }
 }
 
 module.exports = {
-   create, 
-   index,
-   findOne,
-   update,
-   destroy
-}
+  create,
+  index,
+  update,
+  destroy,
+};

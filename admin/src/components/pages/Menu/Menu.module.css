@@ -1,0 +1,68 @@
+.categoriesContainer {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.categoriesHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #CCCDCF;
+    border-radius: 4px;
+}
+
+.categoriesHeader h2 {
+    font-size: 20px;
+    line-height: 28px;
+    color: #00050f;
+}
+
+.categoriesHeader button {
+    text-align: center;
+    background: #FF7152;
+    padding: 10px 22px;
+    max-width: 100%;
+    line-height: 22px;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.4s;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.categoriesList {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.categoriesListItem {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    border: 1px solid #CCCDCF;
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+.categoriesButtons {
+    display: flex;
+    gap: 16px;
+}
+
+.categoriesButtons button {
+    color: #00050f;
+    transition: 0.4s;
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+}
+
+
