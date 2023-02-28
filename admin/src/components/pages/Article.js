@@ -99,6 +99,7 @@ function Article() {
   useEffect(() => {
     getTaxomonies();
     getArticles();
+    getParsedStructure();
   }, []);
 
   return (

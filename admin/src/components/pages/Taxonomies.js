@@ -1,8 +1,7 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import TaxonomiesModal from "../modals/TaxonomiesModal";
 import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/http.hook";
-
 
 function Taxonomies() {
    const { token } = useContext(AuthContext);
@@ -14,10 +13,10 @@ function Taxonomies() {
    const [isCreate, setIsCreate] = useState(true)
 
    const getTaxonomies = async (id) => {
-      const res = await request('/api/content/' + id, 'GET', null, {
-         Authorization: `Bearer ${token}`
-      });
-      settaxonomies(res);
+         const res = await request('/api/content/' + id, 'GET', null, {
+            Authorization: `Bearer ${token}`
+         });
+         settaxonomies(res);
    }
 
    const tabClickHanlder = (id) => {
@@ -26,7 +25,7 @@ function Taxonomies() {
    }
 
    const removeHandler = async (id) => {
-      const result = await request('/api/content/' + tab + '/' + id, 'delete', null, {
+      await request('/api/content/' + tab + '/' + id, 'delete', null, {
          Authorization: `Bearer ${token}`
       });
 
@@ -54,12 +53,6 @@ function Taxonomies() {
    return (
       <div className="taxonomies">
          <div className="tabs">
-            <button className={`tab ${tab === 'category' ? 'active' : ''}`} onClick={() => tabClickHanlder('category')}>
-               categories
-            </button>
-            <button className={`tab ${tab === 'tag' ? 'active' : ''}`} onClick={() => tabClickHanlder('tag')}>
-               tags
-            </button>
             <button className={`tab ${tab === 'level' ? 'active' : ''}`} onClick={() => tabClickHanlder('level')}>
                levels
             </button>
