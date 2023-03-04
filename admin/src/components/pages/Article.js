@@ -93,7 +93,7 @@ function Article() {
   useEffect(() => {
     getTaxomonies();
     getArticles();
-    getParsedStructure();
+    // getParsedStructure();
   }, []);
 
   return (

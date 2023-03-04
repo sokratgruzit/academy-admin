@@ -105,6 +105,6 @@ router.get("/quiz", QuizController.index);
 router.get("/quiz/:slug", QuizController.findOne);
 router.post("/quiz", QuizController.create);
 router.put("/quiz/:slug", QuizController.update);
-router.delete("/quiz/:slug", QuizController.destroy);
+router.delete("/quiz/:title", QuizController.destroy);
 
 module.exports = router;

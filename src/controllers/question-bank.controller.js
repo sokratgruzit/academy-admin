@@ -2,10 +2,21 @@ const QuestionBank = require("../models/QuestionBank");
 
 async function index(req, res) {
   const { limit, page } = req.query;
-  ``;
+
+  const limitNum = parseInt(limit);
+
+  if (limit && isNaN(limitNum)) {
+    return res.status(400).send("Invalid limit parameter");
+  }
+
+  if (limitNum === 0) {
+    const result = await QuestionBank.find();
+    return res.status(200).json(result);
+  }
+
   try {
     let options = {
-      limit: limit || 10,
+      limit: limitNum || 10,
       page: page || 1,
     };
 

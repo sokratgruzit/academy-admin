@@ -48,28 +48,13 @@ const schema = new Schema(
       slugPaddingSize: 2,
       unique: true,
     },
-    // description: {
-    //   type: String,
-    // },
-    description: [],
+    question: String,
     duration: {
       type: String,
     },
     category: { type: Schema.Types.ObjectId, ref: "Category" },
     level: { type: Schema.Types.ObjectId, ref: "Level" },
-    // structure: {
-    //   type: Array,
-    //   default: [
-    //     {
-    //       title: String,
-    //       question: { type: Schema.Types.ObjectId, ref: "QuestionBank" },
-    //     },
-    //   ],
-    // },
     structure: [questionSchema],
-    editor: {
-      type: String,
-    },
   },
   {
     timestamps: true,
