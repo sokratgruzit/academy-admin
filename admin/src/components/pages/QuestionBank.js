@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import QuestionModal from "../modals/QuestionModal";
+import QuestionModal from "../modals/QuestionModal/QuestionModal";
 import Pagination from "../UI/Pagination";
 import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/http.hook";

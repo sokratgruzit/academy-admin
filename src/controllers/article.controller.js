@@ -6,6 +6,17 @@ async function index(req, res) {
   try {
     const { category, level, tag, limit, page, id_not, language } = req.query;
 
+    const limitNum = parseInt(limit);
+
+    if (limit && isNaN(limitNum)) {
+      return res.status(400).send("Invalid limit parameter");
+    }
+
+    if (limitNum === 0) {
+      const result = await Article.find();
+      return res.status(200).json(result);
+    }
+
     let query = {};
     let options = {
       populate: ["category", "level", "tag", "language"],
