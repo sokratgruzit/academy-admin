@@ -13,7 +13,7 @@ const TaxonomiesController = require("../controllers/taxonomies.controller");
 const QuestionBankController = require("../controllers/question-bank.controller");
 const QuizController = require("../controllers/quiz.controller");
 const MenuController = require("../controllers/menu.controller");
-
+const ContactController = require("../controllers/contact");
 const CategoryController = new TaxonomiesController("Category");
 const LevelController = new TaxonomiesController("Level");
 const TagController = new TaxonomiesController("Tag");
@@ -106,5 +106,8 @@ router.get("/quiz/:slug", QuizController.findOne);
 router.post("/quiz", QuizController.create);
 router.put("/quiz/:slug", QuizController.update);
 router.delete("/quiz/:title", QuizController.destroy);
+
+// contact 
+router.post("/contact", ContactController.index);
 
 module.exports = router;
