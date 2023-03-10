@@ -7,9 +7,8 @@ import MenuModal from "../../modals/MenuModal";
 function Menu() {
    const [ isOpen, setIsOpen ] = useState(false);
    const [ menuData, setMenuData ] = useState(null);
-   const [ menuDatatitle, setMenuDatatitle ] = useState(null);
    const [ menu, setMenu ] = useState({}); 
-   const [ isCreate, setIsCreate ] = useState(true)
+   const [ isCreate, setIsCreate ] = useState(true);
    const { token } = useContext(AuthContext);
    const { request } = useHttp();
 
@@ -17,16 +16,16 @@ function Menu() {
       const result = await request('/api/content/menu', 'GET', null, {
          Authorization: `Bearer ${token}`
       });
-        setMenuData(result);
-        setMenuDatatitle(result.docs[0].title);
+
+      setMenuData(result);
     };
     
     const removeHandler = async (to) => {
-        const result = await request('/api/content/menu/' + to, 'delete', null, {
-            Authorization: `Bearer ${token}`
-        });
-        
-        getMenu();
+      const result = await request('/api/content/menu/' + to, 'delete', null, {
+         Authorization: `Bearer ${token}`
+      });
+      
+      getMenu();
     };
     
     const editHandler = async (menu) => {
@@ -54,20 +53,21 @@ function Menu() {
       <div className="content-page article">
          <div className="top">
             <h1 className="title">Menu</h1>
-            <button onClick={createHandler}>create</button>
+            <button onClick={createHandler}>Create</button>
          </div>
-         {menuData && menuData.result ? (
+         {console.log(menuData, 'fajjk')}
+         {menuData && menuData.docs ? (
             <div className="list">
-               {menuData.result.map((menuDataItem) => {
+               {menuData.docs.map((menuDataItem) => {
                   return (
                      <div className="list-item" key={menuDataItem._id}>
-                        <span>{menuDataItem.title}</span>
+                        <span>{menuDataItem.component}</span>
                         <div className="btns">
                            <button onClick={() => editHandler(menuDataItem)}>Edit</button>
                            <button onClick={() => removeHandler(menuDataItem.to)}>Remove</button>
                         </div>
                      </div>
-                  )
+                  );
                })}
             </div>
          ) : null}
@@ -75,7 +75,6 @@ function Menu() {
          <MenuModal
             open={isOpen}
             onClose={closeHandler}
-            menuDataTitle={menuDatatitle}
             menu={menu}
             isCreate={isCreate}>
          </MenuModal>

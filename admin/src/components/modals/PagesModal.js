@@ -25,11 +25,11 @@ function PagesModal({ open = false, onClose, page, isCreate }) {
       const method = isCreate ? 'POST' : 'PUT';
       const path = isCreate ? '/api/content/pages' : '/api/content/pages/' + page.slug;
 
-      const result = await request(path, method, formData, {
+      await request(path, method, formData, {
          Authorization: `Bearer ${token}`
       });
+      
       onClose();
-      console.log(result)
    }
 
    return (

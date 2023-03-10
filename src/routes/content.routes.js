@@ -33,7 +33,7 @@ router.get("/menu", MenuController.index);
 router.post("/menu", MenuController.create);
 router.put("/menu/:to", MenuController.update);
 router.delete("/menu/:to", MenuController.destroy);
-router.get("/structure", MenuController.parseStructure);
+router.get("/menu/structure", MenuController.parseStructure);
 
 //pages
 router.get("/pages", PageController.index);

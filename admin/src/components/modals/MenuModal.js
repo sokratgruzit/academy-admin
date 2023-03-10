@@ -1,228 +1,158 @@
 import { useContext, useEffect, useState} from 'react';
 import Modal from './Modal';
+import _uniqueId from "lodash.uniqueid";
 
 import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/http.hook";
 
 import BaseInput from '../UI/BaseInput';
 import BaseSelect from '../UI/BaseSelect';
-
- const temproraryData = [
-   {
-     title: "Dashboard",
-     value: 'dashboard',
-     label: 'dashboard',
-     to: "dashboard",
-     active: false
-   },
-   {
-     title: "Admin",
-     to: "",
-     value: 'Admin',
-     label: 'Admin',
-     active: false,
-     subLinks: [
-       {
-         title: "Menu",
-         value: 'menu',
-         label: 'menu',
-         to: "menu",
-         active: false
-       }
-     ]
-   },
-   {
-     title: "Taxonomies",
-     to: "taxonomies",
-     value: 'taxsonimies',
-     label: 'taxsonomies',
-     active: false
-   },
-   {
-     title: "Articles",
-     to: "articles",
-     value: 'articles',
-     label: 'articles',
-     active: false
-   },
-   {
-     title: "Pages",
-     to: "pages",
-     value: 'pages',
-     label: 'pages',
-     active: false
-   },
-   {
-     title: "Glossary",
-     to: "glossary",
-     value: 'glossary',
-     label: 'glossary',
-     active: false
-   },
-   {
-     title: "Become instructor",
-     to: "become-instructor",
-     value: 'become-instructor',
-     label: 'become-instructor',
-     active: false
-   },
-   {
-     title: "Footer",
-     to: "footer",
-     value: 'footer',
-     label: 'footer',
-     active: false
-   },
-   {
-     title: "Header",
-     to: "header",
-     value: 'header',
-     label: 'header',
-     active: false
-   },
-   {
-     title: "Question Bank",
-     to: "question-bank",
-     value: 'question-bank',
-     label: 'question-bank',
-     active: false
-   },
-   {
-     title: "Quiz",
-     to: "quiz",
-     value: 'quiz',
-     label: 'quiz',
-     active: false
-   },
-   {
-     title: "Courses",
-     to: '',
-     value: 'Courses',
-     label: 'Courses',
-     active: false,
-     subLinks: [
-       {
-         title: "Tags",
-         to: "tags",
-         value: 'tags',
-         label: 'tags',
-         active: false
-       }, 
-       {
-         title: "Categories",
-         to: "categories",
-         value: 'categories',
-         label: 'categories',
-         active: false
-       },
-       {
-         title: "Sub Categories",
-         to: "course/sub-categories",
-         value: 'Sub Categories',
-         label: 'Sub Categories',
-         active: false,
-       },
-     ]
-   }
- ];
  
  function MenuModal({ open = false, onClose, menu, isCreate }) {
    const { token } = useContext(AuthContext);
-   const [ selectData, setSelectData] = useState(temproraryData);
-   const [ selectOptionData, setSelectOptionData] = useState([[temproraryData]]);
+   const [ comps, setComps ] = useState([]);
+   const [ message, setMessage ] = useState("");
+   const [ compPath, setCompPath ] = useState("/");
+   const [ subLink, setSubLink ] = useState([]);
+   const [ subLinkBlock, setSubLinkBlock ] = useState([]);
    const { request } = useHttp();
 
-   
    const submitHandler = async (e) => {
       e.preventDefault();
       
       let formData = {
-         title: '',
-         editor: ''
+         to: '',
+         component: '',
+         path: '',
+         active: false
       };
-      formData.title = e.target.title.value;
-      formData.to = "koko";
-      formData.tag = "koko";
+
+      formData.component = e.target.component.value;
+      formData.to = e.target.to.value;
+      formData.path = e.target.path.value;
       
       const method = isCreate ? 'POST' : 'PUT';
       const path = isCreate ? '/api/content/menu' : '/api/content/menu/' + menu.to;
       
-      const result = await request(path, method, formData, {
+      await request(path, method, formData, {
          Authorization: `Bearer ${token}`
+      })
+      .then(res => {
+         return res;
+      })
+      .catch(err => {
+         setMessage(err[0].msg);
       });
-      console.log(result)
+
       onClose();
    };
 
    const handleChange = (e) => {
-      console.log(e, 'e')
-      if (e.subLinks) {
-         setSelectData(e.subLinks);
-         let optionData = [[temproraryData]];
-         optionData.push([e.subLinks])
-         setSelectOptionData(optionData)
+      setCompPath(e.compPath);
+   };
 
-      } else {
-         console.log('this component has not children')
-      }
+   const genereteSubLink = () => {
+      let sub = <div key={_uniqueId('sub1prefix-')}>
+         <h3>Sub link</h3>
+         <BaseSelect
+            name="subComponent"
+            options={comps}
+            placeholder={"Select component"} 
+            defaultValue={'None'}
+            isMulti={false}
+            onChange={handleChange}
+         />
+         <BaseInput
+            type="text"
+            id="to"
+            name="subTo" 
+            label="To"
+            placeholder="To" 
+         />
+         <BaseInput
+            type="text"
+            name="subPath" 
+            label="Component path"
+            value={compPath}
+            placeholder="Path"
+            readOnly={true} 
+         />
+      </div>
+
+      setSubLinkBlock([...subLinkBlock, sub]);
    };
    
    useEffect(() => {
-      setSelectData(temproraryData);
-      setSelectOptionData([[temproraryData]]);
-      console.log(selectOptionData, 'useffect')
+      const getComponents = async () => {
+         const result = await request('/api/content/menu/structure', 'GET', null, {
+            Authorization: `Bearer ${token}`
+         });
+
+         setComps(result);
+         onClose();
+      };
+
+      comps.map(item => {
+         let newResult = item.label.replace('.js', '');
+         return newResult; 
+      });
+
+      getComponents();
    }, []);
 
 
    return (
       <Modal open={open} onClose={onClose} title="admin">
          <form onSubmit={submitHandler} className="form-list">
-            <BaseInput
-               type="text"
-               id="title"
-               name="title" defaultValue={menu.title}
-               label="title"
-               placeholder="title"
-            />
-            <BaseInput
-               type="text"
-               id="tag"
-               name="tag" defaultValue={menu.tag}
-               label="Tag"
-               placeholder="tag" 
+            <span style={{color: 'red'}}>{ message }</span>
+            <BaseSelect
+               name="component"
+               options={comps}
+               placeholder={"Select component"} 
+               defaultValue={'None'}
+               isMulti={false}
+               onChange={handleChange}
             />
             <BaseInput
                type="text"
                id="to"
-               name="to" defaultValue={menu.to}
+               name="to" 
                label="To"
-               placeholder="to" 
+               placeholder="To" 
             />
-
-            {               
+            <BaseInput
+               type="text"
+               name="path" 
+               label="Component path"
+               value={compPath}
+               placeholder="Path"
+               readOnly={true} 
+            />
+            <div onClick={genereteSubLink}>Add sublink</div>
+            {subLinkBlock}
+            {/* {               
                selectOptionData.map((q, i )=> {
-                  console.log(q, 'q')
                   return(
                      q.map((item, index) => {
-                        console.log(item, 'item')
                         return(
                            <BaseSelect
                               key={index}
-                              name="perent"
+                              name="component"
                               options={item}
-                              placeholder={"select component"} 
+                              placeholder={"Select component"} 
                               // getOptionLabel={q[1].title}
                               // getOptionValue={q?.to}
                               defaultValue={'selectlals'}
+                              isMulti={false}
                               onChange={handleChange}
                            />
                         )
                      })
                   ) 
                })
-            }
+            } */}
 
-            <button className='btn' type="submit"> submit</button>
+            <button className='btn' type="submit">Submit</button>
          </form>
       </Modal>
    )

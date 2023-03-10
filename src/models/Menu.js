@@ -6,20 +6,22 @@ mongoose.plugin(slug);
 mongoose.plugin(mongoosePaginate);
 
 const schema = new Schema({
-   title: {
+   	component: {
 		type: String,
-		required: [true, 'Title is required'],
+		unique: true,
+		required: [true, 'Component is required'],
 	}, 
 	to: {  
 		type: String, 
-		unique: true 
+		unique: true,
+		required: [true, 'Route is required'],
 	},
-	tag: {
+	path: {
 		type: String
 	},
 	ord:Number,
 	active: {type: Boolean, default: false},
-	subLinks:[]
+	subLinks: []
 }, {
 	timestamps: true
 });

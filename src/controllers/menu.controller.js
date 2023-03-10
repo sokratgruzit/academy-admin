@@ -5,10 +5,24 @@ const path = require("path");
 
 async function parseStructure(req, res) {
   try {
+    let comps = [];
     const contentFolder = path.resolve("admin/src/components/pages");
     const dataFolders = fs.readdirSync(contentFolder);
 
-    res.status(200).json(dataFolders);
+    dataFolders.map(item => {
+      let ext = item.slice(-3);
+      if (ext == ".js") {
+        let parsedComp = item.replace('.js', '');
+
+        comps.push({
+          label: parsedComp,
+          value: parsedComp,
+          compPath: "./components/pages/" + item
+        });
+      }
+    });
+    
+    res.status(200).json(comps);
   } catch (e) {
     console.log(e.message);
     res.status(400).json({ message: e.message });
@@ -36,12 +50,13 @@ async function index(req, res) {
 
 async function create(req, res) {
   try {
-    const { title, to, tag, subLinks } = req.body;
+    const { component, to, path, active, subLinks } = req.body;
 
     let result = new Menu({
-      title,
       to, 
-      tag, 
+      component,
+      path,
+      active,
       subLinks
     });
 
@@ -49,7 +64,7 @@ async function create(req, res) {
     res.status(200).json({ message: "New Menu Created", result });
   } catch (e) {
     console.log(e.message);
-    res.status(400).json({ message: e.message });
+    res.status(400).json({ message: e.message == "Route is required" ? "Route is required" : "Fields must be unique" });
   }
 }
 
