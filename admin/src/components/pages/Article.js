@@ -58,7 +58,17 @@ function Article() {
     setArticles(articles);
   };
 
+<<<<<<< HEAD
   //Images managment
+=======
+  const getParsedStructure = async () => {
+    const data = await request("/api/content/structure", "GET", null, {
+      Authorization: `Bearer ${token}`,
+    });
+    console.log(data);
+  };
+
+>>>>>>> c09292fe0f0a5d0ae11a594de6135615a692be1e
   const removeHandler = async (chosenArticle) => {
     const result = await request(
       "/api/content/articles/" + chosenArticle._id,
@@ -99,6 +109,7 @@ function Article() {
   useEffect(() => {
     getTaxomonies();
     getArticles();
+    getParsedStructure();
   }, []);
 
   return (

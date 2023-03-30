@@ -1,39 +1,147 @@
+import React, { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Article from "./components/pages/Article";
+import _uniqueId from "lodash.uniqueid";
+
 import AuthPage from "./components/pages/AuthPage";
 import Dashboard from "./components/pages/Dashboard";
-import DashboardTab from "./components/pages/DashboardTab/DashboardTab";
-import Footer from "./components/pages/Footer";
-import Header from "./components/pages/Header";
-import Glossary from "./components/pages/Glossary";
-import Pages from "./components/pages/Pages";
-import Taxonomies from "./components/pages/Taxonomies";
-import BecomeInstructor from "./components/pages/BecomeInstructor";
-import QuestionBank from "./components/pages/QuestionBank";
-import Quiz from "./components/pages/Quiz";
-import Tags from "./components/pages/Courses/Tags";
-import Categories from "./components/pages/Courses/Categories";
+
+const temproraryData = [
+  {
+    title: "Dashboard",
+    to: "dashboard",
+    active: false,
+    component: "./components/pages/DashboardTab/DashboardTab",
+  },
+  {
+    title: "Admin",
+    to: "admin",
+    active: false,
+    component: "./components/pages/Menu/Menu",
+    subLinks: [
+      {
+        title: "Menu",
+        to: "admin/menu",
+        active: false,
+        component: "./components/pages/Menu/Menu",
+      },
+    ],
+  },
+  {
+    title: "Taxonomies",
+    to: "taxonomies",
+    active: false,
+    component: "./components/pages/Taxonomies",
+  },
+  {
+    title: "Articles",
+    to: "articles",
+    active: false,
+    component: "./components/pages/Article",
+  },
+  {
+    title: "Pages",
+    to: "pages",
+    active: false,
+    component: "./components/pages/Pages",
+  },
+  {
+    title: "Glossary",
+    to: "glossary",
+    active: false,
+    component: "./components/pages/Glossary",
+  },
+  {
+    title: "Become instructor",
+    to: "become-instructor",
+    active: false,
+    component: "./components/pages/BecomeInstructor",
+  },
+  {
+    title: "Footer",
+    to: "footer",
+    active: false,
+    component: "./components/pages/Footer",
+  },
+  {
+    title: "Header",
+    to: "header",
+    active: false,
+    component: "./components/pages/Header",
+  },
+  {
+    title: "Question Bank",
+    to: "question-bank",
+    active: false,
+    component: "./components/pages/QuestionBank",
+  },
+  {
+    title: "Quiz",
+    to: "quiz",
+    active: false,
+    component: "./components/pages/Quiz",
+  },
+  {
+    title: "Courses",
+    to: "course",
+    active: false,
+    subLinks: [
+      {
+        title: "Tags",
+        to: "course/tags",
+        active: false,
+        component: "./components/pages/Tags/Tags",
+      },
+      {
+        title: "Categories",
+        to: "course/categories",
+        active: false,
+        component: "./components/pages/Categories/Categories",
+      },
+      {
+        title: "Sub Categories",
+        to: "course/sub-categories",
+        active: false,
+        component: "./components/pages/Categories/SubCategories/SubCategories",
+      },
+    ],
+  },
+];
+
+const recursiveRoutes = (data) => {
+  return (
+    <React.Fragment>
+      {data.map((item) => {
+        let Component = React.lazy(() => import(`${item.component}`)
+        .then(module => {
+          return module;
+        }));
+        
+        return (
+          <React.Fragment key={_uniqueId("sub1prefix-")}>
+            {item.subLinks && (
+              <Route path={item.subLinks.to} element={<Component />} /> && recursiveRoutes(item.subLinks)
+            )}
+            {!item.subLinks && (
+              <Route path={item.to} element={<Component />} />
+            )}
+          </React.Fragment>
+        );
+      })}
+    </React.Fragment>
+  );
+};
 
 export const useRoutes = (isAuthenticated) => {
   if (isAuthenticated) {
     return (
-      <Routes>
-        <Route path="/" element={<Dashboard />}>
-          <Route path="dashboard" element={<DashboardTab />}></Route>
-          <Route path="articles" element={<Article />}></Route>
-          <Route path="taxonomies" element={<Taxonomies />}></Route>
-          <Route path="pages" element={<Pages />}></Route>
-          <Route path="glossaries" element={<Glossary />}></Route>
-          <Route path="footer" element={<Footer />}></Route>
-          <Route path="header" element={<Header />}></Route>
-          <Route path="become-instructor" element={<BecomeInstructor />}></Route>
-          <Route path="question-bank" element={<QuestionBank />}></Route>
-          <Route path="quiz" element={<Quiz />}></Route>
-          <Route path="course/tags" element={<Tags />}></Route>
-          <Route path="course/categories" element={<Categories />}></Route>
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Route>
-      </Routes>
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Dashboard />}>
+            {recursiveRoutes(temproraryData)}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Route>
+        </Routes>
+      </React.Suspense>
     );
   }
 
