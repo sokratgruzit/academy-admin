@@ -8,6 +8,7 @@
     "@ckeditor/ckeditor5-html-embed": "^35.1.0",
     "@ckeditor/ckeditor5-react": "^5.0.2",
     "@ckeditor/ckeditor5-source-editing": "^35.3.0",
+    "@loadable/component": "^5.15.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",

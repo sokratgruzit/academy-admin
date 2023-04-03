@@ -6,6 +6,17 @@ async function index(req, res) {
   try {
     const { category, level, tag, limit, page, id_not, language } = req.query;
 
+    const limitNum = parseInt(limit);
+
+    if (limit && isNaN(limitNum)) {
+      return res.status(400).send("Invalid limit parameter");
+    }
+
+    if (limitNum === 0) {
+      const result = await Article.find();
+      return res.status(200).json(result);
+    }
+
     let query = {};
     let options = {
       populate: ["category", "level", "tag", "language"],
@@ -29,11 +40,11 @@ async function index(req, res) {
 
 async function findOne(req, res) {
   try {
-    let result = await Article.find({
-      tag: { $in: [new ObjectId(req.params.slug)] },
+    let result = await Article.findOne({
+      slug: req.params.slug,
     }).populate(["category", "level", "tag", "language"]);
-
-    res.status(200).json({ docs: result });
+    // console.log(result);
+    res.status(200).json(result);
   } catch (e) {
     console.log(e.message);
     res.status(400).json({ message: e.message });

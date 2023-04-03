@@ -67,17 +67,17 @@ const temproraryData = [
   },
   {
     title: "Courses",
-    to: '',
+    to: "course",
     active: false,
     subLinks: [
       {
         title: "Tags",
-        to: "tags",
+        to: "course/tags",
         active: false
       }, 
       {
         title: "Categories",
-        to: "categories",
+        to: "course/categories",
         active: false
       },
       {
