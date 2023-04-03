@@ -40,11 +40,22 @@ async function index(req, res) {
 
 async function findOne(req, res) {
   try {
-    let result = await Article.findOne({
+    let article = await Article.findOne({
       slug: req.params.slug,
     }).populate(["category", "level", "tag", "language"]);
-    // console.log(result);
-    res.status(200).json(result);
+    let tagsDb = article.tag;
+    let tags = [];
+    for(let i=0; i<tagsDb.length; i++){
+      tags.push(tagsDb[i]._id);
+    }
+    let featuredData = await Article.find({
+      tag:{$in:tags}, slug: { $ne: req.params.slug }
+    }).limit(3).populate(["category", "level", "tag", "language"]);;
+   let returnData = {
+    article,
+    featured:{docs:featuredData}
+   }
+    res.status(200).json(returnData);
   } catch (e) {
     console.log(e.message);
     res.status(400).json({ message: e.message });
