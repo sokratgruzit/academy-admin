@@ -4,10 +4,71 @@ var ObjectId = require("mongoose").Types.ObjectId;
 
 async function index(req, res) {
   try {
-    const { category, level, tag, limit, page, id_not, language } = req.query;
+    const { category, level,groupBy, tag, limit, page, id_not, language } = req.query;
 
     const limitNum = parseInt(limit);
-
+    if(groupBy && groupBy=="category"){
+      let art = await Article.aggregate([
+          {
+            $sort:{createdAt:-1}
+          },
+          {
+            $lookup: {
+              from: "levels",
+              localField: "level",
+              foreignField: "_id",
+              as: "level"
+            }
+          },
+          {
+            $unwind: "$level"
+          },
+          {
+            $lookup: {
+              from: "categories",
+              localField: "category",
+              foreignField: "_id",
+              as: "category"
+            }
+          },
+          {
+            $unwind: "$category"
+          },
+          {
+            $lookup: {
+              from: "tags",
+              localField: "tag",
+              foreignField: "_id",
+              as: "tag"
+            }
+          },
+          {
+            $lookup: {
+              from: "languages",
+              localField: "language",
+              foreignField: "_id",
+              as: "language"
+            }
+          },
+          {
+            $unwind: "$language"
+          },
+          {
+            $group: {
+              _id: "$category.slug",
+              articles: { $push: "$$ROOT" }
+            }
+          },
+          {
+            $project: {
+              _id: 1,
+              articles: { $slice: ["$articles", limitNum] }
+            }
+          }
+          
+        ]);
+        return res.status(200).json(art);
+    }
     if (limit && isNaN(limitNum)) {
       return res.status(400).send("Invalid limit parameter");
     }

@@ -9,7 +9,6 @@ class TaxonomiesService {
 		const result = await this.Model.find();
 		return result;
 	}
-
 	async create(body) {
 		const result = new this.Model(body);
 		await result.save();
@@ -20,6 +19,7 @@ class TaxonomiesService {
 		const result = await this.Model.findById(id);
 		return {result};
 	}
+	
 
 	async update(id, body){
 		const result = await this.Model.findById(id);
