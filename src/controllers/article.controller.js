@@ -11,9 +11,6 @@ async function index(req, res) {
     if (limit && isNaN(limitNum)) {
       return res.status(400).send("Invalid limit parameter");
     }
-
-   
-
     let query = {};
     let options = {
       populate: ["category", "level", "tag", "language"],
@@ -27,10 +24,7 @@ async function index(req, res) {
     tag ? (query.tag = { $in: tag }) : "";
     id_not ? (query._id = { $ne: id_not }) : "";
     if (limitNum === 0) {
-      options = {
-        populate: ["category", "level", "tag", "language"]
-      };
-      const result = await Article.paginate(query, options);
+      const result = await Article.find().populate(["category", "level", "tag", "language"]);
       return res.status(200).json(result);
     }
 
@@ -54,7 +48,7 @@ async function findOne(req, res) {
     }
     let featuredData = await Article.find({
       tag:{$in:tags}, slug: { $ne: req.params.slug }
-    }).limit(3).populate(["category", "level", "tag", "language"]);;
+    }).limit(3).populate(["category", "level", "tag", "language"]);
    let returnData = {
     article,
     featured:{docs:featuredData}
