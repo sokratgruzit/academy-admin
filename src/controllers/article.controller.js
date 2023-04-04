@@ -12,10 +12,7 @@ async function index(req, res) {
       return res.status(400).send("Invalid limit parameter");
     }
 
-    if (limitNum === 0) {
-      const result = await Article.find();
-      return res.status(200).json(result);
-    }
+   
 
     let query = {};
     let options = {
@@ -29,6 +26,13 @@ async function index(req, res) {
     language ? (query.language = language) : "";
     tag ? (query.tag = { $in: tag }) : "";
     id_not ? (query._id = { $ne: id_not }) : "";
+    if (limitNum === 0) {
+      options = {
+        populate: ["category", "level", "tag", "language"]
+      };
+      const result = await Article.paginate(query, options);
+      return res.status(200).json(result);
+    }
 
     const result = await Article.paginate(query, options);
     res.status(200).json(result);
