@@ -1,7 +1,5 @@
 const Header = require('../models/Header');
 
-
-
 async function index(){
    const result = await Header.find();
    return {result};
@@ -17,7 +15,6 @@ async function create(body) {
    result = await result.save();
    return {result};
 }
-
 
 async function update(slug, body){
    const result = await Header.findOne({slug});

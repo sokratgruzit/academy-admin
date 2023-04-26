@@ -4,8 +4,8 @@ var ObjectId = require("mongoose").Types.ObjectId;
 
 async function index(req, res) {
   try {
-    const { category, level, tag, limit, page, id_not, language } = req.query;
-
+    const { category, level, tag, limit, page, id_not, language, type } = req.query;
+    
     let query = {};
     let options = {
       populate: ["category", "level", "tag", "language"],
@@ -13,14 +13,19 @@ async function index(req, res) {
       page: page || 1,
     };
 
-    category ? (query.category = category) : "";
-    level ? (query.level = level) : "";
-    language ? (query.language = language) : "";
+    category && ObjectId.isValid(category) ? (query.category = ObjectId(category)) : "";
+    level && ObjectId.isValid(level) ? (query.level = ObjectId(level)) : "";
+    language && ObjectId.isValid(language) ? (query.language = ObjectId.isValid(language)) : "";
     tag ? (query.tag = { $in: tag }) : "";
     id_not ? (query._id = { $ne: id_not }) : "";
 
     const result = await Article.paginate(query, options);
-    res.status(200).json(result);
+    
+    if (type === 'common') {
+      return result.docs;
+    } else {
+      res.status(200).json(result);
+    }
   } catch (e) {
     console.log(e.message);
     res.status(400).json({ message: e.message });
@@ -30,7 +35,7 @@ async function index(req, res) {
 async function findOne(req, res) {
   try {
     let result = await Article.find({
-      tag: { $in: [new ObjectId(req.params.slug)] },
+      slug: { $in: [req.params.slug] },
     }).populate(["category", "level", "tag", "language"]);
 
     res.status(200).json({ docs: result });

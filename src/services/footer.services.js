@@ -1,7 +1,5 @@
 const Footer = require('../models/Footer');
 
-
-
 async function index(){
    const result = await Footer.find();
    return {result};
@@ -17,7 +15,6 @@ async function create(body) {
    result = await result.save();
    return {result}; 
 }
-
 
 async function update(slug, body){
    const result = await Footer.findOne({slug});
@@ -35,7 +32,6 @@ async function destroy(slug){
       message: 'Footer successuly deleted'
    }
 }
-
 
 module.exports = {
    create,

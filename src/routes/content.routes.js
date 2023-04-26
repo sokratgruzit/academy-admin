@@ -12,13 +12,14 @@ const HeaderController = require("../controllers/header.controller");
 const TaxonomiesController = require("../controllers/taxonomies.controller");
 const QuestionBankController = require("../controllers/question-bank.controller");
 const QuizController = require("../controllers/quiz.controller");
+const CommonController = require("../controllers/common.controller");
 
 const CategoryController = new TaxonomiesController("Category");
 const LevelController = new TaxonomiesController("Level");
 const TagController = new TaxonomiesController("Tag");
 const LanguageController = new TaxonomiesController("Language");
 
-router.use(AuthMiddleware);
+//router.use(AuthMiddleware);
 
 //articles
 router.get("/articles", ArticleController.index);
@@ -99,5 +100,7 @@ router.get("/quiz/:slug", QuizController.findOne);
 router.post("/quiz", QuizController.create);
 router.put("/quiz/:slug", QuizController.update);
 router.delete("/quiz/:slug", QuizController.destroy);
+
+router.get("/common-data", CommonController.commonData);
 
 module.exports = router;

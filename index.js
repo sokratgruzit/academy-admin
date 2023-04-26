@@ -27,10 +27,6 @@ app.get("/api/images/:filename", getImage);
 app.use("/api/auth", auth);
 app.use("/api/data", data);
 
-app.get("/api/test", (req, res) => {
-  res.send("test");
-});
-
 const root = require("path").join(__dirname, "admin", "build");
 app.use(express.static(root));
 
