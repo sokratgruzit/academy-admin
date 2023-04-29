@@ -19,12 +19,6 @@ function Article() {
   const { token } = useContext(AuthContext);
   const { request } = useHttp();
 
-  const [first, setfirst] = useState(3);
-
-  useEffect(() => {
-    setfirst(3);
-  }, [first]);
-
   const getTaxomonies = async () => {
     try {
       const [category, tag, level, language] = await Promise.all([
@@ -99,6 +93,7 @@ function Article() {
   useEffect(() => {
     getTaxomonies();
     getArticles();
+    // getParsedStructure();
   }, []);
 
   return (

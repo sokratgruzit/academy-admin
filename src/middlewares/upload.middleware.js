@@ -19,9 +19,9 @@ const upload = async (req, res, next) => {
   const blob = bucket.file(fileName);
   const blobStream = blob.createWriteStream();
 
-   blobStream.on("error", (err) => {
-      next(err);
-   });
+  blobStream.on("error", (err) => {
+    next(err);
+  });
 
   blobStream.on("finish", async () => {
     await Article.findOneAndUpdate(

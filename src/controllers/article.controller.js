@@ -38,7 +38,7 @@ async function findOne(req, res) {
       slug: { $in: [req.params.slug] },
     }).populate(["category", "level", "tag", "language"]);
 
-    res.status(200).json({ docs: result });
+    res.status(200).json(result);
   } catch (e) {
     console.log(e.message);
     res.status(400).json({ message: e.message });
