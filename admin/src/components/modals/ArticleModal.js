@@ -60,14 +60,14 @@ function ArticleModal({
       Authorization: `Bearer ${token}`,
     });
 
-    if (message === "Article successuly updated") {
+    if (message === "Article successfully updated") {
       setArticles((prev) => ({
         ...prev,
         docs: prev.docs.map((doc) => (doc.title === article.title ? result : doc)),
       }));
     }
 
-    if (message === "New Article Created") {
+    if (message === "New article created") {
       setArticles((prev) => ({ ...prev, docs: [...prev.docs, result] }));
     }
 
@@ -76,8 +76,9 @@ function ArticleModal({
 
   async function saveImage(file) {
     if (!file?.name) return;
-    let blob = file.slice(0, file.size, "image/png");
-    const newFile = new File([blob], `${article._id}_article.png`, { type: "image/png" });
+    let blob = file.slice(0, file.size, file.type);
+    let ext = file.type.slice(6);
+    const newFile = new File([blob], `${article._id}_article.${ext}`, { type: file.type });
 
     let data = new FormData();
     data.append("image", newFile);

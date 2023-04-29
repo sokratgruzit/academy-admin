@@ -3,11 +3,11 @@ const path = require("path");
 const Article = require("../models/Article");
 
 const storage = new Storage({
-  projectId: "buoyant-imagery-378110",
-  keyFilename: path.join(__dirname, "../../buoyant-imagery-378110-078ae3dc746a.json"),
+  projectId: "academy-385213",
+  keyFilename: path.join(__dirname, "../../cloudKey.json"),
 });
 
-const bucket = storage.bucket("academy-images");
+const bucket = storage.bucket("academy-bucket-admin");
 
 const upload = async (req, res, next) => {
   if (!req.file) {
@@ -23,16 +23,19 @@ const upload = async (req, res, next) => {
     next(err);
   });
 
-  blobStream.on("finish", async () => {
-    await Article.findOneAndUpdate(
-      { _id: req.body.id },
-      { image: { path: `http://localhost:4000/api/images/${fileName}` } },
-    );
-
-    res.status(200).json({ path: `http://localhost:4000/api/images/${fileName}` });
+  const url = await blob.getSignedUrl({
+    action: "read",
+    expires: "03-17-2025" // Set the expiration date of the URL (optional)
   });
 
+  await Article.findOneAndUpdate(
+    { _id: req.body.id },
+    { image: { path: url[0] } },
+  );
+
   blobStream.end(req.file.buffer);
+
+  res.status(200).json({ path: url[0] });
 };
 
 const getImage = async (req, res) => {
